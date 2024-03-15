@@ -9,6 +9,9 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+      - text: Recitations
+        menu: 
+          - recitations/recitation-1.ipynb
 
 format:
   html:
