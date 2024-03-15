@@ -1,0 +1,53 @@
+---
+title: "Syllabus"
+bibliography: references.bib
+---
+
+Welcome to this course! Here you'll find details on the syllabus.
+
+## Topics
+
+### Identification, Credible Inference, and Marschak's Maxim
+
+We formally define identification and discuss (via examples) what people really mean when they talk about identification and **credible inference**. We use the **Generalized Roy Model** to compare identification via functional form to nonparametric identification.
+
+We introduce **Marschak's Maxim** as a guide for doing empirical model-based research.
+
+#### Reading
+
+The two survey articles by @Keane2010 ([link](/papers/KeaneJEP2010.pdf)) and @AngristPischke2010 ([link](/papers/TheCredibilityRevolutionInEmpiricalEconomics_AngristPischke_JEP_2010.pdf)) -  although aging - provide two important perspectives on the issues of credible inference in economics. @LowMeghir2017 [provide](/papers/TheUseOfStructuralModelsInEconometrics_LowMeghir_JEP_2017.pdf) a nice review of the advantages of the structural approach.
+
+[The original paper](/papers/Marschak1953.pdf) by @Marschak1953 may be of interest. @HeckmanVytlacil2007 provide a [nice discussion](/papers/HeckmanVytlacilHandbook2007.pdf) of Marschak's Maxim in the context of policy evaluation. They introduce [@HeckmanVytlacil2005; @Carneiro2011] the *Marginal Treatment Effect* as a tool for thinking about quasi-experimental estimators and policy evaluation.
+
+### Extremum Estimators
+
+We introduce the concept of an **extremum estimator** and discuss conditions under which this estimator has good asymptotic properties, with specific applications to **maximum likelihood**, **minimum distance**, and **generalized method of moments** estimators. We discuss optimal weighting of the relative efficiency properties of these estimators.
+
+#### Reading
+
+This section relies heavily on the @newey1994large chapter of the Handbook of Econometrics. Although not necessary, @hayashi2011econometrics provides a very thorough treatment of all of these estimators.
+
+### Simulation Methods
+
+We introduce simulation methods for the estimation of structural models, including the **Simulated Method of Moments**, **Indirect Inference**, and the **Bootstrap** method for inference.
+
+#### Reading
+
+You may find the @horowitz2001bootstrap handbook chapter useful. @cameron2005microeconometrics provide a useful discussion of simulation-based estimators in their textbook.
+
+### Panel Data Methods
+
+We talk about individual heterogeneity and discuss the use of panel data for detecting individual heterogeneity in data.
+
+### Discrete Choice and Dynamic Discrete Choice
+
+We review some of the formalities of discrete choice models and consider estimation of these models in the presence of **dynamics**.
+
+
+## Assessment
+
+5 problem sets, each worth 20%.
+
+## Office Hours
+
+I will provide a link on Canvas to sign up for my weekly office hours.

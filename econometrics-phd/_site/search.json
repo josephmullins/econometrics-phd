@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Syllabus",
+    "section": "",
+    "text": "Welcome to this course! Here you’ll find details on the syllabus."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html#covered-topics",
+    "href": "index.html#covered-topics",
+    "title": "Syllabus",
+    "section": "Covered Topics",
+    "text": "Covered Topics\n\nIdentification, Credible Inference and Marschak’s Maxim\n\n\nExtremum Estimators\n\n\nSimulation Methods"
+  },
+  {
+    "objectID": "index.html#topics",
+    "href": "index.html#topics",
+    "title": "Syllabus",
+    "section": "Topics",
+    "text": "Topics\n\nIdentification, Credible Inference, and Marschak’s Maxim\nWe formally define identification and discuss (via examples) what people really mean when they talk about identification and “credible inference”. We use the generalized Roy model to compare identification via functional form to nonparametric identification.\nWe introduce “Marschak’s Maxim” as a guide for doing empirical model-based research.\n\nReading\nThe two survey articles by Keane (2010) (link) and Angrist and Pischke (2010) (link) - although aging - provide two important perspectives on the issues of credible inference in economics. Low and Meghir (2017) provide a nice review of the advantages of the structural approach.\nThe original paper by Marschak (1953) may be of interest. Heckman and Vytlacil (2007) provide a nice discussion of Marschak’s Maxim in the context of policy evaluation. They introduce (Heckman and Vytlacil 2005; Carneiro, Heckman, and Vytlacil 2011) the Marginal Treatment Effect as a tool for thinking about quasi-experimental estimators and policy evaluation.\n\n\n\nExtremum Estimators\nWe introduce the concept of an extremum estimator and discuss conditions under which this estimator has good asymptotic properties, with specific applications to maximum likelihood, minimum distance, and generalized method of moments estimators. We discuss optimal weighting of the relative efficiency properties of these estimators.\n\nReading\nThis section relies heavily on the Newey and McFadden (1994) chapter of the Handbook of Econometrics. Although not necessary, Hayashi (2011) provides a very thorough treatment of all of these estimators.\n\n\n\nSimulation Methods\nWe introduce simulation methods for the estimation of structural models, including the Simulated Method of Moments, Indirect Inference, advantages\n\nReading\nYou may find the Horowitz (2001) handbook chapter useful. Cameron and Trivedi (2005) provide a useful discussion of simulation-based estimators in their textbook."
+  },
+  {
+    "objectID": "index.html#assessment",
+    "href": "index.html#assessment",
+    "title": "Syllabus",
+    "section": "Assessment",
+    "text": "Assessment"
+  },
+  {
+    "objectID": "index.html#office-hours",
+    "href": "index.html#office-hours",
+    "title": "Syllabus",
+    "section": "Office Hours",
+    "text": "Office Hours"
+  }
+]
