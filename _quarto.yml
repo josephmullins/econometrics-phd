@@ -7,10 +7,13 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Syllabus#
+        text: Syllabus
       - text: Recitations
         menu: 
           - recitations/recitation-1.ipynb
+      - text: Models
+        menu:
+          - models/search-model.ipynb
 
 format:
   html:
