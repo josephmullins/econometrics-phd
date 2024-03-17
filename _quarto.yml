@@ -14,6 +14,11 @@ website:
       - text: Models
         menu:
           - models/search-model.ipynb
+          - models/entry-exit.ipynb
+          - models/savings.ipynb
+      - text: Assignments
+        menu:
+          - assignments/Assignment-1.ipynb
 
 format:
   html:

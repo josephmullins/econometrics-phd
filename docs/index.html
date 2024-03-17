@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.539">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -132,6 +132,25 @@ div.csl-indent {
     <a class="dropdown-item" href="./models/search-model.html">
  <span class="dropdown-text">Simple Search Model</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./models/entry-exit.html">
+ <span class="dropdown-text">Symmetric Duopoly Model of Entry/Exit</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./models/savings.html">
+ <span class="dropdown-text">Life-Cycle Savings Model</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-assignments" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Assignments</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-assignments">    
+        <li>
+    <a class="dropdown-item" href="./assignments/Assignment-1.html">
+ <span class="dropdown-text">Assignment 1</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -225,7 +244,46 @@ div.csl-indent {
 </section>
 <section id="assessment" class="level2">
 <h2 class="anchored" data-anchor-id="assessment">Assessment</h2>
-<p>5 problem sets, each worth 20%.</p>
+<p>There will be 7 problem sets. Your best 5 of these 7 problem sets will be worth 20%. Hence, you can skip two if you want.</p>
+<p>Here is the proposed timeline of due dates. Submissions <strong>must</strong> be made thorugh Canvas as a jupyter notebook or a notebook formatted to html with printed output.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Assignment</th>
+<th>Due Date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="./assignments/Assignment-1.html">Assignment 1</a></td>
+<td>March 22</td>
+</tr>
+<tr class="even">
+<td>Assignment 2</td>
+<td>March 29</td>
+</tr>
+<tr class="odd">
+<td>Assignment 3</td>
+<td>April 5</td>
+</tr>
+<tr class="even">
+<td>Assignment 4</td>
+<td>April 12</td>
+</tr>
+<tr class="odd">
+<td>Assignment 5</td>
+<td>April 19</td>
+</tr>
+<tr class="even">
+<td>Assignment 6</td>
+<td>April 26</td>
+</tr>
+<tr class="odd">
+<td>Assignment 7</td>
+<td>May 3</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="office-hours" class="level2">
 <h2 class="anchored" data-anchor-id="office-hours">Office Hours</h2>
@@ -431,7 +489,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

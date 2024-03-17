@@ -46,7 +46,19 @@ We review some of the formalities of discrete choice models and consider estimat
 
 ## Assessment
 
-5 problem sets, each worth 20%.
+There will be 7 problem sets. Your best 5 of these 7 problem sets will be worth 20%. Hence, you can skip two if you want. 
+
+Here is the proposed timeline of due dates. Submissions **must** be made thorugh Canvas as a jupyter notebook or a notebook formatted to html with printed output. 
+
+| Assignment | Due Date |
+| ---------- | -------- |
+| [Assignment 1](assignments/Assignment-1.ipynb) | March 22 |
+| Assignment 2 | March 29 | 
+| Assignment 3 | April 5 | 
+| Assignment 4 | April 12 | 
+| Assignment 5 | April 19 | 
+| Assignment 6 | April 26 | 
+| Assignment 7 | May 3 | 
 
 ## Office Hours
 
