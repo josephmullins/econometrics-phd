@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.539">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -122,6 +185,17 @@ ul.task-list li input[type="checkbox"] {
   </li>  
     </ul>
   </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-assignments" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Assignments</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-assignments">    
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-1.html">
+ <span class="dropdown-text">Assignment 1</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -138,7 +212,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#symmetric-duopoly-model-of-entryexit" id="toc-symmetric-duopoly-model-of-entryexit" class="nav-link active" data-scroll-target="#symmetric-duopoly-model-of-entryexit">Symmetric Duopoly Model of Entry/Exit</a></li>
+  <li><a href="#symmetric-duopoly-model-of-entryexit" id="toc-symmetric-duopoly-model-of-entryexit" class="nav-link active" data-scroll-target="#symmetric-duopoly-model-of-entryexit">Symmetric Duopoly Model of Entry/Exit</a>
+  <ul class="collapse">
+  <li><a href="#model-ingredients" id="toc-model-ingredients" class="nav-link" data-scroll-target="#model-ingredients">Model Ingredients</a></li>
+  <li><a href="#solving-the-firms-problem" id="toc-solving-the-firms-problem" class="nav-link" data-scroll-target="#solving-the-firms-problem">Solving the firm’s problem</a></li>
+  <li><a href="#equilibrium" id="toc-equilibrium" class="nav-link" data-scroll-target="#equilibrium">Equilibrium</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -166,9 +245,232 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="symmetric-duopoly-model-of-entryexit" class="level1">
 <h1>Symmetric Duopoly Model of Entry/Exit</h1>
-<p>Details IOU.</p>
+<section id="model-ingredients" class="level2">
+<h2 class="anchored" data-anchor-id="model-ingredients">Model Ingredients</h2>
+<p>Here are the basic ingredients of the model:</p>
+<ul>
+<li>There are two firms indexed by <span class="math inline">\(f\in\{0,1\}\)</span></li>
+<li>There are <span class="math inline">\(M\)</span> markets indexed by <span class="math inline">\(m\)</span></li>
+<li>Time is discrete and indexed by <span class="math inline">\(t\)</span></li>
+<li>Each firm makes an <em>entry decision</em> every period. We let <span class="math inline">\(j\in\{0,1\}\)</span> index this decision to enter or not. Let <span class="math inline">\(j(f,m,t)\)</span> indicate the choice of firm <span class="math inline">\(f\)</span> in market <span class="math inline">\(m\)</span> in period <span class="math inline">\(t\)</span>.</li>
+<li>We let <span class="math inline">\(a_{f,m,t}=j(f,m,t-1)\)</span> indicate whether firm <span class="math inline">\(f\)</span> is active in market <span class="math inline">\(m\)</span> in period <span class="math inline">\(t\)</span>, which means they entered in the previous period.</li>
+<li>Let <span class="math inline">\(x_{m}\)</span> be a market-level unobservable that shifts the profitability of operations in market <span class="math inline">\(m\)</span>.</li>
+<li>In addition to the observed states, each firm draws a pair of idiosyncatic shocks to payoffs in each period, <span class="math inline">\(\epsilon_{f}=[\epsilon_{f0},\epsilon_{f1}]\)</span> that is <em>private information</em> to the firm and is iid over markets, firms, and time periods.</li>
+<li>Firms make their decisions in each period <em>simultaneously</em></li>
+</ul>
+<p>To simplify notation, suppress dependance of outcomes on the market <span class="math inline">\(m\)</span> and time period <span class="math inline">\(t\)</span>. Because we are writing a symmetric model, we will also suppress dependence on <span class="math inline">\(f\)</span>. The <em>deterministic</em> component of the payoff to entering is a function of the market primitives (<span class="math inline">\(x\)</span>), the firm’s activity status (<span class="math inline">\(a\)</span>), and the other firm’s entry decision <span class="math inline">\(j^\prime\)</span>:</p>
+<p><span class="math display">\[ u_{1}(x,a,j^{\prime}) = \phi_{0} + \phi_{1}x - \phi_{2}j^\prime - \phi_{3}(1-a) \]</span></p>
+<p>The payoff to not entering is simply:</p>
+<p><span class="math display">\[{u}_{0}(x,a) = \phi_{4}a \]</span></p>
+<p>Before characterizing the solution to the firm’s problem, let’s code up these payoff functions:</p>
+<div id="cell-1" class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">u1</span>(x,a,j′,ϕ) <span class="op">=</span> ϕ[<span class="fl">1</span>] <span class="op">+</span> ϕ[<span class="fl">2</span>]<span class="op">*</span>x <span class="op">-</span> ϕ[<span class="fl">3</span>]j′ <span class="op">+</span> ϕ[<span class="fl">4</span>]<span class="fu">*</span>(<span class="fl">1</span><span class="op">-</span>a)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">u0</span>(a,ϕ) <span class="op">=</span> a <span class="op">*</span> ϕ[<span class="fl">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="62">
+<pre><code>u0 (generic function with 1 method)</code></pre>
+</div>
+</div>
+</section>
+<section id="solving-the-firms-problem" class="level2">
+<h2 class="anchored" data-anchor-id="solving-the-firms-problem">Solving the firm’s problem</h2>
+<p>Let <span class="math inline">\(j^*(x,a,a',\epsilon)\)</span> be the firm’s optimal decision given the state and the idiosyncratic shock. We will focus on <em>symmetric equilibria</em> so this policy function is sufficient to describe the behavior of both firms.</p>
+<p>The value to either firm of arriving in a period with state <span class="math inline">\((x,a,a')\)</span> can be written recursively as:</p>
+<p><span class="math display">\[
+\begin{split}
+V(x,a,a') = \mathbb{E}_{\epsilon,\epsilon'}\max\{u_{1}(x,a,j^*(x,a,a',\epsilon'))+\epsilon_{1} + \beta V(x,1,j^*(x,a,a',\epsilon')), \\ u_{0}(x,a) + \epsilon_{0} + \beta V(x,0,j^*(x,a,a',\epsilon'))\}
+\end{split}
+\]</span></p>
+<p>Define the optimal choice probability in equilibrium as:</p>
+<p><span class="math display">\[ p(x) = \int_{\epsilon}j^*(x,a,a')dF(\epsilon') \]</span></p>
+<p>With this in hand we can simplify the recursive formulation slightly:</p>
+<p><span class="math display">\[
+\begin{split}
+V(x,a,a') = \mathbb{E}_{\epsilon}\max\{\phi_{0}+\phi_{1}x - \phi_{2}p(x,a',a) +\epsilon_{1} + \beta [p(x,a',a)V(x,1,1) + (1-p(x,a',a))V(x,1,0)], \\
+a \phi_{4} + \epsilon_{0} + \beta [p(x,a',a)V(x,0,1) + (1-p(x,a',a))V(x,0,0)]\}
+\end{split}
+\]</span></p>
+<p>Define the choice-specific values as:</p>
+<p><span class="math display">\[ v_{1}(x,a,a') = \phi_{0}+\phi_{1}x - \phi_{2}p(x,a',a) + \beta [p(x,a',a)V(x,1,1) + (1-p(x,a',a))V(x,1,0)] \]</span></p>
+<p>and</p>
+<p><span class="math display">\[ v_{0}(x,a,a') = a \phi_{4} + \beta [p(x,a',a)V(x,0,1) + (1-p(x,a',a))V(x,0,0)] \]</span></p>
+<p>So assuming that <span class="math inline">\(\epsilon\)</span> is distributed as type I extreme value random variable with location parameter 0 and scale parameter 1 we get analytical expressions for the choice probabilities and the expected value of the maximum:</p>
+<p><span class="math display">\[ V(x) = \gamma + \log\left(\exp(v_{0}(x,a,a'))+\exp(v_{1}(x,a,a'))\right)\]</span></p>
+<p>where <span class="math inline">\(\gamma\)</span> is the <a href="https://en.wikipedia.org/wiki/Euler%27s_constant">Euler-Mascheroni constant</a> and</p>
+<p><span class="math display">\[ p(x,a,a') = \frac{\exp(v_{1}(x,a,a'))}{\exp(v_{0}(x,a,a'))+\exp(v_{1}(x,a,a'))} \]</span></p>
+<p>Before we define equilibrium and think about solving the model, let’s quickly write up the mapping between the other firm’s choice probabilities and the choice values:</p>
+<div id="cell-3" class="cell" data-execution_count="63">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixing x, assume that V is stored as a 2 x 2 array</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The argument p is the current guess of p(x,a',a)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">choice_values</span>(x,a,p,V,ϕ,β)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    v0 <span class="op">=</span> <span class="fu">u0</span>(a,ϕ) <span class="op">+</span> β <span class="op">*</span> p <span class="op">*</span> V[<span class="fl">1</span>,<span class="fl">2</span>] <span class="op">+</span> β <span class="op">*</span> (<span class="fl">1</span><span class="op">-</span>p) <span class="op">*</span> V[<span class="fl">1</span>,<span class="fl">1</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    v1 <span class="op">=</span> <span class="fu">u1</span>(x,a,p,ϕ) <span class="op">+</span> β <span class="op">*</span> p <span class="op">*</span> V[<span class="fl">2</span>,<span class="fl">2</span>] <span class="op">+</span> β <span class="op">*</span> (<span class="fl">1</span><span class="op">-</span>p) <span class="op">*</span> V[<span class="fl">2</span>,<span class="fl">1</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v0,v1</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="63">
+<pre><code>choice_values (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>In principle we could iterate on this mapping to find (for a fixed <span class="math inline">\(p\)</span>), the firm’s optimal solution. But that won’t be an efficient way to try and solve for the equilibrium.</p>
+</section>
+<section id="equilibrium" class="level2">
+<h2 class="anchored" data-anchor-id="equilibrium">Equilibrium</h2>
+<p>The solution concept for this model is <em>Markov Perfect Equilibrium</em>. Fixing the market <span class="math inline">\(x\)</span>, here the equilibrium be characterized as a fixed point in the value function <span class="math inline">\(V\)</span>. In words, equilibrium is summarized by a <span class="math inline">\(V\)</span> that:</p>
+<ol type="1">
+<li>Fixing choice probabilities <span class="math inline">\(p\)</span>, is a fixed point in the recursive formulation of values; and</li>
+<li><span class="math inline">\(p\)</span> is also the optimal choice probability given <span class="math inline">\(V\)</span>.</li>
+</ol>
+<p>How should we solve for this symmetric equilibrium? We could try iterating on <span class="math inline">\(V\)</span> as follows:</p>
+<div id="cell-6" class="cell" data-execution_count="64">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># V is a 2x2 array with values</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p is a 2x2 array with choice probabilities</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">iterate_model</span>(V,p,x,ϕ,β)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    Vnew <span class="op">=</span> <span class="fu">copy</span>(V)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    pnew <span class="op">=</span> <span class="fu">copy</span>(p)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a′ <span class="kw">in</span> <span class="fu">axes</span>(V,<span class="fl">2</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> a <span class="kw">in</span> <span class="fu">axes</span>(V,<span class="fl">1</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            p′ <span class="op">=</span> p[a′,a]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            v0,v1 <span class="op">=</span> <span class="fu">choice_values</span>(x,a<span class="op">-</span><span class="fl">1</span>,p′,V,ϕ,β)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            pnew[a,a′] <span class="op">=</span> <span class="fu">exp</span>(v1) <span class="op">/</span> (<span class="fu">exp</span>(v0)<span class="fu">+exp</span>(v1))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            Vnew[a,a′] <span class="op">=</span> <span class="fu">log</span>(<span class="fu">exp</span>(v0)<span class="fu">+exp</span>(v1))</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Vnew,pnew</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve_by_iteration</span>(x,ϕ,β; max_iter <span class="op">=</span> <span class="fl">1000</span>, verbose <span class="op">=</span> <span class="cn">false</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    V0 <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">2</span>,<span class="fl">2</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    p0 <span class="op">=</span> <span class="fu">fill</span>(<span class="fl">0.1</span>,<span class="fl">2</span>,<span class="fl">2</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    err <span class="op">=</span> <span class="cn">Inf</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    iter <span class="op">=</span> <span class="fl">1</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> err<span class="op">&gt;</span><span class="fl">1e-10</span> <span class="op">&amp;&amp;</span> iter<span class="op">&lt;</span>max_iter</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        V1,p1 <span class="op">=</span> <span class="fu">iterate_model</span>(V0,p0,x,ϕ,β)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        err <span class="op">=</span> <span class="fu">maximum</span>(<span class="fu">abs</span>.(V1 <span class="op">.-</span> V0))</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">mod</span>(iter,<span class="fl">100</span>)<span class="op">==</span><span class="fl">0</span> <span class="op">&amp;&amp;</span> verbose</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">println</span>(<span class="st">"Iteration </span><span class="sc">$</span>iter<span class="st">, error is </span><span class="sc">$</span>err<span class="st">"</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        V0 <span class="op">=</span> V1</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        p0 <span class="op">=</span> p1</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        iter <span class="op">+=</span> <span class="fl">1</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> V0,p0</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>β <span class="op">=</span> <span class="fl">0.95</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>ϕ <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> [<span class="fl">1</span>.,<span class="fl">0.1</span>,<span class="fl">0.5</span>,<span class="fl">2</span>.,<span class="fl">0.5</span>]</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_by_iteration</span>(<span class="fl">0</span>.,ϕ,β; verbose <span class="op">=</span> <span class="cn">true</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iteration 100, error is 0.04823924738592211
+Iteration 200, error is 0.001242310554474102
+Iteration 300, error is 5.032709619001707e-5
+Iteration 400, error is 2.123540213005981e-6
+Iteration 500, error is 8.863101186307176e-8
+Iteration 600, error is 3.693557459882868e-9
+Iteration 700, error is 1.538467131467769e-10</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="64">
+<pre><code>([69.73147518902888 70.96824731388737; 68.46263413289174 67.89546273371974], [0.9107652821657111 0.990549524651413; 0.052475860075290155 0.27729654446688445])</code></pre>
+</div>
+</div>
+<p>This seems to work! But notice that it takes a while for the iteration to converge. Also, unlike the single agent case, there is no guarantee that this iteration is always a contraction.</p>
+<p>We can also solve this model relatively easily using Newton’s Method and the magic of Automatic Differentiation. To do this, we’ll solve over the pair of choice-specific values <span class="math inline">\(v_{0}\)</span> and <span class="math inline">\(v_{1}\)</span> and store these values as a vector instead of an array:</p>
+<div id="cell-8" class="cell" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ForwardDiff</span>, <span class="bu">LinearAlgebra</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># this function returns V as a 2 x 2 array given the vector of choice specific values in V</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">calc_V</span>(v)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> <span class="fu">LinearIndices</span>((<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    [<span class="fu">log</span>(<span class="fu">exp</span>(v[idx[<span class="fl">1</span>,<span class="fl">1</span><span class="op">+</span>a,<span class="fl">1</span><span class="op">+</span>a′]]) <span class="op">+</span> <span class="fu">exp</span>(v[idx[<span class="fl">2</span>,<span class="fl">1</span><span class="op">+</span>a,<span class="fl">1</span><span class="op">+</span>a′]])) for a <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, a′ <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span>]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># this function returns choice probabilities as a 2x2 array given the vector v</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">calc_p</span>(v)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> <span class="fu">LinearIndices</span>((<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">1</span> <span class="op">/</span> (<span class="fl">1</span><span class="fu">+exp</span>(v[idx[<span class="fl">1</span>,<span class="fl">1</span><span class="op">+</span>a,<span class="fl">1</span><span class="op">+</span>a′]] <span class="op">-</span> v[idx[<span class="fl">2</span>,<span class="fl">1</span><span class="op">+</span>a,<span class="fl">1</span><span class="op">+</span>a′]])) for a <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, a′ <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span>]</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">iterate_model_v</span>(v,x,ϕ,β)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> <span class="fu">LinearIndices</span>((<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>)) <span class="co">#&lt;- this is for convenient indexing over v</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    vnew <span class="op">=</span> <span class="fu">copy</span>(v)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fu">calc_V</span>(v)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a′ <span class="kw">in</span> <span class="fu">axes</span>(idx,<span class="fl">3</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> a <span class="kw">in</span> <span class="fu">axes</span>(idx,<span class="fl">2</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            i0′ <span class="op">=</span> idx[<span class="fl">1</span>,a′,a] <span class="co">#&lt;- this locates the position in v for v_{0}(x,a',a)</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            i1′ <span class="op">=</span> idx[<span class="fl">2</span>,a′,a] <span class="co">#&lt;- this locates the position in v for v_{1}(x,a',a)</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            p <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> (<span class="fl">1</span> <span class="op">+</span> <span class="fu">exp</span>(v[i0′] <span class="op">-</span> v[i1′]))</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            v0,v1 <span class="op">=</span> <span class="fu">choice_values</span>(x,a<span class="op">-</span><span class="fl">1</span>,p,V,ϕ,β)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>            vnew[idx[<span class="fl">1</span>,a,a′]] <span class="op">=</span> v0</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>            vnew[idx[<span class="fl">2</span>,a,a′]] <span class="op">=</span> v1</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> vnew</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="fu">F</span>(v,x,ϕ,β) <span class="op">=</span> v <span class="op">.-</span> <span class="fu">iterate_model_v</span>(v,x,ϕ,β)</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve_model_newton</span>(x,ϕ,β;max_iter <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">false</span>)</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">8</span>)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dF</span>(v) <span class="op">=</span> ForwardDiff.<span class="fu">jacobian</span>(<span class="fu">y-&gt;F</span>(y,x,ϕ,β),v)</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    err <span class="op">=</span> <span class="cn">Inf</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    iter <span class="op">=</span> <span class="fl">1</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (err<span class="op">&gt;</span><span class="fl">1e-10</span>) <span class="op">&amp;&amp;</span> (iter<span class="op">&lt;</span>max_iter)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        Fv <span class="op">=</span> <span class="fu">F</span>(v,x,ϕ,β)</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>        dFv <span class="op">=</span> <span class="fu">dF</span>(v)</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>        vnew <span class="op">=</span> v <span class="op">-</span> <span class="fu">inv</span>(dFv) <span class="op">*</span> Fv</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>        err <span class="op">=</span> <span class="fu">maximum</span>(<span class="fu">abs</span>.(Fv))</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> verbose</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>            <span class="fu">println</span>(<span class="st">"Iteration </span><span class="sc">$</span>iter<span class="st">, error is </span><span class="sc">$</span>err<span class="st">"</span>)</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        iter <span class="op">+=</span> <span class="fl">1</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> vnew</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_model_newton</span>(<span class="fl">0</span>.,ϕ,β;verbose <span class="op">=</span> <span class="cn">true</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iteration 1, error is 6.158489821531948
+Iteration 2, error is 1.7766463237555712
+Iteration 3, error is 0.056247498263360285
+Iteration 4, error is 0.00028434628951856666
+Iteration 5, error is 3.4473004006940755e-8
+Iteration 6, error is 1.4210854715202004e-14</code></pre>
+</div>
+</div>
+<p>Let’s try timing each solution method to quickly compare:</p>
+<div id="cell-10" class="cell" data-execution_count="66">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_model_newton</span>(<span class="fl">0</span>.,ϕ,β)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_by_iteration</span>(<span class="fl">0</span>.,ϕ,β)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="fu">solve_model_newton</span>(<span class="fl">0</span>.,ϕ,β)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="fu">solve_by_iteration</span>(<span class="fl">0</span>.,ϕ,β)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  0.000099 seconds (157 allocations: 58.250 KiB)
+  0.000251 seconds (2.15 k allocations: 201.031 KiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="66">
+<pre><code>([69.73147518902888 70.96824731388737; 68.46263413289174 67.89546273371974], [0.9107652821657111 0.990549524651413; 0.052475860075290155 0.27729654446688445])</code></pre>
+</div>
+</div>
+<p>In this case Newton’s method is faster. Let’s double check that both methods return the same answer:</p>
+<div id="cell-12" class="cell" data-execution_count="67">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>v0 <span class="op">=</span> <span class="fu">solve_model_newton</span>(<span class="fl">0</span>.,ϕ,β)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>V0,p <span class="op">=</span> <span class="fu">solve_by_iteration</span>(<span class="fl">0</span>.,ϕ,β)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>V1 <span class="op">=</span> <span class="fu">calc_V</span>(v0)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>[V0 V1]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">calc_p</span>(v0)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>[p p1]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="67">
+<pre><code>2×4 Matrix{Float64}:
+ 0.910765   0.99055   0.910765   0.99055
+ 0.0524759  0.277297  0.0524759  0.277297</code></pre>
+</div>
+</div>
+<p>Looks good! We can re-use this code when we get to thinking about estimation later on. To do this we will have to solve the model for different values of <span class="math inline">\(x_{m}\)</span>, but that can be done by using this code and iterating (potentially in parallel) over different values.</p>
+<p>If you play around with parameters, you will see how convergence times may change and that solution methods are not always stable, especially when choice probabilities in equilibrium are very close to one or zero.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -333,12 +635,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

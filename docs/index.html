@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.539">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -245,7 +245,7 @@ div.csl-indent {
 <section id="assessment" class="level2">
 <h2 class="anchored" data-anchor-id="assessment">Assessment</h2>
 <p>There will be 7 problem sets. Your best 5 of these 7 problem sets will be worth 20%. Hence, you can skip two if you want.</p>
-<p>Here is the proposed timeline of due dates. Submissions <strong>must</strong> be made thorugh Canvas as a jupyter notebook or a notebook formatted to html with printed output.</p>
+<p>Here is the proposed timeline of due dates. Submissions <strong>must</strong> be made through Canvas as a notebook (e.g.&nbsp;jupyter or quarto) formatted to html with printed output.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -489,12 +489,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

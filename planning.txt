@@ -1,0 +1,36 @@
+----- Lectures ------
+- define identification
+- linear IV
+- generalized roy model with two examples to show credible inference
+- MTE and LATE and monotonicity?
+- Marschak's maxim with examples
+- 3 prototype models (describe estimation? identification?)
+- Extremum Estimators
+- Simulation:
+    - simulated integrals and estimators
+    - bootstrap
+- Panel Data?
+- Discrete Choice + Dynamic Discrete Choice
+
+
+----- Problem Sets Brainstorm -----
+
+- something with simulation to show discontinuity
+- MLE estimation of search model
+- SMM est of search model
+- MLE estimation of discrete choice
+- simulation est of discrete choice
+- MLE est of entry model
+- SMM est of entry model
+- min dist estimation of income process (data?)
+
+----- Recitation Brainstorm ------
+- LATE and MTE
+- income process estimation
+- demand estimation
+- intro to lifecycle model solution
+- intro to search data (calculate moments)
+- intro to entry exit data (calculate stuff)
+- solution of entry/exit model + simulation of data?
+- bootstrap example
+- simulation example
