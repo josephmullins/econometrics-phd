@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.539">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -466,7 +466,7 @@ Iteration 6, error is 1.4210854715202004e-14</code></pre>
  0.0524759  0.277297  0.0524759  0.277297</code></pre>
 </div>
 </div>
-<p>Looks good! We can re-use this code when we get to thinking about estimation later on. To do this we will have to solve the model for different values of <span class="math inline">\(x_{m}\)</span>, but that can be done by using this code and iterating (potentially in parallel) over different values.</p>
+<p>Looks good! We can re-use this code when we get to thinking about estimation later on. To do this we will have to solve the model for different values of <span class="math inline">\(x_{m}\)</span>, but that can be done by using this code and iterating (potentially in parallel) over different values of <span class="math inline">\(x\)</span>.</p>
 <p>If you play around with parameters, you will see how convergence times may change and that solution methods are not always stable, especially when choice probabilities in equilibrium are very close to one or zero.</p>
 
 
@@ -635,7 +635,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

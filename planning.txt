@@ -34,3 +34,8 @@
 - solution of entry/exit model + simulation of data?
 - bootstrap example
 - simulation example
+
+--- List
+R1: numerical maximization
+R2: search model and entry/exit model solution (?) (+ intro to search data? or likelihood for search model?) 
+R3: std errors for maximum likelihood? 

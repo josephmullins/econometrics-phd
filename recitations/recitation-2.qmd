@@ -1,0 +1,110 @@
+---
+title: "Recitation 2"
+---
+
+## Part 1
+
+Review the code and solution method for the [search model](/models/search-model.ipynb).
+
+## Part 2
+
+Review the code and solution method for the [entry/exit model](/models/entry-exit.ipynb).
+
+## Part 3: CPS data
+
+### Reading the data
+Let's take a look at data from the CPS on wages, employment status, and labor market transitions. Here is code to read in the data:
+
+```{julia}
+using CSV, DataFrames, DataFramesMeta, Statistics
+
+data = CSV.read("../data/cps_00019.csv",DataFrame)
+```
+
+As you can see from the preview of the data, the data is taken from January-March 2018. Here is a quick snippet of code to see how many observations we have on average per person:
+
+```{julia}
+@chain data begin
+    groupby(:CPSIDP)
+    @combine :T = length(:EMPSTAT)
+    @combine :average = mean(:T) :frac_panel = mean(:T.>1)
+end
+```
+
+So we see that more than half of the individuals in this sample can be found in more than one month of the data.
+
+The `@chain` macro comes from the package `DataFramesMeta` and is a convenient syntax for composing operations into one block. For example:
+
+```{julia}
+#| eval: false
+@chain x begin
+    func1(y1)
+    func2(y2)
+    func3(y3)
+end
+```
+
+is equivalent to
+
+```{julia}
+#| eval: false
+func3(func2(func1(x,y1),y2),y3)
+```
+
+### Calculating some moments
+
+You may find the [codebook](/data/CPS-Codebook.html) useful for understanding particular variables. We have already limited the data to individuals who are working (`EMPSTAT`=10), have a job but did not work last week (`EMPSTAT`==12), or are unemployed (`EMPSTAT`==21).
+
+Suppose we wanted to use the panel dimension to measure transition rates. Here is a simple way to do that by simply measuring transitions between January and Feburary.
+
+```{julia}
+data[!,:E] .= data.EMPSTAT.<21 #<- code the employment variable
+
+data_jan = @chain data begin
+    @subset :MONTH.==1
+    @select :CPSIDP :AGE :SEX :EDUC :RACE :E
+    @rename :E_lag = :E
+end
+
+data_merged = @chain data begin
+    @subset :MONTH.==2
+    @select :CPSIDP :E
+    innerjoin(data_jan,on=:CPSIDP)
+end
+
+```
+
+So now we can calculate the overall transition rate out of unemployment:
+
+```{julia}
+
+@combine data_merged begin
+    :EU =  1-mean(:E[:E_lag.==1])
+    :UE = mean(:E[:E_lag.==0])
+end 
+
+```
+
+So here we're estimating a very low separation rate and a pretty high hazard rate out of unemployment.
+
+### Observable heterogeneity
+
+Next we'll define a very simple education classification (Bachelor's degree or not) and race classification (white vs non-white), and use `groupby` to calculate rates separately by demographics:
+
+```{julia}
+
+@chain data_merged begin
+    @transform begin
+        :bachelors = :EDUC.>=111
+        :nonwhite = :RACE.!=100 
+    end
+    groupby([:bachelors,:nonwhite,:SEX])
+    @combine begin
+       :EU =  1-mean(:E[:E_lag.==1])
+       :UE = mean(:E[:E_lag.==0])
+    end 
+end
+
+```
+
+What do these differences in transition rates tell you about how we should extend the simple model with homogenous parameters?
