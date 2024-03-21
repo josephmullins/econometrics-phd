@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.539">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -286,7 +286,7 @@ V(x,a,a') = \mathbb{E}_{\epsilon,\epsilon'}\max\{u_{1}(x,a,j^*(x,a,a',\epsilon')
 \end{split}
 \]</span></p>
 <p>Define the optimal choice probability in equilibrium as:</p>
-<p><span class="math display">\[ p(x) = \int_{\epsilon}j^*(x,a,a')dF(\epsilon') \]</span></p>
+<p><span class="math display">\[ p(x,a,a') = \int_{\epsilon}j^*(x,a,a')dF(\epsilon') \]</span></p>
 <p>With this in hand we can simplify the recursive formulation slightly:</p>
 <p><span class="math display">\[
 \begin{split}
@@ -319,12 +319,12 @@ a \phi_{4} + \epsilon_{0} + \beta [p(x,a',a)V(x,0,1) + (1-p(x,a',a))V(x,0,0)]\}
 </section>
 <section id="equilibrium" class="level2">
 <h2 class="anchored" data-anchor-id="equilibrium">Equilibrium</h2>
-<p>The solution concept for this model is <em>Markov Perfect Equilibrium</em>. Fixing the market <span class="math inline">\(x\)</span>, here the equilibrium be characterized as a fixed point in the value function <span class="math inline">\(V\)</span>. In words, equilibrium is summarized by a <span class="math inline">\(V\)</span> that:</p>
+<p>The solution concept for this model is <em>Markov Perfect Equilibrium</em>. Fixing the market <span class="math inline">\(x\)</span>, here the equilibrium be characterized as a fixed point in the value function <span class="math inline">\(V\)</span> and choice probabilities, <span class="math inline">\(p\)</span>. In words, equilibrium is summarized by a <span class="math inline">\(V\)</span> and a <span class="math inline">\(p\)</span> such that:</p>
 <ol type="1">
-<li>Fixing choice probabilities <span class="math inline">\(p\)</span>, is a fixed point in the recursive formulation of values; and</li>
-<li><span class="math inline">\(p\)</span> is also the optimal choice probability given <span class="math inline">\(V\)</span>.</li>
+<li>Given <span class="math inline">\(p\)</span>, <span class="math inline">\(V\)</span> is a fixed point in the recursive formulation of values; and</li>
+<li><span class="math inline">\(p\)</span> are the optimal choice probabilities of each firm given <span class="math inline">\(V\)</span> and given the other firm’s choice probabilities are <span class="math inline">\(p\)</span>.</li>
 </ol>
-<p>How should we solve for this symmetric equilibrium? We could try iterating on <span class="math inline">\(V\)</span> as follows:</p>
+<p>How should we solve for this symmetric equilibrium? We could try iterating on <span class="math inline">\(V\)</span> and <span class="math inline">\(p\)</span> as follows:</p>
 <div id="cell-6" class="cell" data-execution_count="64">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># V is a 2x2 array with values</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p is a 2x2 array with choice probabilities</span></span>
@@ -377,7 +377,7 @@ Iteration 700, error is 1.538467131467769e-10</code></pre>
 </div>
 </div>
 <p>This seems to work! But notice that it takes a while for the iteration to converge. Also, unlike the single agent case, there is no guarantee that this iteration is always a contraction.</p>
-<p>We can also solve this model relatively easily using Newton’s Method and the magic of Automatic Differentiation. To do this, we’ll solve over the pair of choice-specific values <span class="math inline">\(v_{0}\)</span> and <span class="math inline">\(v_{1}\)</span> and store these values as a vector instead of an array:</p>
+<p>We can also solve this model relatively easily using Newton’s Method and the magic of Automatic Differentiation. To do this, we’ll solve over the pair of choice-specific values <span class="math inline">\(v_{0}\)</span> and <span class="math inline">\(v_{1}\)</span> (these encode both values and choice probabilities) and store these values as a vector instead of an array:</p>
 <div id="cell-8" class="cell" data-execution_count="65">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ForwardDiff</span>, <span class="bu">LinearAlgebra</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -460,10 +460,8 @@ Iteration 6, error is 1.4210854715202004e-14</code></pre>
 <div id="cell-12" class="cell" data-execution_count="67">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>v0 <span class="op">=</span> <span class="fu">solve_model_newton</span>(<span class="fl">0</span>.,ϕ,β)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>V0,p <span class="op">=</span> <span class="fu">solve_by_iteration</span>(<span class="fl">0</span>.,ϕ,β)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>V1 <span class="op">=</span> <span class="fu">calc_V</span>(v0)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>[V0 V1]</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">calc_p</span>(v0)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>[p p1]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">calc_p</span>(v0)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>[p p1]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="67">
 <pre><code>2×4 Matrix{Float64}:
  0.910765   0.99055   0.910765   0.99055
@@ -639,7 +637,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
