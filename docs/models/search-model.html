@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.539">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -198,6 +198,14 @@ window.Quarto = {
     <a class="dropdown-item" href="../assignments/Assignment-1.html">
  <span class="dropdown-text">Assignment 1</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-2.html">
+ <span class="dropdown-text">Assignment 2: Setup for Estimating a Search Model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-3.html">
+ <span class="dropdown-text">Assignment 3: Estimating a Search Model</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -285,26 +293,27 @@ window.Quarto = {
 <section id="model-solution" class="level2">
 <h2 class="anchored" data-anchor-id="model-solution">Model solution</h2>
 <p>In class we showed that the optimal decision rule of the worker is characterized by a reservation wage. We derived the reservation wage equation:</p>
-<p><span class="math display">\[ w^* = b + \beta\lambda\int_{w^*}\frac{1-F_{W}(w)}{1 + \beta(1-\delta)}dw \]</span></p>
+<p><span class="math display">\[ w^* = b + \beta\lambda\int_{w^*}\frac{1-F_{W}(w)}{1 - \beta(1-\delta)}dw \]</span></p>
 <p>and we characterized the steady state rate of unemployment as:</p>
 <p><span class="math display">\[ P[E = 0] = \frac{h}{h+\delta} \]</span></p>
 <p>where <span class="math inline">\(h = \lambda(1-F_{W}(w^*))\)</span> is the rate at which workers exit unemployment.</p>
 <p>Similarly, we showed that the steady state fraction of unemployment durations <span class="math inline">\(t\)</span> is</p>
 <p><span class="math display">\[ P[t_{U}=t] = h(1-h)^{t} \]</span></p>
 <p>Let’s write some code to solve the reservation wage equation, starting with code to evalute the equation below:</p>
-<div id="cell-1" class="cell" data-execution_count="7">
+<div id="cell-1" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Distributions</span>, <span class="bu">QuadGK</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># this function evaluates the reservation wage equation</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">res_wage</span>(wres ; b,λ,δ,β,F<span class="op">::</span><span class="dt">Distribution</span>) <span class="op">=</span> wres <span class="op">-</span> b <span class="op">-</span> β <span class="op">*</span> λ <span class="op">*</span> <span class="fu">quadgk</span>(<span class="fu">x-&gt;1-cdf</span>(F,x),wres,<span class="cn">Inf</span>)[<span class="fl">1</span>]</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pars <span class="op">=</span> (;b <span class="op">=</span> <span class="fl">0.5</span>,λ <span class="op">=</span> <span class="fl">0.5</span>,δ <span class="op">=</span> <span class="fl">0.03</span>,β <span class="op">=</span> <span class="fl">0.95</span>,F <span class="op">=</span> <span class="fu">LogNormal</span>(<span class="fl">1</span>,<span class="fl">1</span>))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">res_wage</span>(<span class="fl">1</span>. ; pars<span class="op">...</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>-1.1807330206199615</code></pre>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dS</span>(x ; F,β,δ) <span class="op">=</span> (<span class="fl">1</span><span class="fu">-cdf</span>(F,x)) <span class="op">/</span> (<span class="fl">1</span><span class="fu">-β*</span>(<span class="fl">1</span><span class="op">-</span>δ)) <span class="co">#&lt;- this function defines S'(x)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">res_wage</span>(wres ; b,λ,δ,β,F<span class="op">::</span><span class="dt">Distribution</span>) <span class="op">=</span> wres <span class="op">-</span> b <span class="op">-</span> β <span class="op">*</span> λ <span class="op">*</span> <span class="fu">quadgk</span>(<span class="fu">x-&gt;dS</span>(x;F,β,δ),wres,<span class="cn">Inf</span>)[<span class="fl">1</span>]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pars <span class="op">=</span> (;b <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>.,λ <span class="op">=</span> <span class="fl">0.45</span>,δ <span class="op">=</span> <span class="fl">0.03</span>,β <span class="op">=</span> <span class="fl">0.99</span>,F <span class="op">=</span> <span class="fu">LogNormal</span>(<span class="fl">1</span>,<span class="fl">1</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">res_wage</span>(<span class="fl">1</span>. ; pars<span class="op">...</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>-33.70656559385876</code></pre>
 </div>
 </div>
 <p>The most straightforward way to solve for the reservation wage would be to use a root-finding method here. Since we have used <code>Optim</code> already, let’s just go ahead and use that package:</p>
-<div id="cell-3" class="cell" data-execution_count="12">
+<div id="cell-3" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Optim</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve_res_wage</span>(pars)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    (;F) <span class="op">=</span> pars</span>
@@ -314,8 +323,8 @@ window.Quarto = {
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r.minimizer</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>rwage <span class="op">=</span> <span class="fu">solve_res_wage</span>(pars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>1.873687807092726</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>7.2471320591661295</code></pre>
 </div>
 </div>
 
@@ -485,12 +494,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {
