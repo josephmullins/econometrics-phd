@@ -20,6 +20,8 @@ website:
       - text: Assignments
         menu:
           - assignments/Assignment-1.ipynb
+          - assignments/Assignment-2.ipynb
+          - assignments/Assignment-3.ipynb
 
 format:
   html:

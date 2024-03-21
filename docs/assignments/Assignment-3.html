@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Applied Econometrics - Syllabus</title>
+<title>Applied Econometrics - Assignment 3: Estimating a Search Model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,45 +20,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -88,7 +68,7 @@ div.csl-indent {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -98,7 +78,7 @@ div.csl-indent {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Applied Econometrics</span>
     </a>
   </div>
@@ -109,7 +89,7 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -118,11 +98,11 @@ div.csl-indent {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-recitations">    
         <li>
-    <a class="dropdown-item" href="./recitations/recitation-1.html">
+    <a class="dropdown-item" href="../recitations/recitation-1.html">
  <span class="dropdown-text">Introduction to Julia, Automatic Differentiation and Optimization</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./recitations/recitation-2.html">
+    <a class="dropdown-item" href="../recitations/recitation-2.html">
  <span class="dropdown-text">Recitation 2</span></a>
   </li>  
     </ul>
@@ -133,15 +113,15 @@ div.csl-indent {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-models">    
         <li>
-    <a class="dropdown-item" href="./models/search-model.html">
+    <a class="dropdown-item" href="../models/search-model.html">
  <span class="dropdown-text">Simple Search Model</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./models/entry-exit.html">
+    <a class="dropdown-item" href="../models/entry-exit.html">
  <span class="dropdown-text">Symmetric Duopoly Model of Entry/Exit</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./models/savings.html">
+    <a class="dropdown-item" href="../models/savings.html">
  <span class="dropdown-text">Life-Cycle Savings Model</span></a>
   </li>  
     </ul>
@@ -152,15 +132,15 @@ div.csl-indent {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-assignments">    
         <li>
-    <a class="dropdown-item" href="./assignments/Assignment-1.html">
+    <a class="dropdown-item" href="../assignments/Assignment-1.html">
  <span class="dropdown-text">Assignment 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./assignments/Assignment-2.html">
+    <a class="dropdown-item" href="../assignments/Assignment-2.html">
  <span class="dropdown-text">Assignment 2: Setup for Estimating a Search Model</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./assignments/Assignment-3.html">
+    <a class="dropdown-item" href="../assignments/Assignment-3.html">
  <span class="dropdown-text">Assignment 3: Estimating a Search Model</span></a>
   </li>  
     </ul>
@@ -181,16 +161,14 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#topics" id="toc-topics" class="nav-link active" data-scroll-target="#topics">Topics</a>
+  <li><a href="#assignment-3-estimating-a-search-model" id="toc-assignment-3-estimating-a-search-model" class="nav-link active" data-scroll-target="#assignment-3-estimating-a-search-model">Assignment 3: Estimating a Search Model</a>
   <ul class="collapse">
-  <li><a href="#identification-credible-inference-and-marschaks-maxim" id="toc-identification-credible-inference-and-marschaks-maxim" class="nav-link" data-scroll-target="#identification-credible-inference-and-marschaks-maxim">Identification, Credible Inference, and Marschak’s Maxim</a></li>
-  <li><a href="#extremum-estimators" id="toc-extremum-estimators" class="nav-link" data-scroll-target="#extremum-estimators">Extremum Estimators</a></li>
-  <li><a href="#simulation-methods" id="toc-simulation-methods" class="nav-link" data-scroll-target="#simulation-methods">Simulation Methods</a></li>
-  <li><a href="#panel-data-methods" id="toc-panel-data-methods" class="nav-link" data-scroll-target="#panel-data-methods">Panel Data Methods</a></li>
-  <li><a href="#discrete-choice-and-dynamic-discrete-choice" id="toc-discrete-choice-and-dynamic-discrete-choice" class="nav-link" data-scroll-target="#discrete-choice-and-dynamic-discrete-choice">Discrete Choice and Dynamic Discrete Choice</a></li>
+  <li><a href="#part-1" id="toc-part-1" class="nav-link" data-scroll-target="#part-1">Part 1</a>
+  <ul class="collapse">
+  <li><a href="#hint-2" id="toc-hint-2" class="nav-link" data-scroll-target="#hint-2">Hint 2</a></li>
   </ul></li>
-  <li><a href="#assessment" id="toc-assessment" class="nav-link" data-scroll-target="#assessment">Assessment</a></li>
-  <li><a href="#office-hours" id="toc-office-hours" class="nav-link" data-scroll-target="#office-hours">Office Hours</a></li>
+  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">Part 2</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -199,7 +177,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Syllabus</h1>
+<h1 class="title">Assignment 3: Estimating a Search Model</h1>
 </div>
 
 
@@ -216,130 +194,26 @@ div.csl-indent {
 </header>
 
 
-<p>Welcome to this course! Here you’ll find details on the syllabus.</p>
-<section id="topics" class="level2">
-<h2 class="anchored" data-anchor-id="topics">Topics</h2>
-<section id="identification-credible-inference-and-marschaks-maxim" class="level3">
-<h3 class="anchored" data-anchor-id="identification-credible-inference-and-marschaks-maxim">Identification, Credible Inference, and Marschak’s Maxim</h3>
-<p>We formally define identification and discuss (via examples) what people really mean when they talk about identification and <strong>credible inference</strong>. We use the <strong>Generalized Roy Model</strong> to compare identification via functional form to nonparametric identification.</p>
-<p>We introduce <strong>Marschak’s Maxim</strong> as a guide for doing empirical model-based research.</p>
-<section id="reading" class="level4">
-<h4 class="anchored" data-anchor-id="reading">Reading</h4>
-<p>The two survey articles by <span class="citation" data-cites="Keane2010">Keane (<a href="#ref-Keane2010" role="doc-biblioref">2010</a>)</span> (<a href="./papers/KeaneJEP2010.pdf">link</a>) and <span class="citation" data-cites="AngristPischke2010">Angrist and Pischke (<a href="#ref-AngristPischke2010" role="doc-biblioref">2010</a>)</span> (<a href="./papers/TheCredibilityRevolutionInEmpiricalEconomics_AngristPischke_JEP_2010.pdf">link</a>) - although aging - provide two important perspectives on the issues of credible inference in economics. <span class="citation" data-cites="LowMeghir2017">Low and Meghir (<a href="#ref-LowMeghir2017" role="doc-biblioref">2017</a>)</span> <a href="./papers/TheUseOfStructuralModelsInEconometrics_LowMeghir_JEP_2017.pdf">provide</a> a nice review of the advantages of the structural approach.</p>
-<p><a href="./papers/Marschak1953.pdf">The original paper</a> by <span class="citation" data-cites="Marschak1953">Marschak (<a href="#ref-Marschak1953" role="doc-biblioref">1953</a>)</span> may be of interest. <span class="citation" data-cites="HeckmanVytlacil2007">Heckman and Vytlacil (<a href="#ref-HeckmanVytlacil2007" role="doc-biblioref">2007</a>)</span> provide a <a href="./papers/HeckmanVytlacilHandbook2007.pdf">nice discussion</a> of Marschak’s Maxim in the context of policy evaluation. They introduce <span class="citation" data-cites="HeckmanVytlacil2005 Carneiro2011">(<a href="#ref-HeckmanVytlacil2005" role="doc-biblioref">Heckman and Vytlacil 2005</a>; <a href="#ref-Carneiro2011" role="doc-biblioref">Carneiro, Heckman, and Vytlacil 2011</a>)</span> the <em>Marginal Treatment Effect</em> as a tool for thinking about quasi-experimental estimators and policy evaluation.</p>
+<section id="assignment-3-estimating-a-search-model" class="level1">
+<h1>Assignment 3: Estimating a Search Model</h1>
+<p>You are going to build on the work you did last week so you will need all of that code.</p>
+<section id="part-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
+<p>Estimate the parameters of the model using maximum likelihood on a single month of the CPS data.</p>
+<section id="hint-2" class="level3">
+<h3 class="anchored" data-anchor-id="hint-2">Hint 2</h3>
+<p>If you are struggling with executing this, try first estimating the model with homogenous parameters and see if that works. In this case you will know from class that some of the MLE estimates have an analytic solution to compare to.</p>
 </section>
 </section>
-<section id="extremum-estimators" class="level3">
-<h3 class="anchored" data-anchor-id="extremum-estimators">Extremum Estimators</h3>
-<p>We introduce the concept of an <strong>extremum estimator</strong> and discuss conditions under which this estimator has good asymptotic properties, with specific applications to <strong>maximum likelihood</strong>, <strong>minimum distance</strong>, and <strong>generalized method of moments</strong> estimators. We discuss optimal weighting of the relative efficiency properties of these estimators.</p>
-<section id="reading-1" class="level4">
-<h4 class="anchored" data-anchor-id="reading-1">Reading</h4>
-<p>This section relies heavily on the <span class="citation" data-cites="newey1994large">Newey and McFadden (<a href="#ref-newey1994large" role="doc-biblioref">1994</a>)</span> chapter of the Handbook of Econometrics. Although not necessary, <span class="citation" data-cites="hayashi2011econometrics">Hayashi (<a href="#ref-hayashi2011econometrics" role="doc-biblioref">2011</a>)</span> provides a very thorough treatment of all of these estimators.</p>
-</section>
-</section>
-<section id="simulation-methods" class="level3">
-<h3 class="anchored" data-anchor-id="simulation-methods">Simulation Methods</h3>
-<p>We introduce simulation methods for the estimation of structural models, including the <strong>Simulated Method of Moments</strong>, <strong>Indirect Inference</strong>, and the <strong>Bootstrap</strong> method for inference.</p>
-<section id="reading-2" class="level4">
-<h4 class="anchored" data-anchor-id="reading-2">Reading</h4>
-<p>You may find the <span class="citation" data-cites="horowitz2001bootstrap">Horowitz (<a href="#ref-horowitz2001bootstrap" role="doc-biblioref">2001</a>)</span> handbook chapter useful. <span class="citation" data-cites="cameron2005microeconometrics">Cameron and Trivedi (<a href="#ref-cameron2005microeconometrics" role="doc-biblioref">2005</a>)</span> provide a useful discussion of simulation-based estimators in their textbook.</p>
-</section>
-</section>
-<section id="panel-data-methods" class="level3">
-<h3 class="anchored" data-anchor-id="panel-data-methods">Panel Data Methods</h3>
-<p>We talk about individual heterogeneity and discuss the use of panel data for detecting individual heterogeneity in data.</p>
-</section>
-<section id="discrete-choice-and-dynamic-discrete-choice" class="level3">
-<h3 class="anchored" data-anchor-id="discrete-choice-and-dynamic-discrete-choice">Discrete Choice and Dynamic Discrete Choice</h3>
-<p>We review some of the formalities of discrete choice models and consider estimation of these models in the presence of <strong>dynamics</strong>.</p>
-</section>
-</section>
-<section id="assessment" class="level2">
-<h2 class="anchored" data-anchor-id="assessment">Assessment</h2>
-<p>There will be 7 problem sets. Your best 5 of these 7 problem sets will be worth 20%. Hence, you can skip two if you want.</p>
-<p>Here is the proposed timeline of due dates. Submissions <strong>must</strong> be made through Canvas as a notebook (e.g.&nbsp;jupyter or quarto) formatted to html with printed output.</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Assignment</th>
-<th>Due Date</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="./assignments/Assignment-1.html">Assignment 1</a></td>
-<td>March 22</td>
-</tr>
-<tr class="even">
-<td>Assignment 2</td>
-<td>March 29</td>
-</tr>
-<tr class="odd">
-<td>Assignment 3</td>
-<td>April 5</td>
-</tr>
-<tr class="even">
-<td>Assignment 4</td>
-<td>April 12</td>
-</tr>
-<tr class="odd">
-<td>Assignment 5</td>
-<td>April 19</td>
-</tr>
-<tr class="even">
-<td>Assignment 6</td>
-<td>April 26</td>
-</tr>
-<tr class="odd">
-<td>Assignment 7</td>
-<td>May 3</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="office-hours" class="level2">
-<h2 class="anchored" data-anchor-id="office-hours">Office Hours</h2>
-<p>I will provide a link on Canvas to sign up for my weekly office hours.</p>
-
+<section id="part-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-2">Part 2</h2>
+<p>Write code to calculate the standard errors and create a table that reports parameter estimates with standard errors. Remember from class that you can do this one of two different ways.</p>
 
 
 </section>
+</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-AngristPischke2010" class="csl-entry" role="listitem">
-Angrist, Joshua D., and Jörn-Steffen Pischke. 2010. <span>“The Credibility Revolution in Empirical Economics: How Better Research Design Is Taking the Con Out of Econometrics.”</span> <em>Journal of Economic Perspectives</em> 24 (2).
-</div>
-<div id="ref-cameron2005microeconometrics" class="csl-entry" role="listitem">
-Cameron, A Colin, and Pravin K Trivedi. 2005. <em>Microeconometrics: Methods and Applications</em>. Cambridge university press.
-</div>
-<div id="ref-Carneiro2011" class="csl-entry" role="listitem">
-Carneiro, P., J. J. Heckman, and E. J. Vytlacil. 2011. <span>“Estimating Marginal Returns to Education.”</span> <em>American Economic Review</em> 101 (October): 2754–81. <a href="http://www.nber.org/papers/w16474">http://www.nber.org/papers/w16474</a>.
-</div>
-<div id="ref-hayashi2011econometrics" class="csl-entry" role="listitem">
-Hayashi, Fumio. 2011. <em>Econometrics</em>. Princeton University Press.
-</div>
-<div id="ref-HeckmanVytlacil2005" class="csl-entry" role="listitem">
-Heckman, James, and Edward Vytlacil. 2005. <span>“<span class="nocase">Structural equations, treatment effects, and econometric policy evaluation</span>.”</span> <em>Econometrica</em> 73 (3): 669–738.
-</div>
-<div id="ref-HeckmanVytlacil2007" class="csl-entry" role="listitem">
-———. 2007. <span>“Chapter 70 Econometric Evaluation of Social Programs, Part i: Causal Models, Structural Models and Econometric Policy Evaluation.”</span> In, edited by James J. Heckman and Edward E. Leamer, 6:4779–874. Handbook of Econometrics. Elsevier. https://doi.org/<a href="https://doi.org/10.1016/S1573-4412(07)06070-9">https://doi.org/10.1016/S1573-4412(07)06070-9</a>.
-</div>
-<div id="ref-horowitz2001bootstrap" class="csl-entry" role="listitem">
-Horowitz, Joel L. 2001. <span>“The Bootstrap.”</span> In <em>Handbook of Econometrics</em>, 5:3159–3228. Elsevier.
-</div>
-<div id="ref-Keane2010" class="csl-entry" role="listitem">
-Keane, Michael P. 2010. <span>“A Structural Perspective on the Experimentalist School.”</span> <em>Journal of Economic Perspectives</em> 24 (2).
-</div>
-<div id="ref-LowMeghir2017" class="csl-entry" role="listitem">
-Low, Hamish, and Costas Meghir. 2017. <span>“The Use of Structural Models in Econometrics.”</span> <em>Journal of Economic Perspectives</em> 31 (2).
-</div>
-<div id="ref-Marschak1953" class="csl-entry" role="listitem">
-Marschak, Jacob. 1953. <span>“Economic Measurements for Policy and Prediction.”</span> In <em>Studies in Econometric Method</em>, edited by W. Hood and C. Koopmans. John Wiley &amp; Sons.
-</div>
-<div id="ref-newey1994large" class="csl-entry" role="listitem">
-Newey, Whitney K, and Daniel McFadden. 1994. <span>“Large Sample Estimation and Hypothesis Testing.”</span> <em>Handbook of Econometrics</em> 4: 2111–2245.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

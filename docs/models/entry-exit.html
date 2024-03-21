@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.4.539">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -198,6 +198,14 @@ window.Quarto = {
     <a class="dropdown-item" href="../assignments/Assignment-1.html">
  <span class="dropdown-text">Assignment 1</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-2.html">
+ <span class="dropdown-text">Assignment 2: Setup for Estimating a Search Model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-3.html">
+ <span class="dropdown-text">Assignment 3: Estimating a Search Model</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -286,8 +294,8 @@ V(x,a,a') = \mathbb{E}_{\epsilon,\epsilon'}\max\{u_{1}(x,a,j^*(x,a,a',\epsilon')
 \end{split}
 \]</span></p>
 <p>Define the optimal choice probability in equilibrium as:</p>
-<p><span class="math display">\[ p(x,a,a') = \int_{\epsilon}j^*(x,a,a')dF(\epsilon') \]</span></p>
-<p>With this in hand we can simplify the recursive formulation slightly:</p>
+<p><span class="math display">\[ p(x,a,a') = \int_{\epsilon}j^*(x,a,a',\epsilon)dF(\epsilon) \]</span></p>
+<p>With this in hand we can integrate out the other firm’s shocks <span class="math inline">\(\epsilon\)</span>’ to get:</p>
 <p><span class="math display">\[
 \begin{split}
 V(x,a,a') = \mathbb{E}_{\epsilon}\max\{\phi_{0}+\phi_{1}x - \phi_{2}p(x,a',a) +\epsilon_{1} + \beta [p(x,a',a)V(x,1,1) + (1-p(x,a',a))V(x,1,0)], \\
@@ -637,12 +645,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
+      return note.innerHTML;
     }
   }
   for (var i=0; i<xrefs.length; i++) {

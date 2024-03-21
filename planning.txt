@@ -5,15 +5,48 @@
 - MTE and LATE and monotonicity?
 - Marschak's maxim with examples
 - 3 prototype models (describe estimation? identification?)
-- Extremum Estimators
-- Simulation:
+- Extremum Estimators:
+    - Introduce MLE estimator of search model
+    - Introduce MLE estimator of probit model
+    - Introduce general setup.
+    - What are properties?
+    - from here, follow the slides (maybe skipping proofs)
+    - At minimum distance: introduce the savings model (segue into simulation) **
+- Simulation (follow slides but skip the example model there)
+    - how to calculate a moment for the savings model? Could be tricky! (motivate integration by simulation) **
+    - how to get standard errors from two stage estimator? (motivate bootstrap)
     - simulated integrals and estimators
     - bootstrap
-- Panel Data?
+    - For MSL, use joint distribution of wages and assets? Or joint sequences? Would have to work this out. **
+    - Indirect inference (use quantiles as simple example. Pull in entry exit too maybe?) **
+- Panel Data / Unobserved Heterogeneity
+    - Example: separating volatility from true risk in income process. **
+    - Heterogeneity in income risk? How to deal with this? **
+    - Review fixed vs random effects (clustering and standard errors)
+    - Review the Athey and Imbens paper on clustering? **
+    - Use simple diff in diff to illustrate clustering issues.
+    - Discuss: how does unobserved heterogeneity upset our estimators? In terms of initial conditions and state variables. **
+    - Exercise: duration dependence in our CPS data. **
+    - Show inconsistency of panel data estimators (just the one example with lagged dependent variable)
 - Discrete Choice + Dynamic Discrete Choice
+    - Follow notes almost as is. 
+    - Everything looks useful. Could we improve control function example? **
+    - Use GMM when you have endogenous regressors, or do control function approach (example given) ** work out nonparametric approach? would be a good example of nonparametric identification.
+    - Demand model? Go back to unobserved heterogeneity to think about the issue with prices. ***
+    - Repeat selection problem (when Z enters the outcome equation but is endogenous, still selected!) ***
+    - Then Dynamic Discrete Choice with whatever time left.
 
 
 ----- Problem Sets Brainstorm -----
+
+1. Credible inference problem.
+2. Data setup for search model and code log-likelihood.
+3. Estimation of search model and code standard errors.
+3. SMM est of search model. Or min distance?
+4. MLE est of entry exit model? Or we could try matching transition probabilities? |X| x 2 x 2 vector?
+5. SMM est of entry exit model.
+6. Est income process. 
+7. SMM est of savings model.
 
 - something with simulation to show discontinuity
 - MLE estimation of search model
@@ -38,4 +71,5 @@
 --- List
 R1: numerical maximization
 R2: search model and entry/exit model solution (?) (+ intro to search data? or likelihood for search model?) 
-R3: std errors for maximum likelihood? 
+R3: A warning for using auto differentiation + std errors for maximum likelihood.
+R4: Code to simulate from search model.
