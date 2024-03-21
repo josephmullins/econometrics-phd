@@ -108,3 +108,11 @@ end
 ```
 
 What do these differences in transition rates tell you about how we should extend the simple model with homogenous parameters?
+
+## A Disclaimer for IPUMS CPS data
+
+These data are a subsample of the IPUMS CPS data available from cps.ipums.org. Any use of these data should be cited as follows:
+
+  Sarah Flood, Miriam King, Renae Rodgers, Steven Ruggles, J. Robert Warren, Daniel Backman, Annie Chen, Grace Cooper, Stephanie Richards, Megan Schouweiler, and Michael Westberry. IPUMS CPS: Version 11.0 [dataset]. Minneapolis, MN: IPUMS, 2023. <https://doi.org/10.18128/D030.V11.0> 
+
+The CPS data file is intended only for exercises as part of ECON8208. Individuals are not to redistribute the data without permission. Contact <ipums@umn.edu> for redistribution requests. For all other uses of these data, please access data directly via [cps.ipums.org](http://cps.ipums.org/).
