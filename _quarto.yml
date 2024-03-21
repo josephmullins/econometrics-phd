@@ -11,6 +11,7 @@ website:
       - text: Recitations
         menu: 
           - recitations/recitation-1.ipynb
+          - recitations/recitation-2.qmd
       - text: Models
         menu:
           - models/search-model.ipynb
