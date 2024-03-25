@@ -231,10 +231,13 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup:</a></li>
   <li><a href="#part-1" id="toc-part-1" class="nav-link" data-scroll-target="#part-1">Part 1</a></li>
-  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">Part 2</a></li>
+  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">Part 2</a>
+  <ul class="collapse">
+  <li><a href="#hint" id="toc-hint" class="nav-link" data-scroll-target="#hint">Hint:</a></li>
+  </ul></li>
   <li><a href="#part-3" id="toc-part-3" class="nav-link" data-scroll-target="#part-3">Part 3</a>
   <ul class="collapse">
-  <li><a href="#hint-1" id="toc-hint-1" class="nav-link" data-scroll-target="#hint-1">Hint 1</a></li>
+  <li><a href="#hint-1" id="toc-hint-1" class="nav-link" data-scroll-target="#hint-1">Hint</a></li>
   </ul></li>
   <li><a href="#a-disclaimer-for-ipums-cps-data" id="toc-a-disclaimer-for-ipums-cps-data" class="nav-link" data-scroll-target="#a-disclaimer-for-ipums-cps-data">A Disclaimer for IPUMS CPS data</a></li>
   </ul></li>
@@ -607,12 +610,20 @@ window.Quarto = {
 <section id="part-2" class="level2">
 <h2 class="anchored" data-anchor-id="part-2">Part 2</h2>
 <p>Write a function that takes a single observation from the cross-section and calculates the log-likelihood of that observation given the model solution, current parameters, and observables <span class="math inline">\(X_{n}\)</span>.</p>
+<p>Show the output from a function call to prove that it works, then use the <code>@time</code> macro to test how long it takes.</p>
+<section id="hint" class="level3">
+<h3 class="anchored" data-anchor-id="hint">Hint:</h3>
+<p>Relative to your notes in class, you will need to integrate out the measurement error here for wages. Letting <span class="math inline">\(\phi(x;\mu,\sigma)\)</span> be the normal pdf with mean <span class="math inline">\(\mu\)</span> and standard error <span class="math inline">\(\sigma\)</span>, the likelihood of observing a wage <span class="math inline">\(W^{o}\)</span> will be:</p>
+<p><span class="math display">\[ f(W^{o}|E,X) = \int_{w^*}\frac{\phi(\log(w);\mu(X),\sigma(X))}{1-\Phi(\log(w^*);\mu(X),\sigma(X))}\phi(\log(W^{o})-w ; \sigma_{\zeta})dw \]</span></p>
+<p>You will want to use a package like <code>QuadGK</code> to evaluate this integral numerically.</p>
+</section>
 </section>
 <section id="part-3" class="level2">
 <h2 class="anchored" data-anchor-id="part-3">Part 3</h2>
 <p>Write a function that iterates over every observation in the data and calculates the log-likelihood of the data given parameters.</p>
+<p>Show the output from a function call to prove that it works, then use the <code>@time</code> macro to test how long it takes.</p>
 <section id="hint-1" class="level3">
-<h3 class="anchored" data-anchor-id="hint-1">Hint 1</h3>
+<h3 class="anchored" data-anchor-id="hint-1">Hint</h3>
 <p>You may find that these functions work faster if you pull the data you need out of <code>DataFrame</code> format and save it as arrays or vectors with known type. For example, I would recommend creating a flag for missing wage data and a default value for those missing wages, and iterating over those objects:</p>
 <div id="cell-3" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>wage_missing <span class="op">=</span> <span class="fu">ismissing</span>.(data.wage)</span>
