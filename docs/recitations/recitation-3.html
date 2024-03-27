@@ -168,6 +168,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../recitations/recitation-2.html">
  <span class="dropdown-text">Recitation 2</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../recitations/recitation-3.html">
+ <span class="dropdown-text">Recitation 3</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -265,10 +269,10 @@ window.Quarto = {
 <p>In this recitation we’ll do some maximum likelihood exercises using the simple probit model. First let’s write code to simulate data from this model and calculate the likelihood of the data given a set of parameters.</p>
 <p>Recall that the probit model can be written as:</p>
 <p><span class="math display">\[ Y_{n} = \mathbf{1}\{X_{n}\beta - \epsilon_{n} \geq 0 \},\ \epsilon\sim \mathcal{N}(0,1) \]</span></p>
-<p>So it will be simple to simulate data from this model. We’ll assume that <span class="math inline">\(X_{n} = [1 X_{n,1} X_{n,2}]\)</span> where each <span class="math inline">\(X_{n,j}\)</span> is distributed as a standard normal.</p>
+<p>So it will be simple to simulate data from this model. We’ll assume that <span class="math inline">\(X_{n} = [1\ X_{n,1}\ X_{n,2}]\)</span> where each <span class="math inline">\(X_{n,j}\)</span> is distributed as a standard normal.</p>
 <p>For no good reason other than that we want to explore the issues later on, suppose that the parameters <span class="math inline">\(\beta_{1},\beta_{2},\beta_{3}\)</span> are a function of deeper structural parameters <span class="math inline">\(\gamma\)</span>:</p>
 <p><span class="math display">\[ \beta_{1} = \exp(\gamma_{1}+\gamma_{2}), \beta_{2} = \gamma_{2}, \beta_{3} = \gamma_{1} \]</span></p>
-<p>So our objective is to simply</p>
+<p>Below is code for simulating the data and calculating the log-likelihood given <span class="math inline">\(\beta\)</span>.</p>
 <div id="cell-1" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Distributions</span>, <span class="bu">ForwardDiff</span>, <span class="bu">Optim</span>, <span class="bu">Random</span>, <span class="bu">LinearAlgebra</span>, <span class="bu">Plots</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -437,20 +441,21 @@ Closest candidates are:
 </section>
 <section id="monte-carlo-validation" class="level2">
 <h2 class="anchored" data-anchor-id="monte-carlo-validation">Monte-Carlo Validation</h2>
-<p>Let’s validate the estimates using a monte-carlo simulation:</p>
+<p>Let’s validate the estimated variances using a monte-carlo simulation:</p>
 <div id="cell-19" class="cell" data-execution_count="71">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">monte_carlo</span>(num_trials,γ,N)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    γ_sim <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">2</span>,num_trials)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b <span class="kw">in</span> <span class="fu">axes</span>(γ_sim,<span class="fl">2</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        Y,X <span class="op">=</span> <span class="fu">simulate_probit</span>(β,N)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> <span class="fu">optimize</span>(<span class="fu">x-&gt;-log_likelihood</span>(Y,X,<span class="fu">get_β_sensible</span>(x)),γ,<span class="fu">Newton</span>(),autodiff<span class="op">=:</span>forward)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        γ_sim[<span class="op">:</span>,b] <span class="op">=</span> r.minimizer</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> γ_sim</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>γ_sim <span class="op">=</span> <span class="fu">monte_carlo</span>(<span class="fl">200</span>,γ,N)</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>var_sim <span class="op">=</span> <span class="fu">cov</span>(γ_sim<span class="op">'</span>)</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>se_sim <span class="op">=</span> <span class="fu">sqrt</span>.(<span class="fu">diag</span>(var_sim))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    β <span class="op">=</span> <span class="fu">get_β_sensible</span>(γ)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b <span class="kw">in</span> <span class="fu">axes</span>(γ_sim,<span class="fl">2</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        Y,X <span class="op">=</span> <span class="fu">simulate_probit</span>(β,N)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> <span class="fu">optimize</span>(<span class="fu">x-&gt;-log_likelihood</span>(Y,X,<span class="fu">get_β_sensible</span>(x)),γ,<span class="fu">Newton</span>(),autodiff<span class="op">=:</span>forward)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        γ_sim[<span class="op">:</span>,b] <span class="op">=</span> r.minimizer</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> γ_sim</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>γ_sim <span class="op">=</span> <span class="fu">monte_carlo</span>(<span class="fl">200</span>,γ,N)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>var_sim <span class="op">=</span> <span class="fu">cov</span>(γ_sim<span class="op">'</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>se_sim <span class="op">=</span> <span class="fu">sqrt</span>.(<span class="fu">diag</span>(var_sim))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="71">
 <pre><code>2-element Vector{Float64}:
  0.02941598344758601
@@ -467,21 +472,22 @@ Closest candidates are:
 </section>
 <section id="exercise-2" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-2">Exercise 2</h3>
-<p>Suppose we keep the same data-generating process, but that we <strong>misspecify</strong> the model as: <span class="math display">\[ \beta = [\gamma_{1}+\gamma_{2},\ \gamma_{1},\ \gamma_{2}] \]</span> The monte-carlo simulation below shows that the estimates of this misspecified model are still approximately normal. Which assumption is now violated and what formula for the asymptotic variance should we use instead?</p>
+<p>Suppose we keep the same data-generating process, but that we <strong>misspecify</strong> the model as: <span class="math display">\[ \beta = [\gamma_{1}+\gamma_{2},\ \gamma_{1},\ \gamma_{2}] \]</span> The monte-carlo simulation below shows that the estimates of this misspecified model are still approximately normal. Which assumption is now violated and what formula for the asymptotic variance should we use instead for this pseudo-likelihood?</p>
 <div id="cell-21" class="cell" data-execution_count="76">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_β_misspecified</span>(γ) <span class="op">=</span> [γ[<span class="fl">1</span>]<span class="op">+</span>γ[<span class="fl">2</span>],γ[<span class="fl">2</span>],γ[<span class="fl">1</span>]]</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">monte_carlo_misspecified</span>(num_trials,γ,N)</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    γ_sim <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">2</span>,num_trials)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b <span class="kw">in</span> <span class="fu">axes</span>(γ_sim,<span class="fl">2</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        Y,X <span class="op">=</span> <span class="fu">simulate_probit</span>(β,N)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> <span class="fu">optimize</span>(<span class="fu">x-&gt;-log_likelihood</span>(Y,X,<span class="fu">get_β_misspecified</span>(x)),γ,<span class="fu">Newton</span>(),autodiff<span class="op">=:</span>forward)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        γ_sim[<span class="op">:</span>,b] <span class="op">=</span> r.minimizer</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> γ_sim</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>γ_sim <span class="op">=</span> <span class="fu">monte_carlo_misspecified</span>(<span class="fl">200</span>,γ,N)</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="fu">histogram</span>(γ_sim[<span class="fl">1</span>,<span class="op">:</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    β <span class="op">=</span> <span class="fu">get_β_sensible</span>(γ)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> b <span class="kw">in</span> <span class="fu">axes</span>(γ_sim,<span class="fl">2</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        Y,X <span class="op">=</span> <span class="fu">simulate_probit</span>(β,N)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> <span class="fu">optimize</span>(<span class="fu">x-&gt;-log_likelihood</span>(Y,X,<span class="fu">get_β_misspecified</span>(x)),γ,<span class="fu">Newton</span>(),autodiff<span class="op">=:</span>forward)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        γ_sim[<span class="op">:</span>,b] <span class="op">=</span> r.minimizer</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> γ_sim</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>γ_sim <span class="op">=</span> <span class="fu">monte_carlo_misspecified</span>(<span class="fl">200</span>,γ,N)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="fu">histogram</span>(γ_sim[<span class="fl">1</span>,<span class="op">:</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="76">
 <div>
 <figure class="figure">
