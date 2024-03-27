@@ -71,5 +71,7 @@
 --- List
 R1: numerical maximization
 R2: search model and entry/exit model solution (?) (+ intro to search data? or likelihood for search model?) 
-R3: A warning for using auto differentiation + std errors for maximum likelihood.
+R3: A warning for using auto differentiation + std errors for maximum likelihood + integration?
 R4: Code to simulate from search model.
+R5: 
+R6: 
