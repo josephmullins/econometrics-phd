@@ -23,7 +23,7 @@ website:
           - assignments/Assignment-1.ipynb
           - assignments/Assignment-2.ipynb
           - assignments/Assignment-3.ipynb
-
+      - data.qmd
 format:
   html:
     theme: cosmo

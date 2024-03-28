@@ -1,0 +1,12 @@
+---
+title: "Datasets"
+bibliography: references.bib
+---
+
+For the practical applications in this course we will use three datasets:
+
+1. [Monthly CPS data](/data/cps_00019.csv) from IPUMS.
+2. [County-level panel data](/data/clubstore_county.csv) on entry and exit of club stores from @dearing-blevins-2024
+3. PSID [panel data](/data/abb_aea_data.csv) on earnings, consumption, and assets from @ABB_2018
+
+These data are included in the [course git repo](https://github.com/josephmullins/econometrics-phd), and you should be able to run all of the example code in this class using the relative file paths in the git repo if you clone it. Alternatively you can download these datasets and save them wherever you wish, but you will need to edit file paths accordingly.

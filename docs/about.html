@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.539">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -90,11 +90,68 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">Syllabus</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-recitations" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Recitations</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-recitations">    
+        <li>
+    <a class="dropdown-item" href="./recitations/recitation-1.html">
+ <span class="dropdown-text">Introduction to Julia, Automatic Differentiation and Optimization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./recitations/recitation-2.html">
+ <span class="dropdown-text">Recitation 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./recitations/recitation-3.html">
+ <span class="dropdown-text">Recitation 3</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-models" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Models</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-models">    
+        <li>
+    <a class="dropdown-item" href="./models/search-model.html">
+ <span class="dropdown-text">Simple Search Model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./models/entry-exit.html">
+ <span class="dropdown-text">Symmetric Duopoly Model of Entry/Exit</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./models/savings.html">
+ <span class="dropdown-text">Life-Cycle Savings Model</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-assignments" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Assignments</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-assignments">    
+        <li>
+    <a class="dropdown-item" href="./assignments/Assignment-1.html">
+ <span class="dropdown-text">Assignment 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./assignments/Assignment-2.html">
+ <span class="dropdown-text">Assignment 2: Setup for Estimating a Search Model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./assignments/Assignment-3.html">
+ <span class="dropdown-text">Assignment 3: Estimating a Search Model</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
-<span class="menu-text">About</span></a>
+    <a class="nav-link" href="./data.html"> 
+<span class="menu-text">Datasets</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -298,7 +355,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

@@ -142,6 +142,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../recitations/recitation-2.html">
  <span class="dropdown-text">Recitation 2</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../recitations/recitation-3.html">
+ <span class="dropdown-text">Recitation 3</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -182,6 +186,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../data.html"> 
+<span class="menu-text">Datasets</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -245,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reading-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="reading-the-data">Reading the data</h3>
 <p>Let’s take a look at data from the CPS on wages, employment status, and labor market transitions. Here is code to read in the data:</p>
-<div id="f62ffb18" class="cell" data-execution_count="1">
+<div id="e287b507" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CSV</span>, <span class="bu">DataFrames</span>, <span class="bu">DataFramesMeta</span>, <span class="bu">Statistics</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> CSV.<span class="fu">read</span>(<span class="st">"../data/cps_00019.csv"</span>,DataFrame)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -961,7 +969,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>As you can see from the preview of the data, the data is taken from January-March 2018. Here is a quick snippet of code to see how many observations we have on average per person:</p>
-<div id="a06e0148" class="cell" data-execution_count="2">
+<div id="9b486841" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> data <span class="cf">begin</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">groupby</span>(<span class="op">:</span>CPSIDP)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@combine</span> <span class="op">:</span>T <span class="op">=</span> <span class="fu">length</span>(<span class="op">:</span>EMPSTAT)</span>
@@ -995,7 +1003,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>So we see that more than half of the individuals in this sample can be found in more than one month of the data.</p>
 <p>The <code>@chain</code> macro comes from the package <code>DataFramesMeta</code> and is a convenient syntax for composing operations into one block. For example:</p>
-<div id="f6d9c7f2" class="cell" data-execution_count="3">
+<div id="340e0f38" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> x <span class="cf">begin</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">func1</span>(y1)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">func2</span>(y2)</span>
@@ -1003,7 +1011,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>is equivalent to</p>
-<div id="bf570716" class="cell" data-execution_count="4">
+<div id="92ec8e82" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">func3</span>(<span class="fu">func2</span>(<span class="fu">func1</span>(x,y1),y2),y3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -1011,7 +1019,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="calculating-some-moments">Calculating some moments</h3>
 <p>You may find the <a href="../data/CPS-Codebook.html">codebook</a> useful for understanding particular variables. We have already limited the data to individuals who are working (<code>EMPSTAT</code>=10), have a job but did not work last week (<code>EMPSTAT</code>==12), or are unemployed (<code>EMPSTAT</code>==21).</p>
 <p>Suppose we wanted to use the panel dimension to measure transition rates. Here is a simple way to do that by simply measuring transitions between January and Feburary.</p>
-<div id="cbecce6d" class="cell" data-execution_count="5">
+<div id="994732b1" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data[!,<span class="op">:</span>E] <span class="op">.=</span> data.EMPSTAT<span class="op">.&lt;</span><span class="fl">21</span> <span class="co">#&lt;- code the employment variable</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_jan <span class="op">=</span> <span class="pp">@chain</span> data <span class="cf">begin</span></span>
@@ -1317,7 +1325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>So now we can calculate the overall transition rate out of unemployment:</p>
-<div id="6f54276b" class="cell" data-execution_count="6">
+<div id="2c0cf61e" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@combine</span> data_merged <span class="cf">begin</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>EU <span class="op">=</span>  <span class="fl">1</span><span class="fu">-mean</span>(<span class="op">:</span>E[<span class="op">:</span>E_lag<span class="op">.==</span><span class="fl">1</span>])</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>UE <span class="op">=</span> <span class="fu">mean</span>(<span class="op">:</span>E[<span class="op">:</span>E_lag<span class="op">.==</span><span class="fl">0</span>])</span>
@@ -1353,7 +1361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="observable-heterogeneity" class="level3">
 <h3 class="anchored" data-anchor-id="observable-heterogeneity">Observable heterogeneity</h3>
 <p>Next we’ll define a very simple education classification (Bachelor’s degree or not) and race classification (white vs non-white), and use <code>groupby</code> to calculate rates separately by demographics:</p>
-<div id="74ec110a" class="cell" data-execution_count="7">
+<div id="b18ddf1a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> data_merged <span class="cf">begin</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@transform</span> <span class="cf">begin</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span>bachelors <span class="op">=</span> <span class="op">:</span>EDUC<span class="op">.&gt;=</span><span class="fl">111</span></span>
