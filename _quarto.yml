@@ -13,6 +13,7 @@ website:
           - recitations/recitation-1.ipynb
           - recitations/recitation-2.qmd
           - recitations/recitation-3.ipynb
+          - recitations/recitation-4.ipynb
       - text: Models
         menu:
           - models/search-model.ipynb

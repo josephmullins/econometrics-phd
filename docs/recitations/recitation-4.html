@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Applied Econometrics - Some Hints and Tricks for Assignment 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Applied Econometrics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-recitations" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Recitations</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-recitations">    
+        <li>
+    <a class="dropdown-item" href="../recitations/recitation-1.html">
+ <span class="dropdown-text">Introduction to Julia, Automatic Differentiation and Optimization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../recitations/recitation-2.html">
+ <span class="dropdown-text">Recitation 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../recitations/recitation-3.html">
+ <span class="dropdown-text">Recitation 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../recitations/recitation-4.html">
+ <span class="dropdown-text">Some Hints and Tricks for Assignment 3</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-models" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Models</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-models">    
+        <li>
+    <a class="dropdown-item" href="../models/search-model.html">
+ <span class="dropdown-text">Simple Search Model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../models/entry-exit.html">
+ <span class="dropdown-text">Symmetric Duopoly Model of Entry/Exit</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../models/savings.html">
+ <span class="dropdown-text">Life-Cycle Savings Model</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-assignments" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Assignments</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-assignments">    
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-1.html">
+ <span class="dropdown-text">Assignment 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-2.html">
+ <span class="dropdown-text">Assignment 2: Setup for Estimating a Search Model</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-3.html">
+ <span class="dropdown-text">Assignment 3: Estimating a Search Model</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../data.html"> 
+<span class="menu-text">Datasets</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#some-hints-and-tricks-for-assignment-3" id="toc-some-hints-and-tricks-for-assignment-3" class="nav-link active" data-scroll-target="#some-hints-and-tricks-for-assignment-3">Some Hints and Tricks for Assignment 3</a>
+  <ul class="collapse">
+  <li><a href="#adapting-code-for-automatic-differentiation" id="toc-adapting-code-for-automatic-differentiation" class="nav-link" data-scroll-target="#adapting-code-for-automatic-differentiation">Adapting Code for Automatic Differentiation</a></li>
+  <li><a href="#re-writing-the-model-solution" id="toc-re-writing-the-model-solution" class="nav-link" data-scroll-target="#re-writing-the-model-solution">Re-writing the model solution</a></li>
+  <li><a href="#cleaning-the-data" id="toc-cleaning-the-data" class="nav-link" data-scroll-target="#cleaning-the-data">Cleaning the Data</a></li>
+  <li><a href="#coding-the-log-likelihood-with-one-set-of-parameters" id="toc-coding-the-log-likelihood-with-one-set-of-parameters" class="nav-link" data-scroll-target="#coding-the-log-likelihood-with-one-set-of-parameters">Coding the log-likelihood with one set of parameters</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Some Hints and Tricks for Assignment 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="some-hints-and-tricks-for-assignment-3" class="level1">
+<h1>Some Hints and Tricks for Assignment 3</h1>
+<section id="adapting-code-for-automatic-differentiation" class="level2">
+<h2 class="anchored" data-anchor-id="adapting-code-for-automatic-differentiation">Adapting Code for Automatic Differentiation</h2>
+<p>Depending on how much you played around last week, you may have found that methods like <code>QuadGK</code> don’t play nicely with automatic differentiation. This is because <code>QuadGK</code> adjusts the number of nodes adaptively.</p>
+<p>One solution is to use a fixed number of nodes and weights with <code>FastGaussQuadrature</code>. Here is a simple example.</p>
+<div id="cell-1" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">FastGaussQuadrature</span>, <span class="bu">QuadGK</span>, <span class="bu">ForwardDiff</span>, <span class="bu">Distributions</span>, <span class="bu">Optim</span>, <span class="bu">Roots</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># a function to integrate using quadrature (default: 10 nodes)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">integrateGL</span>(f,a,b ; num_nodes <span class="op">=</span> <span class="fl">10</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    nodes, weights <span class="op">=</span> <span class="fu">gausslegendre</span>( num_nodes )</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    ∫f <span class="op">=</span> <span class="fl">0</span>.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="fu">eachindex</span>(nodes)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> (a<span class="op">+</span>b)<span class="op">/</span><span class="fl">2</span> <span class="op">+</span> (b <span class="op">-</span> a)<span class="op">/</span><span class="fl">2</span> <span class="op">*</span> nodes[k]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        ∫f <span class="op">+=</span> weights[k] <span class="op">*</span> <span class="fu">f</span>(x)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (b <span class="op">-</span> a)<span class="op">/</span><span class="fl">2</span> <span class="op">*</span> ∫f</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dS</span>(x ; F,β,δ) <span class="op">=</span> (<span class="fl">1</span><span class="fu">-cdf</span>(F,x)) <span class="op">/</span> (<span class="fl">1</span><span class="fu">-β*</span>(<span class="fl">1</span><span class="op">-</span>δ))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">res_wage_1</span>(wres , b,λ,δ,β,F) <span class="op">=</span> wres <span class="op">-</span> b <span class="op">-</span> β <span class="op">*</span> λ <span class="op">*</span> <span class="fu">integrateGL</span>(<span class="fu">x-&gt;dS</span>(x;F,β,δ),wres,<span class="fu">quantile</span>(F,<span class="fl">0.9999</span>))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">res_wage_2</span>(wres , b,λ,δ,β,F) <span class="op">=</span> wres <span class="op">-</span> b <span class="op">-</span> β <span class="op">*</span> λ <span class="op">*</span> <span class="fu">quadgk</span>(<span class="fu">x-&gt;dS</span>(x;F,β,δ),wres,<span class="cn">Inf</span>)[<span class="fl">1</span>]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>ForwardDiff.<span class="fu">derivative</span>(<span class="fu">x-&gt;res_wage_1</span>(x,<span class="fl">0</span>.,<span class="fl">0.5</span>,<span class="fl">0.03</span>,<span class="fl">0.99</span>,<span class="fu">LogNormal</span>(<span class="fl">0</span>,<span class="fl">1</span>)),<span class="fl">1</span>.) </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#ForwardDiff.derivative(x-&gt;res_wage_2(x,0.,0.5,0.03,0.99,LogNormal(0,1)),1.) &lt;- you can try running this and you will see an error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>7.224647846541125</code></pre>
+</div>
+</div>
+</section>
+<section id="re-writing-the-model-solution" class="level2">
+<h2 class="anchored" data-anchor-id="re-writing-the-model-solution">Re-writing the model solution</h2>
+<p>Based on this, we’re going to re-write the model solution using this new integration routine. We will also use <code>Roots</code> to solve for the reservation wage in a way that will also play nicely with <code>ForwardDiff</code>.</p>
+<div id="cell-3" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">res_wage</span>(wres , b,λ,δ,β,F<span class="op">::</span><span class="dt">Distribution</span>) <span class="op">=</span> wres <span class="op">-</span> b <span class="op">-</span> β <span class="op">*</span> λ <span class="op">*</span> <span class="fu">integrateGL</span>(<span class="fu">x-&gt;dS</span>(x;F,β,δ),wres,<span class="fu">quantile</span>(F,<span class="fl">0.9999</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pars <span class="op">=</span> (;b <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>.,λ <span class="op">=</span> <span class="fl">0.45</span>,δ <span class="op">=</span> <span class="fl">0.03</span>,β <span class="op">=</span> <span class="fl">0.99</span>,F <span class="op">=</span> <span class="fu">LogNormal</span>(<span class="fl">1</span>,<span class="fl">1</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve_res_wage</span>(b,λ,δ,β,F)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">find_zero</span>(<span class="fu">x-&gt;res_wage</span>(x,b,λ,δ,β,F),<span class="fu">eltype</span>(b)(<span class="fl">4</span>.)) <span class="co">#&lt;- initial guess of $4/hour</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_res_wage</span>(<span class="fl">0</span>.,<span class="fl">0.4</span>,<span class="fl">0.03</span>,<span class="fl">0.995</span>,<span class="fu">LogNormal</span>())</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># testing that we can take a derivative here:</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ForwardDiff.<span class="fu">derivative</span>(<span class="fu">x-&gt;solve_res_wage</span>(x,<span class="fl">0.4</span>,<span class="fl">0.04</span>,<span class="fl">0.995</span>,<span class="fu">LogNormal</span>()),<span class="fl">0</span>.)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0.45978046027514413</code></pre>
+</div>
+</div>
+</section>
+<section id="cleaning-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-the-data">Cleaning the Data</h2>
+<p>None of this is really different from before, but we added a function that pulls a named tuple out for a specific demographic group. You might find that useful for your assignment.</p>
+<div id="cell-5" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CSV</span>, <span class="bu">DataFrames</span>, <span class="bu">DataFramesMeta</span>, <span class="bu">Statistics</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> CSV.<span class="fu">read</span>(<span class="st">"../data/cps_00019.csv"</span>,DataFrame)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="pp">@chain</span> data <span class="cf">begin</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@transform</span> <span class="op">:</span>E <span class="op">=</span> <span class="op">:</span>EMPSTAT<span class="op">.&lt;</span><span class="fl">21</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@transform</span> <span class="pp">@byrow</span> <span class="op">:</span>wage <span class="op">=</span> <span class="cf">begin</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">:</span>PAIDHOUR<span class="op">==</span><span class="fl">0</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="cn">missing</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elseif</span> <span class="op">:</span>PAIDHOUR<span class="op">==</span><span class="fl">2</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">:</span>HOURWAGE<span class="op">&lt;</span><span class="fl">99.99</span> <span class="op">&amp;&amp;</span> <span class="op">:</span>HOURWAGE<span class="op">&gt;</span><span class="fl">0</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="op">:</span>HOURWAGE</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="cn">missing</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elseif</span> <span class="op">:</span>PAIDHOUR<span class="op">==</span><span class="fl">1</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">:</span>EARNWEEK<span class="op">&gt;</span><span class="fl">0</span> <span class="op">&amp;&amp;</span> <span class="op">:</span>UHRSWORKT<span class="op">&lt;</span><span class="fl">997</span> <span class="op">&amp;&amp;</span> <span class="op">:</span>UHRSWORKT<span class="op">&gt;</span><span class="fl">0</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="op">:</span>EARNWEEK <span class="op">/</span> <span class="op">:</span>UHRSWORKT</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="cn">missing</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@subset</span> <span class="op">:</span>MONTH<span class="op">.==</span><span class="fl">1</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@select</span> <span class="op">:</span>AGE <span class="op">:</span>SEX <span class="op">:</span>RACE <span class="op">:</span>EDUC <span class="op">:</span>wage <span class="op">:</span>E <span class="op">:</span>DURUNEMP</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@transform</span> <span class="cf">begin</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span>bachelors <span class="op">=</span> <span class="op">:</span>EDUC<span class="op">.&gt;=</span><span class="fl">111</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span>nonwhite <span class="op">=</span> <span class="op">:</span>RACE<span class="op">.!=</span><span class="fl">100</span> </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span>female <span class="op">=</span> <span class="op">:</span>SEX<span class="op">.==</span><span class="fl">2</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span>DURUNEMP <span class="op">=</span> <span class="fu">round</span>.(<span class="op">:</span>DURUNEMP <span class="op">.*</span> <span class="fl">12</span><span class="op">/</span><span class="fl">52</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># the whole dataset in a named tuple</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>wage_missing <span class="op">=</span> <span class="fu">ismissing</span>.(data.wage)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>wage <span class="op">=</span> <span class="fu">coalesce</span>.(data.wage,<span class="fl">1</span>.)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fu">length</span>(data.AGE)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> [<span class="fu">ones</span>(N) data.bachelors data.female data.nonwhite]</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># create a named tuple with all variables to conveniently pass to the log-likelihood:</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> (;logwage <span class="op">=</span> <span class="fu">log</span>.(wage),wage_missing,E <span class="op">=</span> data.E,tU <span class="op">=</span> data.DURUNEMP, X) <span class="co">#&lt;- you will need to add your demographics as well.</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">get_data</span>(data,C,F,R)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> <span class="pp">@subset</span> data <span class="op">:</span>bachelors<span class="op">.==</span>C <span class="op">:</span>female<span class="op">.==</span>F <span class="op">:</span>nonwhite<span class="op">.==</span>R</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    wage_missing <span class="op">=</span> <span class="fu">ismissing</span>.(data.wage)</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    wage <span class="op">=</span> <span class="fu">coalesce</span>.(data.wage,<span class="fl">1</span>.)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="fu">length</span>(data.AGE)</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create a named tuple with all variables to conveniently pass to the log-likelihood:</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> d <span class="op">=</span> (;logwage <span class="op">=</span> <span class="fu">log</span>.(wage),wage_missing,E <span class="op">=</span> data.E,tU <span class="op">=</span> data.DURUNEMP) </span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>dx <span class="op">=</span> <span class="fu">get_data</span>(data,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>) <span class="co">#&lt;- data for white men with a college degree</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(logwage = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.516124491189194, 3.872798692268385, 0.0  …  2.7762279256323206, 0.0, 0.0, 0.0, 2.976307324928243, 0.0, 0.0, 3.410759848526933, 0.0, 0.0], wage_missing = Bool[1, 1, 1, 1, 1, 1, 1, 0, 0, 1  …  0, 1, 1, 1, 0, 1, 1, 0, 1, 1], E = Bool[1, 1, 1, 1, 1, 1, 1, 1, 1, 1  …  1, 1, 1, 1, 1, 1, 1, 1, 1, 1], tU = [231.0, 231.0, 231.0, 231.0, 231.0, 231.0, 231.0, 231.0, 231.0, 231.0  …  231.0, 231.0, 231.0, 231.0, 231.0, 231.0, 231.0, 231.0, 231.0, 231.0])</code></pre>
+</div>
+</div>
+</section>
+<section id="coding-the-log-likelihood-with-one-set-of-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="coding-the-log-likelihood-with-one-set-of-parameters">Coding the log-likelihood with one set of parameters</h2>
+<p>In your assignment you will estimate the model for one set of demographic characteristics by directly estimating <span class="math inline">\((h,\delta,\mu,\sigma,w^*)\)</span> and backing out <span class="math inline">\(b\)</span> and <span class="math inline">\(\lambda\)</span>. Here is a log-likelihood function that you could use (feel free to write your own).</p>
+<div id="cell-7" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ϕ</span>(x,μ,σ) <span class="op">=</span> <span class="fu">pdf</span>(<span class="fu">Normal</span>(μ,σ),x)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Φ</span>(x,μ,σ) <span class="op">=</span> <span class="fu">cdf</span>(<span class="fu">Normal</span>(μ,σ),x)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># a function for the log-likelihood of observed wages (integrating out measurement error)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">logwage_likelihood</span>(logwage,F,σζ,wres)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">f</span>(x) <span class="op">=</span> <span class="fu">pdf</span>(F,x) <span class="op">/</span> (<span class="fl">1</span><span class="fu">-cdf</span>(F,wres)) <span class="op">*</span> <span class="fu">ϕ</span>(logwage,<span class="fu">log</span>(x),σζ)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    ub <span class="op">=</span> <span class="fu">quantile</span>(F,<span class="fl">0.9999</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">integrateGL</span>(f,wres,ub)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># a function to get the log-likelihood of a single observation</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">log_likelihood</span>(n,data,pars)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    (;h,δ,wres,F,σζ) <span class="op">=</span> pars</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    ll <span class="op">=</span> <span class="fl">0</span>.</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> data.E[n]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        ll <span class="op">+=</span> <span class="fu">log</span>(h) <span class="op">-</span> <span class="fu">log</span>(h <span class="op">+</span> δ)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> !data.wage_missing[n]</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            ll <span class="op">+=</span> <span class="fu">logwage_likelihood</span>(data.logwage[n],F,σζ,wres)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        ll <span class="op">+=</span> <span class="fu">log</span>(δ) <span class="op">-</span> <span class="fu">log</span>(h <span class="op">+</span> δ)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        ll <span class="op">+=</span> <span class="fu">log</span>(h) <span class="op">+</span> data.tU[n] <span class="op">*</span> <span class="fu">log</span>(<span class="fl">1</span><span class="op">-</span>h)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ll</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># a function to map the vector x into parameters</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="fu">logit</span>(x) <span class="op">=</span> <span class="fu">exp</span>(x) <span class="op">/</span> (<span class="fl">1</span><span class="fu">+exp</span>(x))</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="fu">logit_inv</span>(x) <span class="op">=</span> <span class="fu">log</span>(x<span class="op">/</span>(<span class="fl">1</span><span class="op">-</span>x))</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">update</span>(pars,x)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> <span class="fu">logit</span>(x[<span class="fl">1</span>])</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    δ <span class="op">=</span> <span class="fu">logit</span>(x[<span class="fl">2</span>])</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    μ <span class="op">=</span> x[<span class="fl">3</span>]</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    σ <span class="op">=</span> <span class="fu">exp</span>(x[<span class="fl">4</span>])</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    wres <span class="op">=</span> <span class="fu">exp</span>(x[<span class="fl">5</span>])</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    F <span class="op">=</span> <span class="fu">LogNormal</span>(μ,σ)</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    σζ <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (;pars<span class="op">...</span>,h,δ,μ,σ,wres,F,σζ)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="co"># a function to iterate over all observations</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">log_likelihood_obj</span>(x,pars,data)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    pars <span class="op">=</span> <span class="fu">update</span>(pars,x)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    ll <span class="op">=</span> <span class="fl">0</span>.</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="fu">eachindex</span>(data.E)</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>        ll <span class="op">+=</span> <span class="fu">log_likelihood</span>(n,data,pars)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ll <span class="op">/</span> <span class="fu">length</span>(data.E)</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>log_likelihood_obj (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>With this log-likelihood we can pass straight to <code>Optim</code>.</p>
+<div id="cell-9" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> [<span class="fu">logit_inv</span>(<span class="fl">0.5</span>),<span class="fu">logit_inv</span>(<span class="fl">0.03</span>),<span class="fl">2</span>.,<span class="fu">log</span>(<span class="fl">1</span>.),<span class="fu">log</span>(<span class="fl">5</span>.)]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pars <span class="op">=</span> (;σζ <span class="op">=</span> <span class="fl">0.05</span>, β <span class="op">=</span> <span class="fl">0.995</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">log_likelihood_obj</span>(x0,pars,dx) <span class="co">#&lt;- test.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> <span class="fu">optimize</span>(<span class="fu">x-&gt;-log_likelihood_obj</span>(x,pars,dx),x0,<span class="fu">Newton</span>(),Optim.<span class="fu">Options</span>(show_trace<span class="op">=</span><span class="cn">true</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iter     Function value   Gradient norm 
+     0     1.566021e-01     9.112564e-02
+ * time: 8.916854858398438e-5
+     1     1.124900e-01     8.425665e-02
+ * time: 0.18092608451843262
+     2     9.438133e-02     7.424673e-02
+ * time: 0.3399372100830078
+     3     7.262438e-02     9.064264e-02
+ * time: 0.49828410148620605
+     4     6.527359e-02     4.043801e-01
+ * time: 0.6780951023101807
+     5     5.390735e-02     7.264660e-02
+ * time: 0.8790051937103271
+     6     4.456252e-02     5.104587e-02
+ * time: 1.2180511951446533
+     7     4.419638e-02     4.246399e-02
+ * time: 1.492077112197876
+     8     4.331776e-02     9.864366e-02
+ * time: 1.6455280780792236
+     9     4.279575e-02     8.358208e-02
+ * time: 1.8211140632629395
+    10     4.266464e-02     3.147197e-02
+ * time: 1.9958012104034424
+    11     4.263086e-02     1.838941e-02
+ * time: 2.1707379817962646
+    12     4.262640e-02     3.127715e-03
+ * time: 2.3470070362091064
+    13     4.262633e-02     3.959605e-07
+ * time: 2.499476194381714
+    14     4.262633e-02     2.184184e-08
+ * time: 2.674283981323242
+    15     4.262633e-02     7.462975e-10
+ * time: 2.744335174560547</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code> * Status: success
+
+ * Candidate solution
+    Final objective value:     4.262633e-02
+
+ * Found with
+    Algorithm:     Newton's Method
+
+ * Convergence measures
+    |x - x'|               = 6.68e-08 ≰ 0.0e+00
+    |x - x'|/|x'|          = 1.20e-08 ≰ 0.0e+00
+    |f(x) - f(x')|         = 8.81e-15 ≰ 0.0e+00
+    |f(x) - f(x')|/|f(x')| = 2.07e-13 ≰ 0.0e+00
+    |g(x)|                 = 7.46e-10 ≤ 1.0e-08
+
+ * Work counters
+    Seconds run:   3  (vs limit Inf)
+    Iterations:    15
+    f(x) calls:    54
+    ∇f(x) calls:   54
+    ∇²f(x) calls:  15</code></pre>
+</div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pars <span class="op">=</span> <span class="fu">update</span>(pars,res.minimizer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(σζ = 0.05, h = 0.17641764242681596, δ = 0.003828372201989135, μ = 2.416002041470427, σ = 1.147127370295339, wres = 18.6280911963576, F = LogNormal{Float64}(μ=2.416002041470427, σ=1.147127370295339))</code></pre>
+</div>
+</div>
+<p>We could back out estimates of <span class="math inline">\(b\)</span> and <span class="math inline">\(\lambda\)</span> as follows:</p>
+<div id="cell-12" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>λ <span class="op">=</span> pars.h <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> <span class="fu">cdf</span>(pars.F,pars.wres))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> pars.wres <span class="op">-</span> pars.β <span class="op">*</span> λ <span class="op">*</span> <span class="fu">integrateGL</span>(<span class="fu">x-&gt;dS</span>(x;pars.F,pars.β,pars.δ),pars.wres,<span class="fu">quantile</span>(pars.F,<span class="fl">0.9999</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>-601.9015559474371</code></pre>
+</div>
+</div>
+<p>What about standard errors? Some parameters (such as <span class="math inline">\(\delta\)</span>) are transformations of the estimated vector. Here we need the delta method, which tells us that if <span class="math inline">\(\mathbb{V}(\hat{\theta}) = v\)</span> and <span class="math inline">\(\beta = f(\theta)\)</span> then <span class="math inline">\(\mathbb{V}(\hat{\beta}) = f'(\theta)^2v\)</span>:</p>
+<div id="cell-14" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> ForwardDiff.<span class="fu">hessian</span>(<span class="fu">x-&gt;log_likelihood_obj</span>(x,pars,dx),res.minimizer)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fu">length</span>(dx.E)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>avar <span class="op">=</span> <span class="fu">inv</span>(<span class="op">-</span>H) <span class="co">#&lt;- asymptotic variance estimate</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>std_err_δ <span class="op">=</span> pars.δ <span class="op">*</span> <span class="fu">sqrt</span>(avar[<span class="fl">2</span>,<span class="fl">2</span>] <span class="op">/</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0.00037289231946497606</code></pre>
+</div>
+</div>
+<p>One final note. You could automate this whole calculation by writing a function that returns all your transformed parameters of interest as a function of the estimated vector, then calling <code>ForwardDiff</code>:</p>
+<div id="cell-16" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">final_ests</span>(x_est,pars)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    pars <span class="op">=</span> <span class="fu">update</span>(pars,x_est)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    (;h,δ,μ,σ,wres,F,β) <span class="op">=</span> pars</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    λ <span class="op">=</span> h <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> <span class="fu">cdf</span>(F,wres))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> wres <span class="op">-</span> β <span class="op">*</span> λ <span class="op">*</span> <span class="fu">integrateGL</span>(<span class="fu">x-&gt;dS</span>(x;F,β,δ),wres,<span class="fu">quantile</span>(F,<span class="fl">0.9999</span>))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [h , δ, μ, σ, wres, λ, b]</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>dF <span class="op">=</span> ForwardDiff.<span class="fu">jacobian</span>(<span class="fu">x-&gt;final_ests</span>(x,pars),res.minimizer)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>var_est <span class="op">=</span> dF <span class="op">*</span> avar <span class="op">*</span> dF<span class="op">'</span> <span class="op">/</span> N <span class="co">#&lt;- this is the variance of the estimates implied by the delta method</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># now a table with estimates and standard errors:</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>p_str <span class="op">=</span> [<span class="st">"h"</span>,<span class="st">"δ"</span>,<span class="st">"μ"</span>,<span class="st">"σ"</span>,<span class="st">"wres"</span>,<span class="st">"λ"</span>,<span class="st">"b"</span>]</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(par <span class="op">=</span> p_str,est <span class="op">=</span> <span class="fu">final_ests</span>(res.minimizer,pars),se <span class="op">=</span> <span class="fu">sqrt</span>.(<span class="fu">diag</span>(var_est)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div><div style="float: left;"><span>7×3 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
+<table class="data-frame table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">par</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">est</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">se</th>
+</tr>
+<tr class="odd subheader headerLastRow">
+<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th" title="String">String</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
+<td style="text-align: left;">h</td>
+<td style="text-align: right;">0.176418</td>
+<td style="text-align: right;">0.0114358</td>
+</tr>
+<tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
+<td style="text-align: left;">δ</td>
+<td style="text-align: right;">0.00382837</td>
+<td style="text-align: right;">0.000371465</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
+<td style="text-align: left;">μ</td>
+<td style="text-align: right;">2.416</td>
+<td style="text-align: right;">0.167726</td>
+</tr>
+<tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
+<td style="text-align: left;">σ</td>
+<td style="text-align: right;">1.14713</td>
+<td style="text-align: right;">0.044975</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">5</td>
+<td style="text-align: left;">wres</td>
+<td style="text-align: right;">18.6281</td>
+<td style="text-align: right;">0.178748</td>
+</tr>
+<tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">6</td>
+<td style="text-align: left;">λ</td>
+<td style="text-align: right;">0.536668</td>
+<td style="text-align: right;">0.0841872</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
+<td style="text-align: left;">b</td>
+<td style="text-align: right;">-601.902</td>
+<td style="text-align: right;">31.4198</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Beautiful!</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
