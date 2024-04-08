@@ -14,6 +14,7 @@ website:
           - recitations/recitation-2.qmd
           - recitations/recitation-3.ipynb
           - recitations/recitation-4.ipynb
+          - recitations/recitation-5.qmd
       - text: Models
         menu:
           - models/search-model.ipynb

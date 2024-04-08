@@ -296,7 +296,7 @@ window.Quarto = {
 
 <p>In this assignment we’ll start working with <a href="../data/abb_aea_data.csv">data</a> from the PSID. If you would like more details on how these data are constructed, you should refer to <span class="citation" data-cites="ABB_2018">Arellano, Blundell, and Bonhomme (<a href="#ref-ABB_2018" role="doc-biblioref">2018</a>)</span>.</p>
 <p>To begin, let’s load the data and pull out the variables we are interested in using. These are person identifiers (<code>person</code>), year, total income (<code>y</code>), savings (<code>tot_assets1</code>) and age. You should bear in mind that it is by no means trivial to measure total income and total assets in these data. The variables we are looking at are the product of a lot of data cleaning and careful choices by the authors.</p>
-<div id="4fb76a24" class="cell" data-execution_count="1">
+<div id="2ad05185" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CSV</span>, <span class="bu">DataFrames</span>, <span class="bu">DataFramesMeta</span>, <span class="bu">Statistics</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="pp">@chain</span> <span class="cf">begin</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    CSV.<span class="fu">read</span>(<span class="st">"../data/abb_aea_data.csv"</span>,DataFrame,missingstring <span class="op">=</span> <span class="st">"NA"</span>)</span>
@@ -572,7 +572,7 @@ window.Quarto = {
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>To map to the model, assume that agents begin (<span class="math inline">\(t=1\)</span>) when aged 25 and live for 40 years (so the “terminal” period is at age 64). Thus, we should filter the data to look at only these ages.</p>
-<div id="8f44f834" class="cell" data-execution_count="2">
+<div id="00517a79" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@subset</span>!(data,<span class="op">:</span>age<span class="op">.&gt;=</span><span class="fl">25</span>,<span class="op">:</span>age<span class="op">.&lt;=</span><span class="fl">64</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div><div style="float: left;"><span>19139×6 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">19114 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
@@ -855,7 +855,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="part-3">Part 3</h2>
 <p>Calculate the sample equivalent of these moments from the data, and write a function that calculates the sum of squared differences between the data and those predicted by a particular choice of <span class="math inline">\((\rho,\sigma_\eta)\)</span>.</p>
 <p>If it helps, here is code to create the lags for income (you could adapt this code to create lags for the residuals you calculated in part 1).</p>
-<div id="6198dd94" class="cell" data-execution_count="3">
+<div id="2f07a464" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d1 <span class="op">=</span> <span class="pp">@chain</span> data <span class="cf">begin</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@select</span> <span class="op">:</span>year <span class="op">:</span>person <span class="op">:</span>y</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@transform</span> <span class="op">:</span>year <span class="op">=</span> <span class="op">:</span>year <span class="op">.+</span> <span class="fl">2</span></span>
@@ -1192,7 +1192,7 @@ window.Quarto = {
 </div>
 </div>
 <p>An example of calculating covariances:</p>
-<div id="1c5545c2" class="cell" data-execution_count="4">
+<div id="a6ae0d40" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@chain</span> data <span class="cf">begin</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@combine</span> <span class="cf">begin</span> </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">:</span>c1 <span class="op">=</span> <span class="fu">cov</span>(<span class="fu">log</span>.(<span class="op">:</span>y),<span class="fu">log</span>.(<span class="op">:</span>ylag1)) </span>
@@ -1237,7 +1237,7 @@ window.Quarto = {
 <p>Suppose that the true model is:</p>
 <p><span class="math display">\[ \log(y_{it}) = \mu_{t} + \varepsilon_{it} + \zeta_{it} \]</span></p>
 <p>where <span class="math inline">\(\zeta_{it}\)</span> is an additional shock to income that is completely iid (i.e.&nbsp;no persistence). Suppose we estimate the persistence parameter <span class="math inline">\(\rho\)</span> using the relationship above (which is now misspecified).</p>
-<p><span class="math display">\[ \hat{\rho} = \frac{\widehat{\mathbb{C}(\varepsilon_{it},\varepsilon_{it-1})}}{\widehat{\mathbb{V}(\varepsilon_{it})}} \]</span></p>
+<p><span class="math display">\[ \hat{\rho} = \frac{\widehat{\mathbb{C}(\hat{\varepsilon}_{it},\hat{\varepsilon}_{it-1})}}{\widehat{\mathbb{V}(\hat{\varepsilon}_{it})}} \]</span></p>
 <p>Does the population limit of our estimator over- or under-estimate <span class="math inline">\(\rho\)</span>, the persistence in <span class="math inline">\(\varepsilon\)</span>?</p>
 
 

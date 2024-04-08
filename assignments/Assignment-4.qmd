@@ -98,7 +98,7 @@ $$ \log(y_{it}) = \mu_{t} + \varepsilon_{it} + \zeta_{it} $$
 
 where $\zeta_{it}$ is an additional shock to income that is completely iid (i.e. no persistence). Suppose we estimate the persistence parameter $\rho$ using the relationship above (which is now misspecified).
 
-$$ \hat{\rho} = \frac{\widehat{\mathbb{C}(\varepsilon_{it},\varepsilon_{it-1})}}{\widehat{\mathbb{V}(\varepsilon_{it})}} $$
+$$ \hat{\rho} = \frac{\widehat{\mathbb{C}(\hat{\varepsilon}_{it},\hat{\varepsilon}_{it-1})}}{\widehat{\mathbb{V}(\hat{\varepsilon}_{it})}} $$
 
 Does the population limit of our estimator over- or under-estimate $\rho$, the persistence in $\varepsilon$?
 

@@ -4,7 +4,7 @@ title: "Recitation 5: Simulating from the life-cycle model"
 
 ## Part 1
 
-Review the details of the simple [life-cycle savings model](/models/savings.ipynb). Below is all of the code to parameterize and solve that model.
+Review the details of the simple [life-cycle savings model](/models/savings.ipynb). Today we're only going to be thinking about the income process, but for the sake of completeness I include below all of the code to parameterize and solve that model. 
 
 ```{julia}
 using Distributions,Random
@@ -26,20 +26,12 @@ function tauchen(ρ,ση,Kϵ)
     return Π,grid
 end
 
-Ka = 100
-Kϵ = 5
-agrid = LinRange(0,pars.μ[1] * pars.T,Ka) #<- is this a reasonable upper bound? We'll find out!
-Π,ϵgrid = tauchen(pars.ρ,pars.ση,Kϵ)
-pars = (;pars...,Ka,agrid,Π,ϵgrid,Kϵ)
-
-
 u(c,σ) = c^(1-σ) / (1-σ)
 function solve_max(V,t,iϵ,ia,pars)
     (;agrid,ϵgrid,Π,σ,Ka,r,β) = pars
     cash = exp(pars.μ[t] + ϵgrid[iϵ]) + agrid[ia]
     amax = 0
     vmax = -Inf
-    # turn this into a while loop!
     loop = true
     a = 1
     while loop && a<Ka
@@ -83,11 +75,128 @@ function backward_induction!(V,A,pars)
     end
 end
 
+pars = (;
+    T = 45, β = 0.95, σ = 2,ρ = 0.9,ση = 0.1, μ = fill(2.,45), ψ = 5., r = 0.05
+)
+Ka = 100
+Kϵ = 5
+agrid = LinRange(0,pars.μ[1] * pars.T,Ka) #
+Π,ϵgrid = tauchen(pars.ρ,pars.ση,Kϵ)
+pars = (;pars...,Ka,agrid,Π,ϵgrid,Kϵ)
 V = zeros(pars.Kϵ,pars.Ka,pars.T+1)
 A = zeros(Int64,pars.Kϵ,pars.Ka,pars.T)
 backward_induction!(V,A,pars)
 @time backward_induction!(V,A,pars)
 
 
+```
+
+## Part 2: The Stationary Distribution of $\varepsilon$
+
+Suppose that $\pi^*$ is the stationary distribution of $\varepsilon$. It must obey:
+
+$$ \pi^* = \Pi \pi^*  $$
+
+where the $k$th column of $\Pi$ gives the transition probabilities given that the current value is $\varepsilon_{k}$. This is equivalent to $\pi^*$ being the eigenvector of $\mathbf{I} - \Pi$ that corresponds to an eigenvalue of 0.
+
+```{julia}
+function stat_dist(Π)
+    Kϵ = size(Π,1)
+    vals, vec = eigen(I(Kϵ) .- Π)
+    return vec[:,1] ./ sum(vec[:,1])
+end
+
+π_stat = stat_dist(Π)
+pars = (;pars...,π_stat)
 
 ```
+
+We can make sure we're doing this correctly by checking:
+
+```{julia}
+π_stat .- Π * π_stat
+```
+
+## Part 3: Simulating the Income Process
+
+In principle, one can simulate draws from any distribution by simulating fraws from the uniform distribution using `rand()` and using the inverse cdf. To see this, note that for any random variable:
+
+$ F_{X}(X) \sim \text{unif}[0,1] $
+
+and hence if $U\sim\text{unif}[0,1]$:
+
+$$F_{X}^{-1}(U) \sim X $$
+
+Here we will make use of the `Distributions` package and the `Categorical` distribution for simulation.
+
+```{julia}
+# this function simulates on path
+function simulate_shocks!(ε,π_stat,Π)
+    ε_current = rand(π_stat)
+    for t in eachindex(ε)
+        ε[t] = ε_current
+        ε_current = rand(Π[ε_current])
+    end
+end
+
+function simulate_shocks!(ε,pars)
+    (;Π,π_stat) = pars
+    π_stat_dist = Categorical(π_stat)
+    Π_dist = [Categorical(Π[:,k]) for k in axes(Π,2)]
+    for n in axes(ε,2)
+        @views simulate_shocks!(ε[:,n],π_stat_dist,Π_dist)
+    end
+end
+
+nsim = 500
+ε_sim = zeros(Int64,pars.T,nsim)
+simulate_shocks!(ε_sim,pars)
+
+```
+
+
+## Part 4: Holding Simulation Error Fixed
+
+Now suppose we plan to use the simulated draws of $\varepsilon$ to calculate some moments to match to the data. For example, we could try to match the lagged covariance to lagged covariance in the data. In practice we won't have to simulation to do this, but for the sake of argument, let's pretend we do. We could write the function to calculate moments as:
+
+```{julia}
+function moments_ε(ε,pars)
+    simulate_shocks!(ε,pars)
+    ε_value = pars.ϵgrid[ε]
+    return [var(ε_value[1,:]) ; cov(ε_value[2,:],ε_value[1,:]) ; cov(ε_value[3,:],ε_value[1,:])]
+end
+
+```
+
+But notice what happens when we call this function multiple times:
+
+```{julia}
+@show moments_ε(ε_sim,pars);
+@show moments_ε(ε_sim,pars);
+@show moments_ε(ε_sim,pars);
+
+```
+
+The moments keep jumping around! This is going to be a problem if we want to match the simulated moments to ones we have calculated in the data. The simulation error is moving the goalposts around in ways that we can't predict. The solution is to *fix simulation error* by fixing the seed of our pseudorandom number generator. To see how, let's rewrite the function:
+
+```{julia}
+
+function moments_ε(ε,pars ; seed = 202404)
+    Random.seed!(seed)
+    simulate_shocks!(ε,pars)
+    ε_value = pars.ϵgrid[ε]
+    return [var(ε_value[1,:]) ; cov(ε_value[2,:],ε_value[1,:]) ; cov(ε_value[3,:],ε_value[1,:])]
+end
+
+@show moments_ε(ε_sim,pars);
+@show moments_ε(ε_sim,pars);
+@show moments_ε(ε_sim,pars);
+
+@show moments_ε(ε_sim,pars ; seed = 12345);
+@show moments_ε(ε_sim,pars ; seed = 12345);
+@show moments_ε(ε_sim,pars ; seed = 12345);
+
+
+```
+
+This is something that is *very* important to keep in mind when you are using the simulated method of moments to estimate models.
