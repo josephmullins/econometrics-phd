@@ -20,10 +20,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -66,7 +100,39 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -109,6 +175,14 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../recitations/recitation-3.html">
  <span class="dropdown-text">Recitation 3</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../recitations/recitation-4.html">
+ <span class="dropdown-text">Some Hints and Tricks for Assignment 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../recitations/recitation-5.html">
+ <span class="dropdown-text">Recitation 5: Simulating from the life-cycle model</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -147,6 +221,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../assignments/Assignment-3.html">
  <span class="dropdown-text">Assignment 3: Estimating a Search Model</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-4.html">
+ <span class="dropdown-text">Assignment 4: Income and Savings from the PSID</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -169,7 +247,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#life-cycle-savings-model" id="toc-life-cycle-savings-model" class="nav-link active" data-scroll-target="#life-cycle-savings-model">Life-Cycle Savings Model</a></li>
+  <li><a href="#life-cycle-savings-model" id="toc-life-cycle-savings-model" class="nav-link active" data-scroll-target="#life-cycle-savings-model">Life-Cycle Savings Model</a>
+  <ul class="collapse">
+  <li><a href="#environment" id="toc-environment" class="nav-link" data-scroll-target="#environment">Environment</a></li>
+  <li><a href="#model-solution" id="toc-model-solution" class="nav-link" data-scroll-target="#model-solution">Model Solution</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -197,9 +279,207 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="life-cycle-savings-model" class="level1">
 <h1>Life-Cycle Savings Model</h1>
-<p>Details IOU.</p>
+<section id="environment" class="level2">
+<h2 class="anchored" data-anchor-id="environment">Environment</h2>
+<p>Time is discrete and indexed by <span class="math inline">\(t\)</span>. Individuals live for a finite number of periods, <span class="math inline">\(T\)</span>. They derive utility from consumption according to a CRRA utility function:</p>
+<p><span class="math display">\[ u(c) = \frac{c^{1-\sigma}}{1-\sigma} \]</span></p>
+<p>and from “bequests”, which are modeled here as cash on hand net of consumption in the final period:</p>
+<p><span class="math display">\[ \nu(a) = \psi \frac{a^{1-\sigma}}{1-\sigma} \]</span>.</p>
+<p>Consumption can be transferred between periods via a portfolio of one-period bonds (“savings’, <span class="math inline">\(a\)</span>) that can be purchased at the price <span class="math inline">\(1 / (1+r)\)</span>, and there is no borrowing. Inviduals receive income <span class="math inline">\(y\)</span> every period that is governed by a deterministic (<span class="math inline">\(\mu_{t}\)</span>) and stochastic component:</p>
+<p><span class="math display">\[ \log(y_{t}) = \mu_{t} + \varepsilon_{it} \]</span></p>
+<p>where <span class="math inline">\(\varepsilon_{it}\)</span> is a stationary AR 1 process:</p>
+<p><span class="math display">\[ \varepsilon_{it} = \rho \varepsilon_{it-1} + \eta_{it} \]</span></p>
+<p>where <span class="math inline">\(\eta_{it} \sim \mathcal{N}(0,\sigma^2_{\eta})\)</span>. The unconditional variance of <span class="math inline">\(\varepsilon_{it}\)</span> is therefore <span class="math inline">\(\sigma^2_{\eta} / (1-\rho^2)\)</span>.</p>
+</section>
+<section id="model-solution" class="level2">
+<h2 class="anchored" data-anchor-id="model-solution">Model Solution</h2>
+<p>Define</p>
+<p><span class="math display">\[ V_{T}(a,\varepsilon) = \max_{c}\left\{u(c) + \nu(y - c)\right\} \]</span></p>
+<p>And now define the remaining value functions recursively:</p>
+<p><span class="math display">\[ V_{t}(a,\varepsilon) = \max_{c,a'}\left\{u(c) + \beta\mathbb{E}_{\varepsilon'|\varepsilon}V(a',\varepsilon')\right\} \]</span></p>
+<p>subject to:</p>
+<p><span class="math display">\[ c + \frac{1}{1+r}a' \leq y + a \]</span></p>
+<p>and</p>
+<p><span class="math display">\[ a' \geq 0\]</span></p>
+<p>We’re going to write code to solve the model naively using this recursive formulation. You may already be aware that there are more efficient solution methods that exploit the first order conditions of the problem. Not the focus of our class! Please don’t use the example below as a demonstration of best practice when it comes to solving savings models.</p>
+<p>We’ll start picking some default parameters.</p>
+<div id="cell-1" class="cell" data-execution_count="126">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pars <span class="op">=</span> (;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> <span class="fl">45</span>, β <span class="op">=</span> <span class="fl">0.95</span>, σ <span class="op">=</span> <span class="fl">2</span>,ρ <span class="op">=</span> <span class="fl">0.9</span>,ση <span class="op">=</span> <span class="fl">0.1</span>, μ <span class="op">=</span> <span class="fu">fill</span>(<span class="fl">2</span>.,<span class="fl">45</span>), ψ <span class="op">=</span> <span class="fl">5</span>., r <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(T = 45, β = 0.95, σ = 2, ρ = 0.9, ση = 0.1, μ = [2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0  …  2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0], ψ = 5.0, r = 0.05)</code></pre>
+</div>
+</div>
+<p>Next we’ll write a function that uses Tauchen’s method to approximate the income process as a discrete markov process.</p>
+<div id="cell-3" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Distributions</span>,<span class="bu">Random</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Φ</span>(x) <span class="op">=</span> <span class="fu">cdf</span>(<span class="fu">Normal</span>(),x)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">tauchen</span>(ρ,ση,Kϵ)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    sd <span class="op">=</span> ση<span class="op">/</span><span class="fu">sqrt</span>(<span class="fl">1</span><span class="op">-</span>ρ<span class="op">^</span><span class="fl">2</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">3</span>sd,stop<span class="op">=</span><span class="fl">3</span>sd,length<span class="op">=</span>Kϵ)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    Π <span class="op">=</span> <span class="fu">zeros</span>(Kϵ,Kϵ)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    Δ <span class="op">=</span> grid[<span class="fl">2</span>]<span class="op">-</span>grid[<span class="fl">1</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j<span class="op">=</span><span class="fl">1</span><span class="op">:</span>Kϵ</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        Π[<span class="fl">1</span>,j] <span class="op">=</span> <span class="fu">Φ</span>((grid[<span class="fl">1</span>] <span class="op">+</span> Δ<span class="op">/</span><span class="fl">2</span> <span class="op">-</span> ρ<span class="op">*</span>grid[j])<span class="op">/</span>ση)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        Π[<span class="kw">end</span>,j] <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu">Φ</span>((grid[<span class="kw">end</span>] <span class="op">-</span> Δ<span class="op">/</span><span class="fl">2</span> <span class="op">-</span> ρ<span class="op">*</span>grid[j])<span class="op">/</span>ση)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k<span class="op">=</span><span class="fl">2</span><span class="op">:</span>(Kϵ<span class="op">-</span><span class="fl">1</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            Π[k,j] <span class="op">=</span> <span class="fu">Φ</span>((grid[k] <span class="op">+</span> Δ<span class="op">/</span><span class="fl">2</span> <span class="op">-</span> ρ<span class="op">*</span>grid[j])<span class="op">/</span>ση) <span class="op">-</span> <span class="fu">Φ</span>((grid[k] <span class="op">-</span> Δ<span class="op">/</span><span class="fl">2</span> <span class="op">-</span> ρ<span class="op">*</span>grid[j])<span class="op">/</span>ση)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Π,grid</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>tauchen (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>Now, let’s think about how to solve this model. We have two state variables to track. We have discretized <span class="math inline">\(\varepsilon\)</span>, now let’s discretize assets and define a max operator.</p>
+<div id="cell-5" class="cell" data-execution_count="127">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Ka <span class="op">=</span> <span class="fl">100</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Kϵ <span class="op">=</span> <span class="fl">5</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>agrid <span class="op">=</span> <span class="fu">LinRange</span>(<span class="fl">0</span>,pars.μ[<span class="fl">1</span>] <span class="op">*</span> pars.T,Ka) <span class="co">#&lt;- is this a reasonable upper bound? We'll find out!</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Π,ϵgrid <span class="op">=</span> <span class="fu">tauchen</span>(pars.ρ,pars.ση,Kϵ)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>pars <span class="op">=</span> (;pars<span class="op">...</span>,Ka,agrid,Π,ϵgrid,Kϵ)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">u</span>(c,σ) <span class="op">=</span> c<span class="op">^</span>(<span class="fl">1</span><span class="op">-</span>σ) <span class="op">/</span> (<span class="fl">1</span><span class="op">-</span>σ)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve_max</span>(V,t,iϵ,ia,pars)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    (;agrid,ϵgrid,Π,σ,Ka,r,β) <span class="op">=</span> pars</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    cash <span class="op">=</span> <span class="fu">exp</span>(pars.μ[t] <span class="op">+</span> ϵgrid[iϵ]) <span class="op">+</span> agrid[ia]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    amax <span class="op">=</span> <span class="fl">0</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    vmax <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    loop <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> <span class="fl">1</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> loop <span class="op">&amp;&amp;</span> a<span class="op">&lt;</span>Ka</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        c <span class="op">=</span> cash <span class="op">-</span> agrid[a] <span class="op">/</span> (<span class="fl">1</span><span class="op">+</span>r)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> c<span class="op">&gt;</span><span class="fl">0</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>            <span class="co">#@views v = u(c,σ) + β * dot(Π[:,iϵ],V[:,a,t+1])</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            v <span class="op">=</span> <span class="fu">u</span>(c,σ)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> iϵ′ <span class="kw">in</span> <span class="fu">axes</span>(V,<span class="fl">1</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                v <span class="op">+=</span> β <span class="op">*</span> Π[iϵ′,iϵ] <span class="op">*</span> V[iϵ′,a,t<span class="op">+</span><span class="fl">1</span>]</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> v<span class="op">&gt;</span>vmax</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                vmax <span class="op">=</span> v</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                amax <span class="op">=</span> a</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>            loop <span class="op">=</span> <span class="cn">false</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        a <span class="op">+=</span> <span class="fl">1</span> <span class="co">#&lt;- move one up the grid space</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amax,vmax</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>solve_max (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>Next, a function that uses this max operator to get the value function for all states in a period, <span class="math inline">\(t\)</span>, and records the optimal savings policy.</p>
+<div id="cell-7" class="cell" data-execution_count="118">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">iterate!</span>(V,A,t,pars)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ia <span class="kw">in</span> <span class="fu">axes</span>(V,<span class="fl">2</span>), iϵ <span class="kw">in</span> <span class="fu">axes</span>(V,<span class="fl">1</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        A[iϵ,ia,t],V[iϵ,ia,t] <span class="op">=</span> <span class="fu">solve_max</span>(V,t,iϵ,ia,pars)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">terminal_values!</span>(V,pars)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    (;σ,ψ,agrid) <span class="op">=</span> pars</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ia <span class="kw">in</span> <span class="fu">axes</span>(V,<span class="fl">2</span>), iϵ <span class="kw">in</span> <span class="fu">axes</span>(V,<span class="fl">1</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        V[iϵ,ia] <span class="op">=</span> ψ <span class="op">*</span> <span class="fu">u</span>(agrid[ia],σ)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>terminal_values! (generic function with 2 methods)</code></pre>
+</div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="89">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">backward_induction!</span>(V,A,pars)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    (;ψ,σ,T,agrid) <span class="op">=</span> pars</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># set the values at T+1 (bequest motives)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@views</span> <span class="fu">terminal_values!</span>(V[<span class="op">:</span>,<span class="op">:</span>,T<span class="op">+</span><span class="fl">1</span>],pars)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> <span class="fu">reverse</span>(<span class="fl">1</span><span class="op">:</span>T)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">iterate!</span>(V,A,t,pars)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>backward_induction! (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>Let’s check the model solution and time it also.</p>
+<div id="cell-10" class="cell" data-execution_count="128">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> <span class="fu">zeros</span>(pars.Kϵ,pars.Ka,pars.T<span class="op">+</span><span class="fl">1</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">zeros</span>(<span class="dt">Int64</span>,pars.Kϵ,pars.Ka,pars.T)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">backward_induction!</span>(V,A,pars)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="fu">backward_induction!</span>(V,A,pars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  0.010476 seconds</code></pre>
+</div>
+</div>
+<p>Seems ok. We can plot the policy functions as a sanity check. The plot below shows savings policy at the median wage shock over time at different levels of assets.</p>
+<div id="cell-12" class="cell" data-execution_count="135">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fl">1</span><span class="op">:</span>pars.T,agrid[A[<span class="fl">3</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">:</span>Ka,<span class="op">:</span>]<span class="ch">'],legend=false)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<!--?xml version="1.0" encoding="utf-8"?-->
+<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="600" height="400" viewbox="0 0 2400 1600">
+<defs>
+  <clippath id="clip500">
+    <rect x="0" y="0" width="2400" height="1600"></rect>
+  </clippath>
+</defs>
+<path clip-path="url(#clip500)" d="M0 1600 L2400 1600 L2400 8.88178e-14 L0 8.88178e-14  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<defs>
+  <clippath id="clip501">
+    <rect x="480" y="0" width="1681" height="1600"></rect>
+  </clippath>
+</defs>
+<path clip-path="url(#clip500)" d="M141.853 1486.45 L2352.76 1486.45 L2352.76 47.2441 L141.853 47.2441  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<defs>
+  <clippath id="clip502">
+    <rect x="141" y="47" width="2212" height="1440"></rect>
+  </clippath>
+</defs>
+<polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="157.022,1486.45 157.022,47.2441 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="631.058,1486.45 631.058,47.2441 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1105.09,1486.45 1105.09,47.2441 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1579.13,1486.45 1579.13,47.2441 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="2053.17,1486.45 2053.17,47.2441 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="141.853,1486.45 2352.76,1486.45 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="157.022,1486.45 157.022,1467.55 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="631.058,1486.45 631.058,1467.55 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1105.09,1486.45 1105.09,1467.55 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1579.13,1486.45 1579.13,1467.55 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="2053.17,1486.45 2053.17,1467.55 "></polyline>
+<path clip-path="url(#clip500)" d="M157.022 1517.37 Q153.411 1517.37 151.582 1520.93 Q149.777 1524.47 149.777 1531.6 Q149.777 1538.71 151.582 1542.27 Q153.411 1545.82 157.022 1545.82 Q160.656 1545.82 162.462 1542.27 Q164.291 1538.71 164.291 1531.6 Q164.291 1524.47 162.462 1520.93 Q160.656 1517.37 157.022 1517.37 M157.022 1513.66 Q162.832 1513.66 165.888 1518.27 Q168.966 1522.85 168.966 1531.6 Q168.966 1540.33 165.888 1544.94 Q162.832 1549.52 157.022 1549.52 Q151.212 1549.52 148.133 1544.94 Q145.078 1540.33 145.078 1531.6 Q145.078 1522.85 148.133 1518.27 Q151.212 1513.66 157.022 1513.66 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M605.746 1544.91 L613.384 1544.91 L613.384 1518.55 L605.074 1520.21 L605.074 1515.95 L613.338 1514.29 L618.014 1514.29 L618.014 1544.91 L625.653 1544.91 L625.653 1548.85 L605.746 1548.85 L605.746 1544.91 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M645.097 1517.37 Q641.486 1517.37 639.657 1520.93 Q637.852 1524.47 637.852 1531.6 Q637.852 1538.71 639.657 1542.27 Q641.486 1545.82 645.097 1545.82 Q648.731 1545.82 650.537 1542.27 Q652.366 1538.71 652.366 1531.6 Q652.366 1524.47 650.537 1520.93 Q648.731 1517.37 645.097 1517.37 M645.097 1513.66 Q650.907 1513.66 653.963 1518.27 Q657.042 1522.85 657.042 1531.6 Q657.042 1540.33 653.963 1544.94 Q650.907 1549.52 645.097 1549.52 Q639.287 1549.52 636.208 1544.94 Q633.153 1540.33 633.153 1531.6 Q633.153 1522.85 636.208 1518.27 Q639.287 1513.66 645.097 1513.66 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M1083.87 1544.91 L1100.19 1544.91 L1100.19 1548.85 L1078.24 1548.85 L1078.24 1544.91 Q1080.9 1542.16 1085.49 1537.53 Q1090.09 1532.88 1091.27 1531.53 Q1093.52 1529.01 1094.4 1527.27 Q1095.3 1525.51 1095.3 1523.82 Q1095.3 1521.07 1093.36 1519.33 Q1091.44 1517.6 1088.33 1517.6 Q1086.14 1517.6 1083.68 1518.36 Q1081.25 1519.13 1078.47 1520.68 L1078.47 1515.95 Q1081.3 1514.82 1083.75 1514.24 Q1086.2 1513.66 1088.24 1513.66 Q1093.61 1513.66 1096.81 1516.35 Q1100 1519.03 1100 1523.52 Q1100 1525.65 1099.19 1527.57 Q1098.4 1529.47 1096.3 1532.07 Q1095.72 1532.74 1092.62 1535.95 Q1089.52 1539.15 1083.87 1544.91 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M1120 1517.37 Q1116.39 1517.37 1114.56 1520.93 Q1112.76 1524.47 1112.76 1531.6 Q1112.76 1538.71 1114.56 1542.27 Q1116.39 1545.82 1120 1545.82 Q1123.64 1545.82 1125.44 1542.27 Q1127.27 1538.71 1127.27 1531.6 Q1127.27 1524.47 1125.44 1520.93 Q1123.64 1517.37 1120 1517.37 M1120 1513.66 Q1125.81 1513.66 1128.87 1518.27 Q1131.95 1522.85 1131.95 1531.6 Q1131.95 1540.33 1128.87 1544.94 Q1125.81 1549.52 1120 1549.52 Q1114.19 1549.52 1111.11 1544.94 Q1108.06 1540.33 1108.06 1531.6 Q1108.06 1522.85 1111.11 1518.27 Q1114.19 1513.66 1120 1513.66 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M1567.97 1530.21 Q1571.33 1530.93 1573.2 1533.2 Q1575.1 1535.47 1575.1 1538.8 Q1575.1 1543.92 1571.58 1546.72 Q1568.06 1549.52 1561.58 1549.52 Q1559.41 1549.52 1557.09 1549.08 Q1554.8 1548.66 1552.35 1547.81 L1552.35 1543.29 Q1554.29 1544.43 1556.61 1545.01 Q1558.92 1545.58 1561.44 1545.58 Q1565.84 1545.58 1568.13 1543.85 Q1570.45 1542.11 1570.45 1538.8 Q1570.45 1535.75 1568.3 1534.03 Q1566.17 1532.3 1562.35 1532.3 L1558.32 1532.3 L1558.32 1528.45 L1562.53 1528.45 Q1565.98 1528.45 1567.81 1527.09 Q1569.64 1525.7 1569.64 1523.11 Q1569.64 1520.45 1567.74 1519.03 Q1565.87 1517.6 1562.35 1517.6 Q1560.43 1517.6 1558.23 1518.01 Q1556.03 1518.43 1553.39 1519.31 L1553.39 1515.14 Q1556.05 1514.4 1558.37 1514.03 Q1560.7 1513.66 1562.76 1513.66 Q1568.09 1513.66 1571.19 1516.09 Q1574.29 1518.5 1574.29 1522.62 Q1574.29 1525.49 1572.65 1527.48 Q1571 1529.45 1567.97 1530.21 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M1593.97 1517.37 Q1590.36 1517.37 1588.53 1520.93 Q1586.72 1524.47 1586.72 1531.6 Q1586.72 1538.71 1588.53 1542.27 Q1590.36 1545.82 1593.97 1545.82 Q1597.6 1545.82 1599.41 1542.27 Q1601.24 1538.71 1601.24 1531.6 Q1601.24 1524.47 1599.41 1520.93 Q1597.6 1517.37 1593.97 1517.37 M1593.97 1513.66 Q1599.78 1513.66 1602.83 1518.27 Q1605.91 1522.85 1605.91 1531.6 Q1605.91 1540.33 1602.83 1544.94 Q1599.78 1549.52 1593.97 1549.52 Q1588.16 1549.52 1585.08 1544.94 Q1582.02 1540.33 1582.02 1531.6 Q1582.02 1522.85 1585.08 1518.27 Q1588.16 1513.66 1593.97 1513.66 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M2041.34 1518.36 L2029.53 1536.81 L2041.34 1536.81 L2041.34 1518.36 M2040.11 1514.29 L2045.99 1514.29 L2045.99 1536.81 L2050.92 1536.81 L2050.92 1540.7 L2045.99 1540.7 L2045.99 1548.85 L2041.34 1548.85 L2041.34 1540.7 L2025.73 1540.7 L2025.73 1536.19 L2040.11 1514.29 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M2068.65 1517.37 Q2065.04 1517.37 2063.21 1520.93 Q2061.41 1524.47 2061.41 1531.6 Q2061.41 1538.71 2063.21 1542.27 Q2065.04 1545.82 2068.65 1545.82 Q2072.29 1545.82 2074.09 1542.27 Q2075.92 1538.71 2075.92 1531.6 Q2075.92 1524.47 2074.09 1520.93 Q2072.29 1517.37 2068.65 1517.37 M2068.65 1513.66 Q2074.46 1513.66 2077.52 1518.27 Q2080.6 1522.85 2080.6 1531.6 Q2080.6 1540.33 2077.52 1544.94 Q2074.46 1549.52 2068.65 1549.52 Q2062.84 1549.52 2059.76 1544.94 Q2056.71 1540.33 2056.71 1531.6 Q2056.71 1522.85 2059.76 1518.27 Q2062.84 1513.66 2068.65 1513.66 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="141.853,1445.72 2352.76,1445.72 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="141.853,1113.82 2352.76,1113.82 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="141.853,781.932 2352.76,781.932 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="141.853,450.04 2352.76,450.04 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="141.853,118.148 2352.76,118.148 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="141.853,1486.45 141.853,47.2441 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="141.853,1445.72 160.751,1445.72 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="141.853,1113.82 160.751,1113.82 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="141.853,781.932 160.751,781.932 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="141.853,450.04 160.751,450.04 "></polyline>
+<polyline clip-path="url(#clip500)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="141.853,118.148 160.751,118.148 "></polyline>
+<path clip-path="url(#clip500)" d="M93.9086 1431.51 Q90.2975 1431.51 88.4688 1435.08 Q86.6632 1438.62 86.6632 1445.75 Q86.6632 1452.86 88.4688 1456.42 Q90.2975 1459.96 93.9086 1459.96 Q97.5428 1459.96 99.3483 1456.42 Q101.177 1452.86 101.177 1445.75 Q101.177 1438.62 99.3483 1435.08 Q97.5428 1431.51 93.9086 1431.51 M93.9086 1427.81 Q99.7187 1427.81 102.774 1432.42 Q105.853 1437 105.853 1445.75 Q105.853 1454.48 102.774 1459.08 Q99.7187 1463.67 93.9086 1463.67 Q88.0984 1463.67 85.0197 1459.08 Q81.9642 1454.48 81.9642 1445.75 Q81.9642 1437 85.0197 1432.42 Q88.0984 1427.81 93.9086 1427.81 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M57.7745 1127.17 L74.0939 1127.17 L74.0939 1131.1 L52.1495 1131.1 L52.1495 1127.17 Q54.8115 1124.41 59.3949 1119.78 Q64.0013 1115.13 65.1819 1113.79 Q67.4272 1111.27 68.3068 1109.53 Q69.2096 1107.77 69.2096 1106.08 Q69.2096 1103.33 67.2652 1101.59 Q65.3439 1099.85 62.2421 1099.85 Q60.043 1099.85 57.5893 1100.62 Q55.1588 1101.38 52.381 1102.93 L52.381 1098.21 Q55.2051 1097.08 57.6588 1096.5 Q60.1124 1095.92 62.1495 1095.92 Q67.5198 1095.92 70.7142 1098.6 Q73.9087 1101.29 73.9087 1105.78 Q73.9087 1107.91 73.0985 1109.83 Q72.3115 1111.73 70.205 1114.32 Q69.6263 1114.99 66.5245 1118.21 Q63.4226 1121.4 57.7745 1127.17 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M93.9086 1099.62 Q90.2975 1099.62 88.4688 1103.19 Q86.6632 1106.73 86.6632 1113.86 Q86.6632 1120.97 88.4688 1124.53 Q90.2975 1128.07 93.9086 1128.07 Q97.5428 1128.07 99.3483 1124.53 Q101.177 1120.97 101.177 1113.86 Q101.177 1106.73 99.3483 1103.19 Q97.5428 1099.62 93.9086 1099.62 M93.9086 1095.92 Q99.7187 1095.92 102.774 1100.53 Q105.853 1105.11 105.853 1113.86 Q105.853 1122.59 102.774 1127.19 Q99.7187 1131.78 93.9086 1131.78 Q88.0984 1131.78 85.0197 1127.19 Q81.9642 1122.59 81.9642 1113.86 Q81.9642 1105.11 85.0197 1100.53 Q88.0984 1095.92 93.9086 1095.92 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M66.5939 768.726 L54.7884 787.175 L66.5939 787.175 L66.5939 768.726 M65.367 764.652 L71.2466 764.652 L71.2466 787.175 L76.1772 787.175 L76.1772 791.064 L71.2466 791.064 L71.2466 799.212 L66.5939 799.212 L66.5939 791.064 L50.9921 791.064 L50.9921 786.55 L65.367 764.652 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M93.9086 767.731 Q90.2975 767.731 88.4688 771.295 Q86.6632 774.837 86.6632 781.967 Q86.6632 789.073 88.4688 792.638 Q90.2975 796.18 93.9086 796.18 Q97.5428 796.18 99.3483 792.638 Q101.177 789.073 101.177 781.967 Q101.177 774.837 99.3483 771.295 Q97.5428 767.731 93.9086 767.731 M93.9086 764.027 Q99.7187 764.027 102.774 768.633 Q105.853 773.217 105.853 781.967 Q105.853 790.694 102.774 795.3 Q99.7187 799.883 93.9086 799.883 Q88.0984 799.883 85.0197 795.3 Q81.9642 790.694 81.9642 781.967 Q81.9642 773.217 85.0197 768.633 Q88.0984 764.027 93.9086 764.027 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M64.3254 448.177 Q61.1773 448.177 59.3254 450.329 Q57.4967 452.482 57.4967 456.232 Q57.4967 459.959 59.3254 462.135 Q61.1773 464.288 64.3254 464.288 Q67.4735 464.288 69.3022 462.135 Q71.1541 459.959 71.1541 456.232 Q71.1541 452.482 69.3022 450.329 Q67.4735 448.177 64.3254 448.177 M73.6077 433.524 L73.6077 437.783 Q71.8485 436.95 70.0429 436.51 Q68.2606 436.07 66.5013 436.07 Q61.8717 436.07 59.418 439.195 Q56.9875 442.32 56.6402 448.64 Q58.006 446.626 60.0662 445.561 Q62.1263 444.473 64.6032 444.473 Q69.8115 444.473 72.8207 447.644 Q75.8531 450.792 75.8531 456.232 Q75.8531 461.556 72.705 464.774 Q69.5568 467.991 64.3254 467.991 Q58.33 467.991 55.1588 463.408 Q51.9875 458.802 51.9875 450.075 Q51.9875 441.88 55.8764 437.019 Q59.7652 432.135 66.3161 432.135 Q68.0754 432.135 69.8578 432.482 Q71.6633 432.83 73.6077 433.524 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M93.9086 435.839 Q90.2975 435.839 88.4688 439.404 Q86.6632 442.945 86.6632 450.075 Q86.6632 457.181 88.4688 460.746 Q90.2975 464.288 93.9086 464.288 Q97.5428 464.288 99.3483 460.746 Q101.177 457.181 101.177 450.075 Q101.177 442.945 99.3483 439.404 Q97.5428 435.839 93.9086 435.839 M93.9086 432.135 Q99.7187 432.135 102.774 436.742 Q105.853 441.325 105.853 450.075 Q105.853 458.802 102.774 463.408 Q99.7187 467.991 93.9086 467.991 Q88.0984 467.991 85.0197 463.408 Q81.9642 458.802 81.9642 450.075 Q81.9642 441.325 85.0197 436.742 Q88.0984 432.135 93.9086 432.135 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M63.7467 119.016 Q60.4134 119.016 58.4921 120.799 Q56.5939 122.581 56.5939 125.706 Q56.5939 128.831 58.4921 130.613 Q60.4134 132.396 63.7467 132.396 Q67.08 132.396 69.0013 130.613 Q70.9226 128.808 70.9226 125.706 Q70.9226 122.581 69.0013 120.799 Q67.1032 119.016 63.7467 119.016 M59.0708 117.026 Q56.0615 116.285 54.3717 114.225 Q52.7051 112.164 52.7051 109.202 Q52.7051 105.058 55.6449 102.651 Q58.6078 100.243 63.7467 100.243 Q68.9087 100.243 71.8485 102.651 Q74.7883 105.058 74.7883 109.202 Q74.7883 112.164 73.0985 114.225 Q71.4318 116.285 68.4457 117.026 Q71.8253 117.813 73.7003 120.104 Q75.5985 122.396 75.5985 125.706 Q75.5985 130.729 72.5198 133.414 Q69.4642 136.1 63.7467 136.1 Q58.0291 136.1 54.9504 133.414 Q51.8949 130.729 51.8949 125.706 Q51.8949 122.396 53.793 120.104 Q55.6912 117.813 59.0708 117.026 M57.3578 109.641 Q57.3578 112.327 59.0245 113.831 Q60.7143 115.336 63.7467 115.336 Q66.7559 115.336 68.4457 113.831 Q70.1587 112.327 70.1587 109.641 Q70.1587 106.956 68.4457 105.452 Q66.7559 103.947 63.7467 103.947 Q60.7143 103.947 59.0245 105.452 Q57.3578 106.956 57.3578 109.641 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip500)" d="M93.9086 103.947 Q90.2975 103.947 88.4688 107.512 Q86.6632 111.053 86.6632 118.183 Q86.6632 125.289 88.4688 128.854 Q90.2975 132.396 93.9086 132.396 Q97.5428 132.396 99.3483 128.854 Q101.177 125.289 101.177 118.183 Q101.177 111.053 99.3483 107.512 Q97.5428 103.947 93.9086 103.947 M93.9086 100.243 Q99.7187 100.243 102.774 104.85 Q105.853 109.433 105.853 118.183 Q105.853 126.91 102.774 131.516 Q99.7187 136.1 93.9086 136.1 Q88.0984 136.1 85.0197 131.516 Q81.9642 126.91 81.9642 118.183 Q81.9642 109.433 85.0197 104.85 Q88.0984 100.243 93.9086 100.243 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip502)" style="stroke:#009af9; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,1445.72 251.829,1445.72 299.233,1445.72 346.636,1445.72 394.04,1445.72 441.444,1445.72 488.847,1445.72 536.251,1445.72 583.654,1445.72 631.058,1445.72 678.461,1445.72 725.865,1445.72 773.269,1445.72 820.672,1445.72 868.076,1445.72 915.479,1445.72 962.883,1445.72 1010.29,1445.72 1057.69,1430.63 1105.09,1430.63 1152.5,1430.63 1199.9,1430.63 1247.3,1430.63 1294.71,1430.63 1342.11,1430.63 1389.52,1430.63 1436.92,1430.63 1484.32,1430.63 1531.73,1430.63 1579.13,1430.63 1626.53,1430.63 1673.94,1430.63 1721.34,1430.63 1768.74,1430.63 1816.15,1430.63 1863.55,1430.63 1910.95,1430.63 1958.36,1415.54 2005.76,1415.54 2053.17,1415.54 2100.57,1415.54 2147.97,1400.46 2195.38,1400.46 2242.78,1385.37 2290.18,1355.2 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#e26f46; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,1294.86 251.829,1294.86 299.233,1294.86 346.636,1294.86 394.04,1294.86 441.444,1294.86 488.847,1294.86 536.251,1294.86 583.654,1294.86 631.058,1294.86 678.461,1294.86 725.865,1294.86 773.269,1294.86 820.672,1294.86 868.076,1294.86 915.479,1294.86 962.883,1294.86 1010.29,1294.86 1057.69,1294.86 1105.09,1294.86 1152.5,1294.86 1199.9,1294.86 1247.3,1294.86 1294.71,1294.86 1342.11,1294.86 1389.52,1294.86 1436.92,1294.86 1484.32,1294.86 1531.73,1294.86 1579.13,1294.86 1626.53,1294.86 1673.94,1279.77 1721.34,1279.77 1768.74,1279.77 1816.15,1279.77 1863.55,1279.77 1910.95,1279.77 1958.36,1279.77 2005.76,1279.77 2053.17,1279.77 2100.57,1279.77 2147.97,1279.77 2195.38,1264.68 2242.78,1264.68 2290.18,1249.6 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#3da44d; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,1144 251.829,1144 299.233,1144 346.636,1144 394.04,1144 441.444,1144 488.847,1144 536.251,1144 583.654,1144 631.058,1144 678.461,1144 725.865,1144 773.269,1144 820.672,1144 868.076,1144 915.479,1144 962.883,1144 1010.29,1144 1057.69,1144 1105.09,1144 1152.5,1144 1199.9,1144 1247.3,1144 1294.71,1144 1342.11,1144 1389.52,1144 1436.92,1144 1484.32,1144 1531.73,1144 1579.13,1144 1626.53,1144 1673.94,1144 1721.34,1144 1768.74,1144 1816.15,1144 1863.55,1144 1910.95,1144 1958.36,1144 2005.76,1144 2053.17,1144 2100.57,1144 2147.97,1144 2195.38,1144 2242.78,1144 2290.18,1144 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#c271d2; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,993.136 251.829,993.136 299.233,993.136 346.636,993.136 394.04,993.136 441.444,993.136 488.847,993.136 536.251,993.136 583.654,993.136 631.058,993.136 678.461,993.136 725.865,993.136 773.269,993.136 820.672,993.136 868.076,993.136 915.479,993.136 962.883,993.136 1010.29,993.136 1057.69,993.136 1105.09,993.136 1152.5,993.136 1199.9,993.136 1247.3,993.136 1294.71,993.136 1342.11,993.136 1389.52,993.136 1436.92,993.136 1484.32,993.136 1531.73,993.136 1579.13,993.136 1626.53,993.136 1673.94,993.136 1721.34,993.136 1768.74,993.136 1816.15,993.136 1863.55,993.136 1910.95,993.136 1958.36,1008.22 2005.76,1008.22 2053.17,1008.22 2100.57,1008.22 2147.97,1008.22 2195.38,1023.31 2242.78,1023.31 2290.18,1038.39 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#ac8d18; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,842.276 251.829,842.276 299.233,842.276 346.636,842.276 394.04,842.276 441.444,842.276 488.847,842.276 536.251,842.276 583.654,842.276 631.058,842.276 678.461,842.276 725.865,842.276 773.269,842.276 820.672,842.276 868.076,842.276 915.479,842.276 962.883,842.276 1010.29,842.276 1057.69,842.276 1105.09,842.276 1152.5,842.276 1199.9,842.276 1247.3,842.276 1294.71,842.276 1342.11,842.276 1389.52,842.276 1436.92,842.276 1484.32,842.276 1531.73,857.362 1579.13,857.362 1626.53,857.362 1673.94,857.362 1721.34,857.362 1768.74,857.362 1816.15,857.362 1863.55,857.362 1910.95,857.362 1958.36,857.362 2005.76,872.448 2053.17,872.448 2100.57,872.448 2147.97,887.534 2195.38,887.534 2242.78,902.62 2290.18,932.792 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#00a9ad; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,691.416 251.829,691.416 299.233,691.416 346.636,691.416 394.04,691.416 441.444,691.416 488.847,691.416 536.251,691.416 583.654,691.416 631.058,691.416 678.461,691.416 725.865,691.416 773.269,691.416 820.672,691.416 868.076,691.416 915.479,691.416 962.883,691.416 1010.29,691.416 1057.69,691.416 1105.09,691.416 1152.5,691.416 1199.9,691.416 1247.3,706.502 1294.71,706.502 1342.11,706.502 1389.52,706.502 1436.92,706.502 1484.32,706.502 1531.73,706.502 1579.13,706.502 1626.53,706.502 1673.94,706.502 1721.34,706.502 1768.74,706.502 1816.15,721.588 1863.55,721.588 1910.95,721.588 1958.36,721.588 2005.76,736.674 2053.17,736.674 2100.57,736.674 2147.97,751.76 2195.38,766.846 2242.78,781.932 2290.18,812.104 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#ed5d92; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,540.556 251.829,540.556 299.233,540.556 346.636,540.556 394.04,540.556 441.444,540.556 488.847,540.556 536.251,540.556 583.654,540.556 631.058,540.556 678.461,540.556 725.865,540.556 773.269,540.556 820.672,540.556 868.076,540.556 915.479,540.556 962.883,555.642 1010.29,555.642 1057.69,555.642 1105.09,555.642 1152.5,555.642 1199.9,555.642 1247.3,555.642 1294.71,555.642 1342.11,555.642 1389.52,555.642 1436.92,555.642 1484.32,555.642 1531.73,555.642 1579.13,555.642 1626.53,555.642 1673.94,570.728 1721.34,570.728 1768.74,570.728 1816.15,570.728 1863.55,570.728 1910.95,585.814 1958.36,585.814 2005.76,585.814 2053.17,600.9 2100.57,615.986 2147.97,631.072 2195.38,646.158 2242.78,661.244 2290.18,706.502 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#c68125; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,389.696 251.829,389.696 299.233,389.696 346.636,389.696 394.04,389.696 441.444,389.696 488.847,389.696 536.251,389.696 583.654,389.696 631.058,389.696 678.461,389.696 725.865,404.782 773.269,404.782 820.672,404.782 868.076,404.782 915.479,404.782 962.883,404.782 1010.29,404.782 1057.69,404.782 1105.09,404.782 1152.5,404.782 1199.9,404.782 1247.3,404.782 1294.71,404.782 1342.11,404.782 1389.52,404.782 1436.92,404.782 1484.32,404.782 1531.73,419.868 1579.13,419.868 1626.53,419.868 1673.94,419.868 1721.34,419.868 1768.74,419.868 1816.15,434.954 1863.55,434.954 1910.95,434.954 1958.36,450.04 2005.76,450.04 2053.17,465.126 2100.57,480.212 2147.97,495.298 2195.38,510.384 2242.78,555.642 2290.18,600.9 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#00a98d; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,238.836 251.829,238.836 299.233,238.836 346.636,238.836 394.04,238.836 441.444,238.836 488.847,253.922 536.251,253.922 583.654,253.922 631.058,253.922 678.461,253.922 725.865,253.922 773.269,253.922 820.672,253.922 868.076,253.922 915.479,253.922 962.883,253.922 1010.29,253.922 1057.69,253.922 1105.09,253.922 1152.5,253.922 1199.9,253.922 1247.3,253.922 1294.71,253.922 1342.11,253.922 1389.52,269.008 1436.92,269.008 1484.32,269.008 1531.73,269.008 1579.13,269.008 1626.53,269.008 1673.94,284.094 1721.34,284.094 1768.74,284.094 1816.15,284.094 1863.55,299.18 1910.95,299.18 1958.36,314.266 2005.76,314.266 2053.17,329.352 2100.57,344.438 2147.97,359.524 2195.38,389.696 2242.78,434.954 2290.18,495.298 "></polyline>
+<polyline clip-path="url(#clip502)" style="stroke:#8e971d; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="204.426,87.9763 251.829,103.062 299.233,103.062 346.636,103.062 394.04,103.062 441.444,103.062 488.847,103.062 536.251,103.062 583.654,103.062 631.058,103.062 678.461,103.062 725.865,103.062 773.269,103.062 820.672,103.062 868.076,103.062 915.479,103.062 962.883,103.062 1010.29,103.062 1057.69,103.062 1105.09,103.062 1152.5,103.062 1199.9,103.062 1247.3,103.062 1294.71,118.148 1342.11,118.148 1389.52,118.148 1436.92,118.148 1484.32,118.148 1531.73,118.148 1579.13,118.148 1626.53,133.234 1673.94,133.234 1721.34,133.234 1768.74,148.32 1816.15,148.32 1863.55,148.32 1910.95,163.406 1958.36,163.406 2005.76,178.492 2053.17,193.578 2100.57,208.664 2147.97,238.836 2195.38,269.008 2242.78,314.266 2290.18,389.696 "></polyline>
+</svg>
+</div>
+</div>
+<p>You can see that the discreteness creates some jumpiness in the policy functions. As I said, other solution methods that use interpolation can be more efficient and will create smoother pictures, but since that is not the focus of this class we will use this simple solution method.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
