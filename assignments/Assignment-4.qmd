@@ -1,0 +1,104 @@
+---
+title: "Assignment 4: Income and Savings from the PSID"
+bibliography: ../references.bib
+---
+
+In this assignment we'll start working with [data](/data/abb_aea_data.csv) from the PSID. If you would like more details on how these data are constructed, you should refer to @ABB_2018.
+
+To begin, let's load the data and pull out the variables we are interested in using. These are person identifiers (`person`), year, total income (`y`), savings (`tot_assets1`) and age. You should bear in mind that it is by no means trivial to measure total income and total assets in these data. The variables we are looking at are the product of a lot of data cleaning and careful choices by the authors.
+
+```{julia}
+using CSV, DataFrames, DataFramesMeta, Statistics
+data = @chain begin 
+    CSV.read("../data/abb_aea_data.csv",DataFrame,missingstring = "NA")
+    @select :person :y :tot_assets1 :asset :age :year
+end
+
+```
+
+You are going to estimate the parameters of the income process in the [simple savings model](/models/savings.ipynb) by matching the implied variances and covariances from the model to those that are calculated from the data.
+
+Recall that the income process is:
+
+$$ \log(y_{it}) = \mu_{t} + \varepsilon_{it} $$
+
+where $\varepsilon_{it}$ is an AR1 process with autocorrelation $\rho$ and variance $\sigma^2_{\eta} / (1-\rho^2)$. Thus, there are only two parameters dictating the income process: ($\rho,\sigma_\eta$).
+
+## Setup
+
+To map to the model, assume that agents begin ($t=1$) when aged 25 and live for 40 years (so the "terminal" period is at age 64). Thus, we should filter the data to look at only these ages.
+
+```{julia}
+@subset!(data,:age.>=25,:age.<=64)
+```
+
+## Part 1
+
+Estimate the parameters $\mu$ using the sample mean of log income at each age. Create residuals $\hat{\varepsilon}_{it}$ for each individual in each period using these estimates.
+
+## Part 2
+
+The PSID data are taken biennially (every two years). Thus, write a function that takes a guess of $(\rho,\sigma_\eta)$ and calculates:
+
+1. The unconditional variance of the residual.
+2. The covariance of the residual with its two year lag.
+3. The covariance of the residual with its four year lag.
+
+## Part 3
+
+Calculate the sample equivalent of these moments from the data, and write a function that calculates the sum of squared differences between the data and those predicted by a particular choice of $(\rho,\sigma_\eta)$.
+
+If it helps, here is code to create the lags for income (you could adapt this code to create lags for the residuals you calculated in part 1).
+
+```{julia}
+d1 = @chain data begin
+    @select :year :person :y
+    @transform :year = :year .+ 2
+    @rename :ylag1 = :y
+end
+
+d2 = @chain data begin
+    @select :year :person :y
+    @transform :year = :year .+ 4
+    @rename :ylag2 = :y
+end
+
+data = @chain data begin
+    innerjoin(d1 , on=[:person,:year])
+    innerjoin(d2 , on=[:person,:year])
+end
+
+```
+
+An example of calculating covariances:
+
+```{julia}
+@chain data begin
+    @combine begin 
+        :c1 = cov(log.(:y),log.(:ylag1)) 
+        :c2 = cov(log.(:y),log.(:ylag2))
+    end
+end
+
+```
+
+## Part 4
+
+Now estimate the income process parameters by minimizing this weighted sum of squares (i.e. implement a minimum distance estimator with identity weighting matrix).
+
+## Part 5 
+
+Note that in this model:
+
+$$ \rho = \frac{\mathbb{C}(\varepsilon_{it},\varepsilon_{it-1})}{\mathbb{V}(\varepsilon_{it})} $$.
+
+Suppose that the true model is:
+
+$$ \log(y_{it}) = \mu_{t} + \varepsilon_{it} + \zeta_{it} $$
+
+where $\zeta_{it}$ is an additional shock to income that is completely iid (i.e. no persistence). Suppose we estimate the persistence parameter $\rho$ using the relationship above (which is now misspecified).
+
+$$ \hat{\rho} = \frac{\widehat{\mathbb{C}(\varepsilon_{it},\varepsilon_{it-1})}}{\widehat{\mathbb{V}(\varepsilon_{it})}} $$
+
+Does the population limit of our estimator over- or under-estimate $\rho$, the persistence in $\varepsilon$?
+

@@ -1,0 +1,93 @@
+---
+title: "Recitation 5: Simulating from the life-cycle model"
+---
+
+## Part 1
+
+Review the details of the simple [life-cycle savings model](/models/savings.ipynb). Below is all of the code to parameterize and solve that model.
+
+```{julia}
+using Distributions,Random
+using LinearAlgebra
+Φ(x) = cdf(Normal(),x)
+
+function tauchen(ρ,ση,Kϵ)
+    sd = ση/sqrt(1-ρ^2)
+    grid = range(-3sd,stop=3sd,length=Kϵ)
+    Π = zeros(Kϵ,Kϵ)
+    Δ = grid[2]-grid[1]
+    for j=1:Kϵ
+        Π[1,j] = Φ((grid[1] + Δ/2 - ρ*grid[j])/ση)
+        Π[end,j] = 1 - Φ((grid[end] - Δ/2 - ρ*grid[j])/ση)
+        for k=2:(Kϵ-1)
+            Π[k,j] = Φ((grid[k] + Δ/2 - ρ*grid[j])/ση) - Φ((grid[k] - Δ/2 - ρ*grid[j])/ση)
+        end
+    end
+    return Π,grid
+end
+
+Ka = 100
+Kϵ = 5
+agrid = LinRange(0,pars.μ[1] * pars.T,Ka) #<- is this a reasonable upper bound? We'll find out!
+Π,ϵgrid = tauchen(pars.ρ,pars.ση,Kϵ)
+pars = (;pars...,Ka,agrid,Π,ϵgrid,Kϵ)
+
+
+u(c,σ) = c^(1-σ) / (1-σ)
+function solve_max(V,t,iϵ,ia,pars)
+    (;agrid,ϵgrid,Π,σ,Ka,r,β) = pars
+    cash = exp(pars.μ[t] + ϵgrid[iϵ]) + agrid[ia]
+    amax = 0
+    vmax = -Inf
+    # turn this into a while loop!
+    loop = true
+    a = 1
+    while loop && a<Ka
+        c = cash - agrid[a] / (1+r)
+        if c>0
+            #@views v = u(c,σ) + β * dot(Π[:,iϵ],V[:,a,t+1])
+            v = u(c,σ)
+            for iϵ′ in axes(V,1)
+                v += β * Π[iϵ′,iϵ] * V[iϵ′,a,t+1]
+            end
+            if v>vmax
+                vmax = v
+                amax = a
+            end
+        else
+            loop = false
+        end
+        a += 1 #<- move one up the grid space
+    end
+    return amax,vmax
+end
+
+function iterate!(V,A,t,pars)
+    for ia in axes(V,2), iϵ in axes(V,1)
+        A[iϵ,ia,t],V[iϵ,ia,t] = solve_max(V,t,iϵ,ia,pars)
+    end
+end
+function terminal_values!(V,pars)
+    (;σ,ψ,agrid) = pars
+    for ia in axes(V,2), iϵ in axes(V,1)
+        V[iϵ,ia] = ψ * u(agrid[ia],σ)
+    end
+end
+
+function backward_induction!(V,A,pars)
+    (;ψ,σ,T,agrid) = pars
+    # set the values at T+1 (bequest motives)
+    @views terminal_values!(V[:,:,T+1],pars)
+    for t in reverse(1:T)
+        iterate!(V,A,t,pars)
+    end
+end
+
+V = zeros(pars.Kϵ,pars.Ka,pars.T+1)
+A = zeros(Int64,pars.Kϵ,pars.Ka,pars.T)
+backward_induction!(V,A,pars)
+@time backward_induction!(V,A,pars)
+
+
+
+```

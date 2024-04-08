@@ -55,7 +55,7 @@ Here is the proposed timeline of due dates. Submissions **must** be made through
 | [Assignment 1](assignments/Assignment-1.ipynb) | March 22 |
 | [Assignment 2](assignments/Assignment-2.ipynb) | March 29 | 
 | [Assignment 3](assignments/Assignment-3.ipynb) | April 5 | 
-| Assignment 4 | April 12 | 
+| [Assignment 4](assignments/Assignment-4.qmd) | April 12 | 
 | Assignment 5 | April 19 | 
 | Assignment 6 | April 26 | 
 | Assignment 7 | May 3 | 

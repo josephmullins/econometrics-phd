@@ -24,6 +24,7 @@ website:
           - assignments/Assignment-1.ipynb
           - assignments/Assignment-2.ipynb
           - assignments/Assignment-3.ipynb
+          - assignments/Assignment-4.qmd
       - data.qmd
 format:
   html:

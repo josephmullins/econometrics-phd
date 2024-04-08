@@ -42,7 +42,12 @@
 1. Credible inference problem.
 2. Data setup for search model and code log-likelihood.
 3. Estimation of search model and code standard errors.
-3. SMM est of search model. Or min distance?
+4. Minimum distance estimation of income processes.
+    - do it with and without a fixed effect
+    - how to estimate model with a fixed effect?
+
+5. SMM estimation of lifecycle model (w/ model fit)
+6. 
 4. MLE est of entry exit model? Or we could try matching transition probabilities? |X| x 2 x 2 vector?
 5. SMM est of entry exit model.
 6. Est income process. 
@@ -56,6 +61,7 @@
 - MLE est of entry model
 - SMM est of entry model
 - min dist estimation of income process (data?)
+- bootstrap standard errors??
 
 ----- Recitation Brainstorm ------
 - LATE and MTE
@@ -72,6 +78,26 @@
 R1: numerical maximization
 R2: search model and entry/exit model solution (?) (+ intro to search data? or likelihood for search model?) 
 R3: A warning for using auto differentiation + std errors for maximum likelihood + integration?
-R4: Code to simulate from search model.
-R5: 
+R4: Minimum distance estimation of income processes
+R5: Code to simulate
 R6: 
+
+
+# - for lifecycle savings, we need to:
+
+(1) solve model #<- in tutorial
+(2) simulate data from the model #<- s
+(3) estimate the income process (minimum distance routine or other)
+(4) evaluate model fit
+(5) bootstrap standard errors (or otherwise)
+
+# idea:
+A4: estimate income process with exta covariance term or fixed effect + bootstrap + weighting?
+R4: min distance + simulate data from model? (go through tutorial) 
+
+A5: estimate model
+R5: simulate data from model
+
+# idea:
+# R4: go through notes on model and simulation of income process. introduce data?
+# A4: write code to simulate data and calculate moments?
