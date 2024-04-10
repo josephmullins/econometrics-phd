@@ -121,7 +121,7 @@ We can make sure we're doing this correctly by checking:
 
 In principle, one can simulate draws from any distribution by simulating fraws from the uniform distribution using `rand()` and using the inverse cdf. To see this, note that for any random variable:
 
-$ F_{X}(X) \sim \text{unif}[0,1] $
+$$ F_{X}(X) \sim \text{unif}[0,1] $$
 
 and hence if $U\sim\text{unif}[0,1]$:
 
