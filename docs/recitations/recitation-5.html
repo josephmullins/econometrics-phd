@@ -276,7 +276,7 @@ window.Quarto = {
 <section id="part-1" class="level2">
 <h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
 <p>Review the details of the simple <a href="../models/savings.html">life-cycle savings model</a>. Today we’re only going to be thinking about the income process, but for the sake of completeness I include below all of the code to parameterize and solve that model.</p>
-<div id="482a54c2" class="cell" data-execution_count="1">
+<div id="6d15c376" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Distributions</span>,<span class="bu">Random</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Φ</span>(x) <span class="op">=</span> <span class="fu">cdf</span>(<span class="fu">Normal</span>(),x)</span>
@@ -358,7 +358,7 @@ window.Quarto = {
 <span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="fu">backward_induction!</span>(V,A,pars)</span>
 <span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="fu">backward_induction!</span>(V,A,pars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  0.010304 seconds</code></pre>
+<pre><code>  0.011196 seconds</code></pre>
 </div>
 </div>
 </section>
@@ -367,7 +367,7 @@ window.Quarto = {
 <p>Suppose that <span class="math inline">\(\pi^*\)</span> is the stationary distribution of <span class="math inline">\(\varepsilon\)</span>. It must obey:</p>
 <p><span class="math display">\[ \pi^* = \Pi \pi^*  \]</span></p>
 <p>where the <span class="math inline">\(k\)</span>th column of <span class="math inline">\(\Pi\)</span> gives the transition probabilities given that the current value is <span class="math inline">\(\varepsilon_{k}\)</span>. This is equivalent to <span class="math inline">\(\pi^*\)</span> being the eigenvector of <span class="math inline">\(\mathbf{I} - \Pi\)</span> that corresponds to an eigenvalue of 0.</p>
-<div id="f0783034" class="cell" data-execution_count="2">
+<div id="af050908" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">stat_dist</span>(Π)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    Kϵ <span class="op">=</span> <span class="fu">size</span>(Π,<span class="fl">1</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    vals, vec <span class="op">=</span> <span class="fu">eigen</span>(<span class="fu">I</span>(Kϵ) <span class="op">.-</span> Π)</span>
@@ -376,14 +376,14 @@ window.Quarto = {
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>π_stat <span class="op">=</span> <span class="fu">stat_dist</span>(Π)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>pars <span class="op">=</span> (;pars<span class="op">...</span>,π_stat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="21">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>(T = 45, β = 0.95, σ = 2, ρ = 0.9, ση = 0.1, μ = [2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0  …  2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0], ψ = 5.0, r = 0.05, Ka = 100, agrid = LinRange{Float64}(0.0, 90.0, 100), Π = [0.8490507777857362 0.019473727871012682 … 7.346962855655732e-17 3.459030953951908e-30; 0.15094537665867613 0.8961919626850798 … 7.260018586910001e-7 1.237828285826989e-15; … ; 1.2212453270876722e-15 7.260018586308092e-7 … 0.8961919626850798 0.15094537665867613; 0.0 1.1102230246251565e-16 … 0.019473727871012647 0.8490507777857362], ϵgrid = -0.6882472016116855:0.34412360080584276:0.6882472016116855, Kϵ = 5, π_stat = [0.03046350803405268, 0.23613279404893608, 0.46680739583402275, 0.23613279404893592, 0.03046350803405253])</code></pre>
 </div>
 </div>
 <p>We can make sure we’re doing this correctly by checking:</p>
-<div id="faad03e8" class="cell" data-execution_count="3">
+<div id="836b64d6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>π_stat <span class="op">.-</span> Π <span class="op">*</span> π_stat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="22">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>5-element Vector{Float64}:
   0.0
   2.7755575615628914e-17
@@ -398,9 +398,9 @@ window.Quarto = {
 <p>In principle, one can simulate draws from any distribution by simulating fraws from the uniform distribution using <code>rand()</code> and using the inverse cdf. To see this, note that for any random variable:</p>
 <p>$ F_{X}(X) [0,1] $</p>
 <p>and hence if <span class="math inline">\(U\sim\text{unif}[0,1]\)</span>:</p>
-<p><span class="math display">\[F_{X}^{-1}(U) \sim X \]</span></p>
+<p><span class="math display">\[ F_{X}^{-1}(U) \sim X \]</span></p>
 <p>Here we will make use of the <code>Distributions</code> package and the <code>Categorical</code> distribution for simulation.</p>
-<div id="04781c98" class="cell" data-execution_count="4">
+<div id="60781cb9" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this function simulates on path</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">simulate_shocks!</span>(ε,π_stat,Π)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    ε_current <span class="op">=</span> <span class="fu">rand</span>(π_stat)</span>
@@ -427,29 +427,29 @@ window.Quarto = {
 <section id="part-4-holding-simulation-error-fixed" class="level2">
 <h2 class="anchored" data-anchor-id="part-4-holding-simulation-error-fixed">Part 4: Holding Simulation Error Fixed</h2>
 <p>Now suppose we plan to use the simulated draws of <span class="math inline">\(\varepsilon\)</span> to calculate some moments to match to the data. For example, we could try to match the lagged covariance to lagged covariance in the data. In practice we won’t have to simulation to do this, but for the sake of argument, let’s pretend we do. We could write the function to calculate moments as:</p>
-<div id="126ccaee" class="cell" data-execution_count="5">
+<div id="e3f1d2dc" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">moments_ε</span>(ε,pars)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">simulate_shocks!</span>(ε,pars)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    ε_value <span class="op">=</span> pars.ϵgrid[ε]</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="fu">var</span>(ε_value[<span class="fl">1</span>,<span class="op">:</span>]) ; <span class="fu">cov</span>(ε_value[<span class="fl">2</span>,<span class="op">:</span>],ε_value[<span class="fl">1</span>,<span class="op">:</span>]) ; <span class="fu">cov</span>(ε_value[<span class="fl">3</span>,<span class="op">:</span>],ε_value[<span class="fl">1</span>,<span class="op">:</span>])]</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="24">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>moments_ε (generic function with 1 method)</code></pre>
 </div>
 </div>
 <p>But notice what happens when we call this function multiple times:</p>
-<div id="20d70a06" class="cell" data-execution_count="6">
+<div id="d742b6ad" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">moments_ε</span>(ε_sim,pars);</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">moments_ε</span>(ε_sim,pars);</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">moments_ε</span>(ε_sim,pars);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>moments_ε(ε_sim, pars) = [0.08183582955384454, 0.0763989030692967, 0.07092780297436987]
-moments_ε(ε_sim, pars) = [0.08185101782512397, 0.07615873852969106, 0.07167629996835763]
-moments_ε(ε_sim, pars) = [0.08779010652884715, 0.08091646450796355, 0.07426874802236051]</code></pre>
+<pre><code>moments_ε(ε_sim, pars) = [0.08379938825018456, 0.07916126990823771, 0.07335745174559641]
+moments_ε(ε_sim, pars) = [0.08603918363041882, 0.07991166543613555, 0.07491377491825767]
+moments_ε(ε_sim, pars) = [0.0837723341419682, 0.079504904545934, 0.07665900221495611]</code></pre>
 </div>
 </div>
 <p>The moments keep jumping around! This is going to be a problem if we want to match the simulated moments to ones we have calculated in the data. The simulation error is moving the goalposts around in ways that we can’t predict. The solution is to <em>fix simulation error</em> by fixing the seed of our pseudorandom number generator. To see how, let’s rewrite the function:</p>
-<div id="f5fccddd" class="cell" data-execution_count="7">
+<div id="429b706f" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">moments_ε</span>(ε,pars ; seed <span class="op">=</span> <span class="fl">202404</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Random</span>.<span class="fu">seed!</span>(seed)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">simulate_shocks!</span>(ε,pars)</span>

@@ -125,7 +125,7 @@ $ F_{X}(X) \sim \text{unif}[0,1] $
 
 and hence if $U\sim\text{unif}[0,1]$:
 
-$$F_{X}^{-1}(U) \sim X $$
+$$ F_{X}^{-1}(U) \sim X $$
 
 Here we will make use of the `Distributions` package and the `Categorical` distribution for simulation.
 
