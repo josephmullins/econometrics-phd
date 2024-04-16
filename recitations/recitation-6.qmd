@@ -184,4 +184,4 @@ se_mu = std(mu_b,dims=2)
 
 ## Exercise
 
-Try comparing the variance of these estimators using the estimated optimal weighting matrix to the identity matrix. Does it make an appreciable difference to the estimated distributino of the parameter estimates?
+Try comparing the variance of these estimators using the estimated optimal weighting matrix to the identity matrix. Does it make an appreciable difference to the estimated distribution of the parameter estimates?
