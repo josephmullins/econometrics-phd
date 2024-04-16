@@ -1,0 +1,187 @@
+---
+title: "Recitation 6: Introduction to the Bootstrap"
+bibliography: ../references.bib
+
+---
+
+We are going to try getting bootstrapped standard errors for our estimates of the income process parameters.
+
+## Setup: Loading the Data
+
+Nothing new here relative to previous weeks. We load the data and do some filtering.
+
+```{julia}
+using CSV, DataFrames, DataFramesMeta, Statistics
+data = @chain begin 
+    CSV.read("../data/abb_aea_data.csv",DataFrame,missingstring = "NA")
+    @select :person :y :tot_assets1 :asset :age :year
+    @subset :age.>=25 :age.<=64
+end
+
+```
+
+Here is a function to calculate $\hat{\mu}_{t}$:
+
+```{julia}
+function estimate_mu(data)
+    μ = @chain data begin
+        groupby(:age)
+        @combine :μ = mean(log.(:y))
+        @orderby :age
+        _.μ
+    end
+    return μ
+end
+
+μ_est = estimate_mu(data)
+
+```
+
+A function to calculate residuals and get lagged residuals:
+```{julia}
+
+function get_resids(data)
+
+    data = @chain data begin
+        groupby(:age)
+        @transform :resid = log.(:y) .- mean(log.(:y))
+    end
+
+    d1 = @chain data begin
+        @select :year :person :resid
+        @transform :year = :year .+ 2
+        @rename :rlag1 = :resid
+    end
+
+    d2 = @chain data begin
+        @select :year :person :resid
+        @transform :year = :year .+ 4
+        @rename :rlag2 = :resid
+    end
+
+    data = @chain data begin
+        innerjoin(d1 , on=[:person,:year])
+        innerjoin(d2 , on=[:person,:year])
+    end
+    return data
+end
+
+```
+
+Then finally a function to calculate the moments that we are going to target in the minimum distance step.
+
+```{julia}
+function get_moments(data)
+    data = get_resids(data)
+    return [var(data.resid), cov(data.resid,data.rlag1), cov(data.resid,data.rlag2)]
+end
+
+m = get_moments(data)
+```
+
+## Creating a boostrapped sample
+
+Recall from class that we have to be careful to sample from the bootstrap at the right unit level. Since we know that observations at the level of `person` are correlated, we have to sample on this variable with replacement. Here's a function to create a bootstrapped panel dataset by sampling individuals with replacement.
+
+```{julia}
+ 
+function draw_bootstrap_sample(data)
+    id = unique(data.person) #<- create a list of all person identifiers in the data
+    N = length(id)
+    id_boot = id[rand(1:N,N)] #<- sample individuals randomly N times with replacement
+    d = DataFrame(person = id_boot, id_boot = 1:N) #<- add a unique identified for each draw (:id_boot)
+    boot_data = innerjoin(d,data,on=:person) 
+    @transform!(boot_data,:id_old = :person, :person = :id_boot) #<- since we are creating lags using the person identified, we need this to be unique for each draw.
+    return boot_data
+end
+
+db = draw_bootstrap_sample(data)
+
+```
+
+## Bootstrapping for a Weighting Matrix
+
+Suppose we would like to weight out minimum distance criterion using the inverse of the variance for each statistic. A simple way to compute this is to use the bootstrap. Here is code to do that:
+
+```{julia}
+using Random
+function boot_moment_variance(data,B ; seed = 1010)
+    M = zeros(3,B)
+    Random.seed!(seed)
+    for b in axes(M,2)
+        db = draw_bootstrap_sample(data)
+        M[:,b] = get_moments(db)
+    end
+    V = cov(M')
+end
+
+V_mom = boot_moment_variance(data,100)
+
+```
+
+We could use the inverse of this matrix or just the inverse of the diagonal component.
+
+## Bootstrapping the Parameters
+
+To bootstrap the parameters we first need to write some simple code to estimate the income process.
+
+```{julia}
+using LinearAlgebra, Optim
+function model_moms(ρ,σ)
+    v = σ^2 / (1 - ρ^2)
+    return [v, ρ^2 * v, ρ^4 * v]
+end
+
+function min_distance_obj(x,m0,W)
+    m1 = model_moms(x[1],x[2])
+    dm = m1 .- m0
+    return dm' * W * dm
+end
+
+function estimate_income_process(data, W)
+    μ = estimate_mu(data)
+    m0 = get_moments(data)
+    res = optimize(x->min_distance_obj(x,m0,W),[0.9,0.1],Newton(),autodiff=:forward)
+    return (; μ, ρ = res.minimizer[1],ση = res.minimizer[2])
+end
+
+r = estimate_income_process(data,I(3))
+
+```
+
+Now we can apply the exact same routine as before. In this case, let's return the entire bootstrapped sample of parameters instead of just the variance.
+
+```{julia}
+
+function boot_parameters(data,B,W ; seed = 2020)
+    mu_b = zeros(40,B)
+    ρ_b = zeros(B)
+    σ_b = zeros(B)
+    Random.seed!(seed)
+    for b in eachindex(ρ_b)
+        db = draw_bootstrap_sample(data)
+        r = estimate_income_process(db,W)
+        mu_b[:,b] = r.μ
+        ρ_b[b] = r.ρ
+        σ_b[b] = r.ση
+    end
+    return mu_b, ρ_b, σ_b
+end
+
+W_opt = inv(V_mom)
+
+mu_b, ρ_b, σ_b = boot_parameters(data,100,W_opt)
+
+```
+
+This would give us standard errors:
+
+```{julia}
+se_mu = std(mu_b,dims=2)
+@show se_ρ = std(ρ_b)
+@show se_σ = std(σ_b)
+```
+
+## Exercise
+
+Try comparing the variance of these estimators using the estimated optimal weighting matrix to the identity matrix. Does it make an appreciable difference to the estimated distributino of the parameter estimates?
