@@ -1,0 +1,88 @@
+---
+title: "Recitation 7: Examining Entry and Exit Data"
+bibliography: ../references.bib
+
+---
+
+## Introducing the Data
+
+This recitation will provide a guide to the data you will use for your last homework assignment, where you will estimate the [dynamic duopoly model](/models/entry-exit.ipynb).
+
+We will use data from @dearing-blevins-2024. Let's see what it looks like:
+
+```{julia}
+using DataFrames, DataFramesMeta, CSV
+
+data = CSV.read("../data/clubstore_county.csv",DataFrame)
+
+```
+
+This is *market level panel data* that indicates the presence of three club stores (Sam's Club, Costco and BJ's) in each market and each year. The variable `active1` indicates the presence of firm 1 and so on. Similarly, the variable `lactive1` indicates if firm was active in the *previous* year. As you will recall, these lagged values are state variables for the *Markov Perfect Equilibrium*.
+
+The variable `pop` is a categorical variable that ranks the size of each market by population. This variable is the observable $x$ that we introduced in our description of the model.
+
+By plotting activity rates by this variable, we can get a sense of how it matters.
+
+```{julia}
+using StatsPlots, Statistics
+
+d = @chain data begin
+    groupby([:year,:pop])
+    @combine :number = mean(:active1 .+ :active2 .+ :active3) 
+    @transform :pop = string.(:pop)
+end
+@df d plot(:year,:number,group=:pop,title = "Average number of active firms by year and market size")
+
+```
+
+## Depicting entry and exit
+
+We can derive entry and exit indicators by comparing activity dummies with their lagged values. For example, for firm 1 entry patterns look like this:
+
+```{julia}
+@chain data begin
+    @subset :lactive1.==0
+    groupby(:pop)
+    @combine :entry = mean(:active1)
+    @df plot(:pop,:entry)
+end
+
+```
+
+And exit patterns look like this:
+```{julia}
+@chain data begin
+    @subset :lactive1.==1
+    groupby(:pop)
+    @combine :exit = mean(:active1.==0)
+    @df plot(:pop,:exit)
+end
+
+```
+
+## Mapping to the model
+
+An obvious problem is that there are three firms in the data and our model has only two firms. It would not be too difficult to extend the model to three firms but we have already jumped away from reality by assuming symmetry. For the purposes of the assignment let's ignore firm 3 and consider only firm 2.
+
+Recall that equillibrium is characterized by a symmetric policy function $p(x,a,a')$, the probability of being active given the market size $x$, the previous activity of the firm ($a$) and the previous activity of their competitor:
+
+```{julia}
+policies = @chain data begin
+    groupby([:pop,:lactive1,:lactive2])
+    @combine :p1 = mean(:active1) :p2 = mean(:active2) :num_obs = length(:active1)
+    @orderby :pop :lactive1 :lactive2
+end
+```
+
+In theory, this gives two separate estimates of the equilibrium choice probabilities (due to the assumed symmetry).
+
+## How do you want to estimate the model?
+
+There are five parameters in the model ($\phi_{0},\phi_{1},\phi_{2},\phi_{3},\phi_{4}$). There are so many ways to estimate these parameters. You could
+
+1. Target particular moments (i.e. mean rates of activity, entry, or exit by market size) by simulating decisions using the distribution of initial market states that is in the data.
+2. Many sensible moments could be calculated in the model directly using the choice probabilities $p$ that come from the model solution, so you could do minimum distance without needing to use simulation.
+3. One example of the above would be to simply do minimum distance on the estimated choice probabilities using choice probabilities at the model solution.
+4. You could also just do maximum likelihood.
+
+It will be completely up to you but you can use any remaining time in recitation to write down your plan for estimating the model and getting standard errors.

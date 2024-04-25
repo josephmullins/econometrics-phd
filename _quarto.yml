@@ -16,6 +16,7 @@ website:
           - recitations/recitation-4.ipynb
           - recitations/recitation-5.qmd
           - recitations/recitation-6.qmd
+          - recitations/recitation-7.qmd
       - text: Models
         menu:
           - models/search-model.ipynb
@@ -29,6 +30,8 @@ website:
           - assignments/Assignment-4.qmd
           - assignments/Assignment-5.qmd
           - assignments/Assignment-6.qmd
+          - assignments/Assignment-7.qmd
+
       - data.qmd
 format:
   html:

@@ -1,0 +1,10 @@
+---
+title: "Assignment 7: Estimating the Dynamic Duopoly Model"
+bibliography: ../references.bib
+---
+
+Write code to estimate the [dynamic duopoly model](/models/entry-exit.ipynb) using the club store data in @dearing-blevins-2024. Some notes:
+
+- You can feel free to directly use the [demonstration code](/models/entry-exit.ipynb) for solving the model given a set of parameters and a value of $x$. To estimate the model you will need to do this for each value of $x$ (i.e. the five values of `pop` in the data)
+- Whatever estimation method you choose, be sure to explain clearly your approach, including any weights you might need to choose.
+- Be sure to provide standard errors.
