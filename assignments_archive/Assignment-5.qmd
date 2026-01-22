@@ -1,0 +1,38 @@
+---
+title: "Assignment 5: Estimating the Savings Model"
+bibliography: ../references.bib
+---
+
+In this assignment you are going to estimate the [life-cycle savings model](../models/savings.ipynb) using indirect inference.
+
+# Part 1
+
+Re-use your code from last week's assignment to:
+
+1. Load the [PSID dataset](../data/abb_aea_data.csv) from @ABB_2018
+2. Produce a *first stage estimate* of the income process parameters $(\mu,\rho,\sigma_{\eta})$.
+
+Recall that we already made a modelling assumption on the ages at which the life-cycle "begins" and "ends".
+
+# Part 2
+
+Describe which statistics from the data you are going to try to match using the model. Write a function that takes the dataset and calculates these statistics.
+
+# Part 3
+
+Write a function that:
+
+1. Solves for optimal savings policies given the estimates $(\hat{\mu},\hat{\rho},\hat{\sigma}_\eta)$ and given a guess of the parameters $\beta$ and $\sigma$. You can [re-use the code](../models/savings.ipynb) from the model description or write your own.
+2. Simulates a panel dataset of income and savings outcomes $(y_{n,r,t},a_{n,r,t})_{n=1,r=1,t=1}^{N,R,T}$ $N\times R$ panels of length $T$ of income and savings outcomes where $R$ is the number of simulations per observation. Note that you will have to make an assumption on initial conditions for assets. You can assume whatever you like but do *be clear*.
+3. Calculates the same statistics from the simulated data as you have calculated from the real data.
+
+Note: it is typically best practice to separate work into individual functions. Divide it up in whatever way makes sense to you.
+
+# Part 4
+
+Write a function that calculates an indirect inference estimate by minimizing the difference between the model's implied statistics and those in the data. Two hints:
+
+1. You should use a minimization routine that does not require a derivative (such as Nelder-Mead), since the objective is likely not differentiable.
+2. You will need to fix the seed in your simulation so the objective does not "jump around" unnecessarily.
+
+For now, feel free to use the identity matrix as a weigting scheme in the indirect inference objective function. If you would prefer to use a different weighting scheme, also feel free.

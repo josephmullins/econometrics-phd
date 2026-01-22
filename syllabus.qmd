@@ -10,6 +10,10 @@ format:
 
 Welcome to this course! Here you'll find details on the syllabus.
 
+## Lecture Materials, Examples, and Exercises
+
+All lecture materials, examples, and exercise can be found in the [online text book](https://www.josephlyonmullins.com/structural-econometrics-julia/). This book is an ongoing work in progress, so thank you in advance for your patience as materials appear!
+
 ## Topics
 
 ### Identification, Credible Inference, and Marschak's Maxim
@@ -57,13 +61,13 @@ Here is the proposed timeline of due dates. Submissions **must** be made through
 
 | Assignment | Due Date |
 | ---------- | -------- |
-| [Assignment 1](assignments/Assignment-1.ipynb) | March 22 |
-| [Assignment 2](assignments/Assignment-2.ipynb) | March 29 | 
-| [Assignment 3](assignments/Assignment-3.ipynb) | April 5 | 
-| [Assignment 4](assignments/Assignment-4.qmd) | April 12 | 
-| [Assignment 5](assignments/Assignment-5.qmd) | April 19 | 
-| [Assignment 6](assignments/Assignment-6.qmd) | April 26 | 
-| [Assignment 7](assignments/Assignment-7.qmd) | May 3 | 
+| [Assignment 1](assignments/Assignment-1.qmd) | Jan 30 |
+| [Assignment 2](assignments/Assignment-2.qmd) | Feb 6 | 
+| [Assignment 3](assignments/Assignment-3.qmd) | Feb 13 | 
+| [Assignment 4](assignments/Assignment-4.qmd) | Feb 20 | 
+| [Assignment 5](assignments/Assignment-5.qmd) | Feb 27 | 
+| [Assignment 6](assignments/Assignment-6.qmd) | Mar 6 | 
+| [Assignment 7](assignments/Assignment-7.qmd) | Mar 20 | 
 
 ## Office Hours
 

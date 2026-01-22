@@ -1,0 +1,6 @@
+---
+title: "Assignment 6: Estimating the Savings Model with Standard Errors"
+bibliography: ../references.bib
+---
+
+Using the code you wrote last week to estimate the parameters of the model, now write a bootstrap routine to calculate standard errors for all of the parameters. Feel free to build on the code you worked with in recitation last week.

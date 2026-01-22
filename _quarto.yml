@@ -10,10 +10,10 @@ website:
         text: Syllabus
       - text: Recitations
         menu: 
-          - recitations/recitation-1.ipynb
+          - recitations/recitation-1.qmd
           - recitations/recitation-2.qmd
-          - recitations/recitation-3.ipynb
-          - recitations/recitation-4.ipynb
+          - recitations/recitation-3.qmd
+          - recitations/recitation-4.qmd
           - recitations/recitation-5.qmd
           - recitations/recitation-6.qmd
           - recitations/recitation-7.qmd
@@ -24,9 +24,9 @@ website:
           - models/savings.ipynb
       - text: Assignments
         menu:
-          - assignments/Assignment-1.ipynb
-          - assignments/Assignment-2.ipynb
-          - assignments/Assignment-3.ipynb
+          - assignments/Assignment-1.qmd
+          - assignments/Assignment-2.qmd
+          - assignments/Assignment-3.qmd
           - assignments/Assignment-4.qmd
           - assignments/Assignment-5.qmd
           - assignments/Assignment-6.qmd
