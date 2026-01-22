@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>assignment-7 – Applied Econometrics</title>
+<title>Assignment 3: Estimating a Search Model – Applied Econometrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -196,17 +225,73 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#part-1" id="toc-part-1" class="nav-link active" data-scroll-target="#part-1">Part 1</a></li>
+  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">Part 2</a></li>
+  <li><a href="#part-3" id="toc-part-3" class="nav-link" data-scroll-target="#part-3">Part 3</a></li>
+  <li><a href="#part-4" id="toc-part-4" class="nav-link" data-scroll-target="#part-4">Part 4</a></li>
+  <li><a href="#part-5" id="toc-part-5" class="nav-link" data-scroll-target="#part-5">Part 5</a></li>
+  <li><a href="#part-6" id="toc-part-6" class="nav-link" data-scroll-target="#part-6">Part 6</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Assignment 3: Estimating a Search Model</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
+
+<p>In this homework you are going to estimate the parameters of the search model for each demographic group <em>individually</em>. That is, you will <em>not</em> impose the parametric restrictions that mapped demographics <span class="math inline">\(X\)</span> to deeper parameters using the <span class="math inline">\(\gamma\)</span> vectors from last week.</p>
+<section id="part-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
+<p>Fix <span class="math inline">\(\sigma_\zeta\)</span> (the standard deviation of measurement error in log wages) to 0.05. Following your work from last week (and recitation this week)write a function that calculates the log-likelihood of a single month of data from the CPS given <span class="math inline">\((h,\delta,\mu,\sigma,w^*)\)</span> where <span class="math inline">\(w^*\)</span> is the reservation wage and <span class="math inline">\(h = \lambda\times(1-F_{W}(w^*;\mu,\sigma))\)</span>.</p>
+</section>
+<section id="part-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-2">Part 2</h2>
+<p>Use the log-likelihood function to get maximum likelihood estimates of <span class="math inline">\((\hat{h},\hat{\delta},\hat{\mu},\hat{\sigma},\hat{w^*})\)</span> for <em>white men with a college degree</em>.</p>
+<p>What is the advantage of estimating <span class="math inline">\(h\)</span> and <span class="math inline">\(w^*\)</span> directly instead of <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(b\)</span>?</p>
+</section>
+<section id="part-3" class="level2">
+<h2 class="anchored" data-anchor-id="part-3">Part 3</h2>
+<p>Back out the implied maximum likelihood estimates of <span class="math inline">\(\hat{\lambda}\)</span> and <span class="math inline">\(\hat{b}\)</span> as a function of the estimated parameters from part (1).</p>
+</section>
+<section id="part-4" class="level2">
+<h2 class="anchored" data-anchor-id="part-4">Part 4</h2>
+<p>Provide an estimate of the asymptotic variance of <span class="math inline">\((\hat{h},\hat{\delta},\hat{\mu},\hat{\sigma},\hat{w^*})\)</span> using the standard MLE formula.</p>
+</section>
+<section id="part-5" class="level2">
+<h2 class="anchored" data-anchor-id="part-5">Part 5</h2>
+<p>Recall that the delta method implies that if <span class="math inline">\(\hat{\theta}\)</span> is asymptotically normal with asymptotic variance <span class="math inline">\(V\)</span> then the vector-valued function <span class="math inline">\(F(\hat{\theta})\)</span> is also asymptotically normal with:</p>
+<p><span class="math display">\[ \sqrt{N}(F(\hat{\theta}) - F(\theta)) \rightarrow_{d} \mathcal{N}(0,\nabla_{\theta'}FV\nabla_{\theta}F') \]</span></p>
+<p>Use this fact to estimate the asymptotic variance of <span class="math inline">\((\hat{h},\hat{\delta},\hat{\mu},\hat{\sigma},\hat{w^*},\hat{\lambda},\hat{b})\)</span>.</p>
+</section>
+<section id="part-6" class="level2">
+<h2 class="anchored" data-anchor-id="part-6">Part 6</h2>
+<p>Now report all of your estimates and standard errors for this group. Repeat this exercise for each group.</p>
+<p>If we thought that the parametric relationships using <span class="math inline">\(\gamma\)</span> from <a href="../assignments/Assignment-2.ipynb">Homework 2</a> described the true values of the parameters for each group, how might we use these group-specific estimates to derive estimates of each <span class="math inline">\(\gamma\)</span>?</p>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

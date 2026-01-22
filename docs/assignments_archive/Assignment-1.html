@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>assignment-4 – Applied Econometrics</title>
+<title>Assignment 1 – Applied Econometrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -196,17 +225,80 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Assignment 1</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
+
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>Consider the following simple model of time allocation. Individual utility is given by:</p>
+<p><span class="math display">\[ U(C,L) = (\phi C^{\rho} + (1-\phi) L^{\rho})^{1/\rho} \]</span></p>
+<p>where <span class="math inline">\(L\)</span> is an aggregate leisure good composed of <span class="math inline">\(K\)</span> different activities:</p>
+<p><span class="math display">\[ L = \prod_{k=1}^{K}l_{k}^{\delta_{k}},\qquad \sum_{k}\delta_{k} = 1 \]</span></p>
+<p>In addition to these leisure activities, the agent may supply labor to the market at a wage rate of <span class="math inline">\(w\)</span>. Letting <span class="math inline">\(h_{k}\)</span> be hours, the time constraint is:</p>
+<p><span class="math display">\[ h_{k} + \sum_{k}l_{k} = 1 \]</span></p>
+<p>The model is static and the individual solves the following problem:</p>
+<p><span class="math display">\[ \max_{C,\{l_{k}\}_{k=1}^{K}} U(C,L) \]</span></p>
+<p>subject to the constraint:</p>
+<p><span class="math display">\[ C + w \left(\sum_{k} l_{k}\right) \leq w \]</span></p>
+</section>
+<section id="question-1" class="level2">
+<h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
+<p>Suppose you are interested in using this model to study the effects of a wage subsidy on labor supply.</p>
+<p>Notice that the model can be written as</p>
+<p><span class="math display">\[ \max_{C,h} U(wh,L^*(1-h)) \]</span></p>
+<p>where</p>
+<p><span class="math display">\[ L^*(1-h) = \max_{\{l_{k}\}_{k=1}^{K}} \prod_{k=1}^{K}l_{k}^{\delta_{k}} \]</span></p>
+<p>subject to <span class="math inline">\(\sum_{k}l_{k} = 1-h\)</span>. Given this simplification, what does Marschak’s Maxim (and common sense) suggest about what parameters need to be estimated here?</p>
+</section>
+<section id="question-2" class="level2">
+<h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
+<p>Based on your answer to the above, you simplify the model to the following specification:</p>
+<p><span class="math display">\[ h^* = \arg\max (\phi (wh)^{\rho} + (1-\phi) (1-h)^{\rho})^{1/\rho} \]</span></p>
+<p>and you derive the following relationship:</p>
+<p><span class="math display">\[ \log\left(\frac{C}{L}\right) =  \frac{1}{1-\rho}\log\left(\frac{\phi}{1-\phi}\right) + \frac{1}{1-\rho}\log(w) \]</span></p>
+<p>where <span class="math inline">\(C=wh^*\)</span> is total labor income and <span class="math inline">\(L=1-h^*\)</span> is non-market time.</p>
+<p>Suppose you have a cross-section of data <span class="math inline">\((C_{n},L_{n},W_{n})\)</span> where <span class="math inline">\(C_{n}\)</span> is labor market earnings, <span class="math inline">\(L_{n}\)</span> is non-market time, and <span class="math inline">\(W_{n}\)</span> is the wage-rate for person <span class="math inline">\(n\)</span>. This could be taken (for example) from the Outgoing Rotation Group of the CPS monthly survey.</p>
+<p>How does this model compare to what you are likely to see in the data?</p>
+</section>
+<section id="question-3" class="level2">
+<h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
+<p>Suppose now you augment the model to acommodate some randomness in how much individuals work by allowing for heterogeneity in preferences (<span class="math inline">\(\phi\)</span>):</p>
+<p><span class="math display">\[ \log\left(\frac{C}{L}\right) =  \frac{1}{1-\rho}\log\left(\frac{\phi_{n}}{1-\phi_{n}}\right) + \frac{1}{1-\rho}\log(w) \]</span></p>
+<p>What assumption do you need for an OLS regression of <span class="math inline">\(\log(C_{n}/L_{n})\)</span> on <span class="math inline">\(\log(W_{n})\)</span> to consistently recover the elasticity of labor supply, <span class="math inline">\(1/(1-\rho)\)</span>? Do you consider this credible? Why/why not?</p>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

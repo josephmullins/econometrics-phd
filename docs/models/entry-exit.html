@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Applied Econometrics - Symmetric Duopoly Model of Entry/Exit</title>
+<title>Symmetric Duopoly Model of Entry/Exit – Applied Econometrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,10 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -101,7 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -146,7 +146,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -156,38 +156,42 @@ window.Quarto = {
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-recitations" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-recitations" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Recitations</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-recitations">    
         <li>
     <a class="dropdown-item" href="../recitations/recitation-1.html">
- <span class="dropdown-text">Introduction to Julia, Automatic Differentiation and Optimization</span></a>
+ <span class="dropdown-text">recitation-1.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../recitations/recitation-2.html">
- <span class="dropdown-text">Recitation 2</span></a>
+ <span class="dropdown-text">recitation-2.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../recitations/recitation-3.html">
- <span class="dropdown-text">Recitation 3</span></a>
+ <span class="dropdown-text">recitation-3.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../recitations/recitation-4.html">
- <span class="dropdown-text">Some Hints and Tricks for Assignment 3</span></a>
+ <span class="dropdown-text">recitation-4.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../recitations/recitation-5.html">
- <span class="dropdown-text">Recitation 5: Simulating from the life-cycle model</span></a>
+ <span class="dropdown-text">recitation-5.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../recitations/recitation-6.html">
- <span class="dropdown-text">Recitation 6: Introduction to the Bootstrap</span></a>
+ <span class="dropdown-text">recitation-6.html</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../recitations/recitation-7.html">
+ <span class="dropdown-text">recitation-7.html</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-models" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-models" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Models</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-models">    
@@ -206,33 +210,37 @@ window.Quarto = {
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-assignments" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-assignments" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Assignments</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-assignments">    
         <li>
     <a class="dropdown-item" href="../assignments/Assignment-1.html">
- <span class="dropdown-text">Assignment 1</span></a>
+ <span class="dropdown-text">Assignment-1.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../assignments/Assignment-2.html">
- <span class="dropdown-text">Assignment 2: Setup for Estimating a Search Model</span></a>
+ <span class="dropdown-text">Assignment-2.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../assignments/Assignment-3.html">
- <span class="dropdown-text">Assignment 3: Estimating a Search Model</span></a>
+ <span class="dropdown-text">Assignment-3.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../assignments/Assignment-4.html">
- <span class="dropdown-text">Assignment 4: Income and Savings from the PSID</span></a>
+ <span class="dropdown-text">Assignment-4.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../assignments/Assignment-5.html">
- <span class="dropdown-text">Assignment 5: Estimating the Savings Model</span></a>
+ <span class="dropdown-text">Assignment-5.html</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../assignments/Assignment-6.html">
- <span class="dropdown-text">Assignment 6: Estimating the Savings Model with Standard Errors</span></a>
+ <span class="dropdown-text">Assignment-6.html</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../assignments/Assignment-7.html">
+ <span class="dropdown-text">Assignment-7.html</span></a>
   </li>  
     </ul>
   </li>
@@ -242,7 +250,7 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -256,12 +264,9 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#symmetric-duopoly-model-of-entryexit" id="toc-symmetric-duopoly-model-of-entryexit" class="nav-link active" data-scroll-target="#symmetric-duopoly-model-of-entryexit">Symmetric Duopoly Model of Entry/Exit</a>
-  <ul class="collapse">
-  <li><a href="#model-ingredients" id="toc-model-ingredients" class="nav-link" data-scroll-target="#model-ingredients">Model Ingredients</a></li>
+  <li><a href="#model-ingredients" id="toc-model-ingredients" class="nav-link active" data-scroll-target="#model-ingredients">Model Ingredients</a></li>
   <li><a href="#solving-the-firms-problem" id="toc-solving-the-firms-problem" class="nav-link" data-scroll-target="#solving-the-firms-problem">Solving the firm’s problem</a></li>
   <li><a href="#equilibrium" id="toc-equilibrium" class="nav-link" data-scroll-target="#equilibrium">Equilibrium</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -287,8 +292,6 @@ window.Quarto = {
 </header>
 
 
-<section id="symmetric-duopoly-model-of-entryexit" class="level1">
-<h1>Symmetric Duopoly Model of Entry/Exit</h1>
 <section id="model-ingredients" class="level2">
 <h2 class="anchored" data-anchor-id="model-ingredients">Model Ingredients</h2>
 <p>Here are the basic ingredients of the model:</p>
@@ -307,7 +310,7 @@ window.Quarto = {
 <p>The payoff to not entering is simply:</p>
 <p><span class="math display">\[{u}_{0}(x,a) = \phi_{4}a \]</span></p>
 <p>Before characterizing the solution to the firm’s problem, let’s code up these payoff functions:</p>
-<div id="cell-1" class="cell" data-execution_count="62">
+<div id="cell-2" class="cell" data-execution_count="62">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">u1</span>(x,a,j′,ϕ) <span class="op">=</span> ϕ[<span class="fl">1</span>] <span class="op">+</span> ϕ[<span class="fl">2</span>]<span class="op">*</span>x <span class="op">-</span> ϕ[<span class="fl">3</span>]j′ <span class="op">+</span> ϕ[<span class="fl">4</span>]<span class="fu">*</span>(<span class="fl">1</span><span class="op">-</span>a)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">u0</span>(a,ϕ) <span class="op">=</span> a <span class="op">*</span> ϕ[<span class="fl">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -343,7 +346,7 @@ a \phi_{4} + \epsilon_{0} + \beta [p(x,a',a)V(x,0,1) + (1-p(x,a',a))V(x,0,0)]\}
 <p>where <span class="math inline">\(\gamma\)</span> is the <a href="https://en.wikipedia.org/wiki/Euler%27s_constant">Euler-Mascheroni constant</a> and</p>
 <p><span class="math display">\[ p(x,a,a') = \frac{\exp(v_{1}(x,a,a'))}{\exp(v_{0}(x,a,a'))+\exp(v_{1}(x,a,a'))} \]</span></p>
 <p>Before we define equilibrium and think about solving the model, let’s quickly write up the mapping between the other firm’s choice probabilities and the choice values:</p>
-<div id="cell-3" class="cell" data-execution_count="63">
+<div id="cell-4" class="cell" data-execution_count="63">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixing x, assume that V is stored as a 2 x 2 array</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The argument p is the current guess of p(x,a',a)</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">choice_values</span>(x,a,p,V,ϕ,β)</span>
@@ -365,7 +368,7 @@ a \phi_{4} + \epsilon_{0} + \beta [p(x,a',a)V(x,0,1) + (1-p(x,a',a))V(x,0,0)]\}
 <li><span class="math inline">\(p\)</span> are the optimal choice probabilities of each firm given <span class="math inline">\(V\)</span> and given the other firm’s choice probabilities are <span class="math inline">\(p\)</span>.</li>
 </ol>
 <p>How should we solve for this symmetric equilibrium? We could try iterating on <span class="math inline">\(V\)</span> and <span class="math inline">\(p\)</span> as follows:</p>
-<div id="cell-6" class="cell" data-execution_count="64">
+<div id="cell-7" class="cell" data-execution_count="64">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># V is a 2x2 array with values</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p is a 2x2 array with choice probabilities</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">iterate_model</span>(V,p,x,ϕ,β)</span>
@@ -418,7 +421,7 @@ Iteration 700, error is 1.538467131467769e-10</code></pre>
 </div>
 <p>This seems to work! But notice that it takes a while for the iteration to converge. Also, unlike the single agent case, there is no guarantee that this iteration is always a contraction.</p>
 <p>We can also solve this model relatively easily using Newton’s Method and the magic of Automatic Differentiation. To do this, we’ll solve over the pair of choice-specific values <span class="math inline">\(v_{0}\)</span> and <span class="math inline">\(v_{1}\)</span> (these encode both values and choice probabilities) and store these values as a vector instead of an array:</p>
-<div id="cell-8" class="cell" data-execution_count="65">
+<div id="cell-9" class="cell" data-execution_count="65">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ForwardDiff</span>, <span class="bu">LinearAlgebra</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># this function returns V as a 2 x 2 array given the vector of choice specific values in V</span></span>
@@ -482,7 +485,7 @@ Iteration 6, error is 1.4210854715202004e-14</code></pre>
 </div>
 </div>
 <p>Let’s try timing each solution method to quickly compare:</p>
-<div id="cell-10" class="cell" data-execution_count="66">
+<div id="cell-11" class="cell" data-execution_count="66">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_model_newton</span>(<span class="fl">0</span>.,ϕ,β)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_by_iteration</span>(<span class="fl">0</span>.,ϕ,β)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -497,7 +500,7 @@ Iteration 6, error is 1.4210854715202004e-14</code></pre>
 </div>
 </div>
 <p>In this case Newton’s method is faster. Let’s double check that both methods return the same answer:</p>
-<div id="cell-12" class="cell" data-execution_count="67">
+<div id="cell-13" class="cell" data-execution_count="67">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>v0 <span class="op">=</span> <span class="fu">solve_model_newton</span>(<span class="fl">0</span>.,ϕ,β)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>V0,p <span class="op">=</span> <span class="fu">solve_by_iteration</span>(<span class="fl">0</span>.,ϕ,β)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">calc_p</span>(v0)</span>
@@ -512,7 +515,6 @@ Iteration 6, error is 1.4210854715202004e-14</code></pre>
 <p>If you play around with parameters, you will see how convergence times may change and that solution methods are not always stable, especially when choice probabilities in equilibrium are very close to one or zero.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -551,18 +553,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -594,7 +585,45 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -629,7 +658,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -677,7 +710,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

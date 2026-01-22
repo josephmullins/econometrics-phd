@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>assignment-3 – Applied Econometrics</title>
+<title>Assignment 5: Estimating the Savings Model – Applied Econometrics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -67,6 +87,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -196,19 +245,82 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#part-1" id="toc-part-1" class="nav-link active" data-scroll-target="#part-1">Part 1</a></li>
+  <li><a href="#part-2" id="toc-part-2" class="nav-link" data-scroll-target="#part-2">Part 2</a></li>
+  <li><a href="#part-3" id="toc-part-3" class="nav-link" data-scroll-target="#part-3">Part 3</a></li>
+  <li><a href="#part-4" id="toc-part-4" class="nav-link" data-scroll-target="#part-4">Part 4</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Assignment 5: Estimating the Savings Model</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In this assignment you are going to estimate the <a href="../models/savings.html">life-cycle savings model</a> using indirect inference.</p>
+<section id="part-1" class="level1">
+<h1>Part 1</h1>
+<p>Re-use your code from last week’s assignment to:</p>
+<ol type="1">
+<li>Load the <a href="../data/abb_aea_data.csv">PSID dataset</a> from <span class="citation" data-cites="ABB_2018">Arellano, Blundell, and Bonhomme (<a href="#ref-ABB_2018" role="doc-biblioref">2018</a>)</span></li>
+<li>Produce a <em>first stage estimate</em> of the income process parameters <span class="math inline">\((\mu,\rho,\sigma_{\eta})\)</span>.</li>
+</ol>
+<p>Recall that we already made a modelling assumption on the ages at which the life-cycle “begins” and “ends”.</p>
+</section>
+<section id="part-2" class="level1">
+<h1>Part 2</h1>
+<p>Describe which statistics from the data you are going to try to match using the model. Write a function that takes the dataset and calculates these statistics.</p>
+</section>
+<section id="part-3" class="level1">
+<h1>Part 3</h1>
+<p>Write a function that:</p>
+<ol type="1">
+<li>Solves for optimal savings policies given the estimates <span class="math inline">\((\hat{\mu},\hat{\rho},\hat{\sigma}_\eta)\)</span> and given a guess of the parameters <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\sigma\)</span>. You can <a href="../models/savings.html">re-use the code</a> from the model description or write your own.</li>
+<li>Simulates a panel dataset of income and savings outcomes <span class="math inline">\((y_{n,r,t},a_{n,r,t})_{n=1,r=1,t=1}^{N,R,T}\)</span> <span class="math inline">\(N\times R\)</span> panels of length <span class="math inline">\(T\)</span> of income and savings outcomes where <span class="math inline">\(R\)</span> is the number of simulations per observation. Note that you will have to make an assumption on initial conditions for assets. You can assume whatever you like but do <em>be clear</em>.</li>
+<li>Calculates the same statistics from the simulated data as you have calculated from the real data.</li>
+</ol>
+<p>Note: it is typically best practice to separate work into individual functions. Divide it up in whatever way makes sense to you.</p>
+</section>
+<section id="part-4" class="level1">
+<h1>Part 4</h1>
+<p>Write a function that calculates an indirect inference estimate by minimizing the difference between the model’s implied statistics and those in the data. Two hints:</p>
+<ol type="1">
+<li>You should use a minimization routine that does not require a derivative (such as Nelder-Mead), since the objective is likely not differentiable.</li>
+<li>You will need to fix the seed in your simulation so the objective does not “jump around” unnecessarily.</li>
+</ol>
+<p>For now, feel free to use the identity matrix as a weigting scheme in the indirect inference objective function. If you would prefer to use a different weighting scheme, also feel free.</p>
 
 
 
+</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-ABB_2018" class="csl-entry" role="listitem">
+Arellano, Manuel, Richard Blundell, and Stephane Bonhomme. 2018. <span>“Nonlinear Persistence and Partial Insurance: Income and Consumption Dynamics in the PSID.”</span> <em>AEA Papers and Proceedings</em> 108 (May): 281–86. <a href="https://doi.org/10.1257/pandp.20181049">https://doi.org/10.1257/pandp.20181049</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

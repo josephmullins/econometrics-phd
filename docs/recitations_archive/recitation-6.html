@@ -301,7 +301,7 @@ window.Quarto = {
 <section id="setup-loading-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="setup-loading-the-data">Setup: Loading the Data</h2>
 <p>Nothing new here relative to previous weeks. We load the data and do some filtering.</p>
-<div id="215e7709" class="cell" data-execution_count="1">
+<div id="a4c05eae" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CSV</span>, <span class="bu">DataFrames</span>, <span class="bu">DataFramesMeta</span>, <span class="bu">Statistics</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="pp">@chain</span> <span class="cf">begin</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    CSV.<span class="fu">read</span>(<span class="st">"../data/abb_aea_data.csv"</span>,DataFrame,missingstring <span class="op">=</span> <span class="st">"NA"</span>)</span>
@@ -572,7 +572,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Here is a function to calculate <span class="math inline">\(\hat{\mu}_{t}\)</span>:</p>
-<div id="6fd4c10b" class="cell" data-execution_count="2">
+<div id="839fa268" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">estimate_mu</span>(data)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    μ <span class="op">=</span> <span class="pp">@chain</span> data <span class="cf">begin</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">groupby</span>(<span class="op">:</span>age)</span>
@@ -615,7 +615,7 @@ window.Quarto = {
 </div>
 </div>
 <p>A function to calculate residuals and get lagged residuals:</p>
-<div id="132d30f5" class="cell" data-execution_count="3">
+<div id="0ac8d3a2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">get_resids</span>(data)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> <span class="pp">@chain</span> data <span class="cf">begin</span></span>
@@ -646,7 +646,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Then finally a function to calculate the moments that we are going to target in the minimum distance step.</p>
-<div id="7cba55bf" class="cell" data-execution_count="4">
+<div id="70cb533f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">get_moments</span>(data)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> <span class="fu">get_resids</span>(data)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="fu">var</span>(data.resid), <span class="fu">cov</span>(data.resid,data.rlag1), <span class="fu">cov</span>(data.resid,data.rlag2)]</span>
@@ -664,7 +664,7 @@ window.Quarto = {
 <section id="creating-a-boostrapped-sample" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-boostrapped-sample">Creating a boostrapped sample</h2>
 <p>Recall from class that we have to be careful to sample from the bootstrap at the right unit level. Since we know that observations at the level of <code>person</code> are correlated, we have to sample on this variable with replacement. Here’s a function to create a bootstrapped panel dataset by sampling individuals with replacement.</p>
-<div id="eaeaf7bf" class="cell" data-execution_count="5">
+<div id="d312cdbc" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">draw_bootstrap_sample</span>(data)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    id <span class="op">=</span> <span class="fu">unique</span>(data.person) <span class="co">#&lt;- create a list of all person identifiers in the data</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="fu">length</span>(id)</span>
@@ -677,7 +677,7 @@ window.Quarto = {
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> <span class="fu">draw_bootstrap_sample</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<div><div style="float: left;"><span>19168×8 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">19143 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
+<div><div style="float: left;"><span>19157×8 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">19132 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
@@ -706,30 +706,8 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
-<td style="text-align: right;">4136</td>
-<td style="text-align: right;">4136</td>
-<td style="text-align: right;">54000</td>
-<td style="text-align: right;">60000</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">98</td>
-<td style="text-align: right;">17118</td>
-</tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
-<td style="text-align: right;">4209</td>
-<td style="text-align: right;">4209</td>
-<td style="text-align: right;">54000</td>
-<td style="text-align: right;">60000</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">98</td>
-<td style="text-align: right;">17118</td>
-</tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
-<td style="text-align: right;">3569</td>
-<td style="text-align: right;">3569</td>
+<td style="text-align: right;">4564</td>
+<td style="text-align: right;">4564</td>
 <td style="text-align: right;">61283</td>
 <td style="text-align: right;">224000</td>
 <td style="text-align: right;">39283.0</td>
@@ -738,9 +716,31 @@ window.Quarto = {
 <td style="text-align: right;">12630</td>
 </tr>
 <tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">1324</td>
+<td style="text-align: right;">69501</td>
+<td style="text-align: right;">48000</td>
+<td style="text-align: right;">3600.0</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">2671</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
+<td style="text-align: right;">692</td>
+<td style="text-align: right;">692</td>
+<td style="text-align: right;">68000</td>
+<td style="text-align: right;">148000</td>
+<td style="text-align: right;">20000.0</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">13027</td>
+</tr>
+<tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
-<td style="text-align: right;">127</td>
-<td style="text-align: right;">127</td>
+<td style="text-align: right;">4687</td>
+<td style="text-align: right;">4687</td>
 <td style="text-align: right;">68000</td>
 <td style="text-align: right;">148000</td>
 <td style="text-align: right;">20000.0</td>
@@ -750,8 +750,8 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">5</td>
-<td style="text-align: right;">492</td>
-<td style="text-align: right;">492</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">2024</td>
 <td style="text-align: right;">93758</td>
 <td style="text-align: right;">80000</td>
 <td style="text-align: right;">160.0</td>
@@ -761,8 +761,8 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">6</td>
-<td style="text-align: right;">839</td>
-<td style="text-align: right;">839</td>
+<td style="text-align: right;">4673</td>
+<td style="text-align: right;">4673</td>
 <td style="text-align: right;">93758</td>
 <td style="text-align: right;">80000</td>
 <td style="text-align: right;">160.0</td>
@@ -772,19 +772,19 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
-<td style="text-align: right;">2632</td>
-<td style="text-align: right;">2632</td>
-<td style="text-align: right;">26581</td>
-<td style="text-align: right;">23300</td>
+<td style="text-align: right;">3847</td>
+<td style="text-align: right;">3847</td>
+<td style="text-align: right;">33785</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">35</td>
+<td style="text-align: right;">42</td>
 <td style="text-align: right;">98</td>
-<td style="text-align: right;">6475</td>
+<td style="text-align: right;">18332</td>
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">8</td>
-<td style="text-align: right;">132</td>
-<td style="text-align: right;">132</td>
+<td style="text-align: right;">4830</td>
+<td style="text-align: right;">4830</td>
 <td style="text-align: right;">33785</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0</td>
@@ -794,8 +794,8 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">9</td>
-<td style="text-align: right;">3775</td>
-<td style="text-align: right;">3775</td>
+<td style="text-align: right;">5097</td>
+<td style="text-align: right;">5097</td>
 <td style="text-align: right;">33785</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0</td>
@@ -805,8 +805,8 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">10</td>
-<td style="text-align: right;">881</td>
-<td style="text-align: right;">881</td>
+<td style="text-align: right;">3810</td>
+<td style="text-align: right;">3810</td>
 <td style="text-align: right;">55300</td>
 <td style="text-align: right;">311000</td>
 <td style="text-align: right;">5300.0</td>
@@ -816,30 +816,8 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">11</td>
-<td style="text-align: right;">3499</td>
-<td style="text-align: right;">3499</td>
-<td style="text-align: right;">55300</td>
-<td style="text-align: right;">311000</td>
-<td style="text-align: right;">5300.0</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">98</td>
-<td style="text-align: right;">3856</td>
-</tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">12</td>
-<td style="text-align: right;">4574</td>
-<td style="text-align: right;">4574</td>
-<td style="text-align: right;">55300</td>
-<td style="text-align: right;">311000</td>
-<td style="text-align: right;">5300.0</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">98</td>
-<td style="text-align: right;">3856</td>
-</tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">13</td>
-<td style="text-align: right;">283</td>
-<td style="text-align: right;">283</td>
+<td style="text-align: right;">586</td>
+<td style="text-align: right;">586</td>
 <td style="text-align: right;">40200</td>
 <td style="text-align: right;">105250</td>
 <td style="text-align: right;">0.0</td>
@@ -848,6 +826,28 @@ window.Quarto = {
 <td style="text-align: right;">19326</td>
 </tr>
 <tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">12</td>
+<td style="text-align: right;">4768</td>
+<td style="text-align: right;">4768</td>
+<td style="text-align: right;">40200</td>
+<td style="text-align: right;">105250</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">19326</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">13</td>
+<td style="text-align: right;">5030</td>
+<td style="text-align: right;">5030</td>
+<td style="text-align: right;">105000</td>
+<td style="text-align: right;">23500</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">20796</td>
+</tr>
+<tr class="even">
 <td style="text-align: right;">⋮</td>
 <td style="text-align: right;">⋮</td>
 <td style="text-align: right;">⋮</td>
@@ -859,136 +859,136 @@ window.Quarto = {
 <td style="text-align: right;">⋮</td>
 </tr>
 <tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19146</td>
+<td style="text-align: right;">3163</td>
+<td style="text-align: right;">3163</td>
+<td style="text-align: right;">84753</td>
+<td style="text-align: right;">7500</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">5762</td>
+</tr>
+<tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19147</td>
+<td style="text-align: right;">1550</td>
+<td style="text-align: right;">1550</td>
+<td style="text-align: right;">100489</td>
+<td style="text-align: right;">62000</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">110</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19148</td>
+<td style="text-align: right;">3438</td>
+<td style="text-align: right;">3438</td>
+<td style="text-align: right;">100489</td>
+<td style="text-align: right;">62000</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">110</td>
+</tr>
+<tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19149</td>
+<td style="text-align: right;">3020</td>
+<td style="text-align: right;">3020</td>
+<td style="text-align: right;">94000</td>
+<td style="text-align: right;">38000</td>
+<td style="text-align: right;">13500.0</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">3649</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19150</td>
+<td style="text-align: right;">4972</td>
+<td style="text-align: right;">4972</td>
+<td style="text-align: right;">94000</td>
+<td style="text-align: right;">38000</td>
+<td style="text-align: right;">13500.0</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">3649</td>
+</tr>
+<tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19151</td>
+<td style="text-align: right;">3036</td>
+<td style="text-align: right;">3036</td>
+<td style="text-align: right;">73180</td>
+<td style="text-align: right;">126000</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">2860</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19152</td>
+<td style="text-align: right;">4062</td>
+<td style="text-align: right;">4062</td>
+<td style="text-align: right;">73180</td>
+<td style="text-align: right;">126000</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">2860</td>
+</tr>
+<tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19153</td>
+<td style="text-align: right;">820</td>
+<td style="text-align: right;">820</td>
+<td style="text-align: right;">26527</td>
+<td style="text-align: right;">4700</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">8098</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19154</td>
+<td style="text-align: right;">4571</td>
+<td style="text-align: right;">4571</td>
+<td style="text-align: right;">26527</td>
+<td style="text-align: right;">4700</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">8098</td>
+</tr>
+<tr class="even">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19155</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">144026</td>
+<td style="text-align: right;">220000</td>
+<td style="text-align: right;">25.0</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">8954</td>
+</tr>
+<tr class="odd">
+<td class="rowNumber" style="text-align: right; font-weight: bold;">19156</td>
+<td style="text-align: right;">1353</td>
+<td style="text-align: right;">1353</td>
+<td style="text-align: right;">122665</td>
+<td style="text-align: right;">220000</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">12990</td>
+</tr>
+<tr class="even">
 <td class="rowNumber" style="text-align: right; font-weight: bold;">19157</td>
-<td style="text-align: right;">1639</td>
-<td style="text-align: right;">1639</td>
-<td style="text-align: right;">188000</td>
-<td style="text-align: right;">430000</td>
-<td style="text-align: right;">31000.0</td>
-<td style="text-align: right;">43</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">3405</td>
-</tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19158</td>
-<td style="text-align: right;">5136</td>
-<td style="text-align: right;">5136</td>
-<td style="text-align: right;">188000</td>
-<td style="text-align: right;">430000</td>
-<td style="text-align: right;">31000.0</td>
-<td style="text-align: right;">43</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">3405</td>
-</tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19159</td>
-<td style="text-align: right;">2771</td>
-<td style="text-align: right;">2771</td>
-<td style="text-align: right;">95148</td>
-<td style="text-align: right;">6300</td>
+<td style="text-align: right;">4819</td>
+<td style="text-align: right;">4819</td>
+<td style="text-align: right;">57000</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0</td>
-<td style="text-align: right;">33</td>
+<td style="text-align: right;">26</td>
 <td style="text-align: right;">108</td>
-<td style="text-align: right;">29191</td>
-</tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19160</td>
-<td style="text-align: right;">2289</td>
-<td style="text-align: right;">2289</td>
-<td style="text-align: right;">73180</td>
-<td style="text-align: right;">126000</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">58</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">2860</td>
-</tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19161</td>
-<td style="text-align: right;">3838</td>
-<td style="text-align: right;">3838</td>
-<td style="text-align: right;">73180</td>
-<td style="text-align: right;">126000</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">58</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">2860</td>
-</tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19162</td>
-<td style="text-align: right;">1403</td>
-<td style="text-align: right;">1403</td>
-<td style="text-align: right;">115887</td>
-<td style="text-align: right;">241000</td>
-<td style="text-align: right;">21346.0</td>
-<td style="text-align: right;">62</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">6617</td>
-</tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19163</td>
-<td style="text-align: right;">2895</td>
-<td style="text-align: right;">2895</td>
-<td style="text-align: right;">128600</td>
-<td style="text-align: right;">98000</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">626</td>
-</tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19164</td>
-<td style="text-align: right;">2898</td>
-<td style="text-align: right;">2898</td>
-<td style="text-align: right;">144026</td>
-<td style="text-align: right;">220000</td>
-<td style="text-align: right;">25.0</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">8954</td>
-</tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19165</td>
-<td style="text-align: right;">3471</td>
-<td style="text-align: right;">3471</td>
-<td style="text-align: right;">144026</td>
-<td style="text-align: right;">220000</td>
-<td style="text-align: right;">25.0</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">8954</td>
-</tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19166</td>
-<td style="text-align: right;">5190</td>
-<td style="text-align: right;">5190</td>
-<td style="text-align: right;">55000</td>
-<td style="text-align: right;">69000</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">8782</td>
-</tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19167</td>
-<td style="text-align: right;">1734</td>
-<td style="text-align: right;">1734</td>
-<td style="text-align: right;">74000</td>
-<td style="text-align: right;">-50000</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">11085</td>
-</tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">19168</td>
-<td style="text-align: right;">2373</td>
-<td style="text-align: right;">2373</td>
-<td style="text-align: right;">74000</td>
-<td style="text-align: right;">-50000</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">11085</td>
+<td style="text-align: right;">13535</td>
 </tr>
 </tbody>
 </table>
@@ -999,7 +999,7 @@ window.Quarto = {
 <section id="bootstrapping-for-a-weighting-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="bootstrapping-for-a-weighting-matrix">Bootstrapping for a Weighting Matrix</h2>
 <p>Suppose we would like to weight out minimum distance criterion using the inverse of the variance for each statistic. A simple way to compute this is to use the bootstrap. Here is code to do that:</p>
-<div id="cfc169cf" class="cell" data-execution_count="6">
+<div id="39653580" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">boot_moment_variance</span>(data,B ; seed <span class="op">=</span> <span class="fl">1010</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    M <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">3</span>,B)</span>
@@ -1024,7 +1024,7 @@ window.Quarto = {
 <section id="bootstrapping-the-parameters" class="level2">
 <h2 class="anchored" data-anchor-id="bootstrapping-the-parameters">Bootstrapping the Parameters</h2>
 <p>To bootstrap the parameters we first need to write some simple code to estimate the income process.</p>
-<div id="04298b5a" class="cell" data-execution_count="7">
+<div id="4f88e65c" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">Optim</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">model_moms</span>(ρ,σ)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> σ<span class="op">^</span><span class="fl">2</span> <span class="op">/</span> (<span class="fl">1</span> <span class="op">-</span> ρ<span class="op">^</span><span class="fl">2</span>)</span>
@@ -1050,7 +1050,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Now we can apply the exact same routine as before. In this case, let’s return the entire bootstrapped sample of parameters instead of just the variance.</p>
-<div id="453a981a" class="cell" data-execution_count="8">
+<div id="63da9c03" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">boot_parameters</span>(data,B,W ; seed <span class="op">=</span> <span class="fl">2020</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    mu_b <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">40</span>,B)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    ρ_b <span class="op">=</span> <span class="fu">zeros</span>(B)</span>
@@ -1074,7 +1074,7 @@ window.Quarto = {
 </div>
 </div>
 <p>This would give us standard errors:</p>
-<div id="cdfe1a60" class="cell" data-execution_count="9">
+<div id="b478b9e0" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>se_mu <span class="op">=</span> <span class="fu">std</span>(mu_b,dims<span class="op">=</span><span class="fl">2</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> se_ρ <span class="op">=</span> <span class="fu">std</span>(ρ_b)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> se_σ <span class="op">=</span> <span class="fu">std</span>(σ_b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
