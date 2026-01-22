@@ -1,0 +1,6 @@
+# Recitation 1
+
+Agenda:
+
+1. Work through the Appendix on [Automatic Differentiation](https://www.josephlyonmullins.com/structural-econometrics-julia/autodiff.html)
+2. With any spare time: review the numerical solution to the [entry-exit model](https://www.josephlyonmullins.com/structural-econometrics-julia/models/entry-exit.html) to see another application of automatic differentiation.

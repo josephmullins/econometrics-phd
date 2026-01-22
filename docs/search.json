@@ -551,5 +551,12 @@
     "title": "Assignment 7: Estimating the Dynamic Duopoly Model",
     "section": "",
     "text": "Write code to estimate the dynamic duopoly model using the club store data in Dearing and Blevins (2024). Some notes:\n\nYou can feel free to directly use the demonstration code for solving the model given a set of parameters and a value of \\(x\\). To estimate the model you will need to do this for each value of \\(x\\) (i.e. the five values of pop in the data)\nWhatever estimation method you choose, be sure to explain clearly your approach, including any weights you might need to choose.\nBe sure to provide standard errors.\n\n\n\n\n\nReferences\n\nDearing, Adam, and Jason R. Blevins. 2024. “Efficient and Convergent Sequential Pseudo-Likelihood Estimation of Dynamic Discrete Games.” Review of Economic Studies."
+  },
+  {
+    "objectID": "recitations/recitation-1.html",
+    "href": "recitations/recitation-1.html",
+    "title": "Recitation 1",
+    "section": "",
+    "text": "Recitation 1\nAgenda:\n\nWork through the Appendix on Automatic Differentiation\nWith any spare time: review the numerical solution to the entry-exit model to see another application of automatic differentiation."
   }
 ]
