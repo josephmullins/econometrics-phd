@@ -25,7 +25,7 @@
     "href": "index.html#assessment",
     "title": "Syllabus",
     "section": "Assessment",
-    "text": "Assessment\nThere will be 7 problem sets. Your best 5 of these 7 problem sets will be worth 20%. Hence, you can skip two if you want.\nHere is the proposed timeline of due dates. Submissions must be made through Canvas as a notebook (e.g. jupyter or quarto) formatted to html with printed output.\n\n\n\nAssignment\nDue Date\n\n\n\n\nAssignment 1\nMarch 22\n\n\nAssignment 2\nMarch 29\n\n\nAssignment 3\nApril 5\n\n\nAssignment 4\nApril 12\n\n\nAssignment 5\nApril 19\n\n\nAssignment 6\nApril 26\n\n\nAssignment 7\nMay 3"
+    "text": "Assessment\nThere will be 7 problem sets. Your best 5 of these 7 problem sets will be worth 20%. Hence, you can skip two if you want.\nHere is the proposed timeline of due dates. Submissions must be made through Canvas as a notebook (e.g. jupyter or quarto) formatted to html with printed output.\n\n\n\nAssignment\nDue Date\n\n\n\n\nAssignment 1\nJan 30\n\n\nAssignment 2\nFeb 6\n\n\nAssignment 3\nFeb 13\n\n\nAssignment 4\nFeb 20\n\n\nAssignment 5\nFeb 27\n\n\nAssignment 6\nMar 6\n\n\nAssignment 7\nMar 20"
   },
   {
     "objectID": "index.html#office-hours",
@@ -544,5 +544,12 @@
     "title": "Assignment 7: Estimating the Dynamic Duopoly Model",
     "section": "",
     "text": "Write code to estimate the dynamic duopoly model using the club store data in Dearing and Blevins (2024). Some notes:\n\nYou can feel free to directly use the demonstration code for solving the model given a set of parameters and a value of \\(x\\). To estimate the model you will need to do this for each value of \\(x\\) (i.e. the five values of pop in the data)\nWhatever estimation method you choose, be sure to explain clearly your approach, including any weights you might need to choose.\nBe sure to provide standard errors.\n\n\n\n\n\nReferences\n\nDearing, Adam, and Jason R. Blevins. 2024. “Efficient and Convergent Sequential Pseudo-Likelihood Estimation of Dynamic Discrete Games.” Review of Economic Studies."
+  },
+  {
+    "objectID": "index.html#lecture-materials-examples-and-exercises",
+    "href": "index.html#lecture-materials-examples-and-exercises",
+    "title": "Syllabus",
+    "section": "Lecture Materials, Examples, and Exercises",
+    "text": "Lecture Materials, Examples, and Exercises\nAll lecture materials, examples, and exercise can be found in the online text book. This book is an ongoing work in progress, so thank you in advance for your patience as materials appear!"
   }
 ]
