@@ -558,5 +558,12 @@
     "title": "Recitation 1",
     "section": "",
     "text": "Recitation 1\nAgenda:\n\nWork through the Appendix on Automatic Differentiation\nWith any spare time: review the numerical solution to the entry-exit model to see another application of automatic differentiation."
+  },
+  {
+    "objectID": "assignments/Assignment-1.html",
+    "href": "assignments/Assignment-1.html",
+    "title": "Assignment 1",
+    "section": "",
+    "text": "Assignment 1\nComplete Exercise 6.1 from the lecture notes.\nReminder: please submit your solutions in .html or .pdf format on Canvas. The due date is suggestive, but it is in your interest to stay on schedule, so that you don’t fall behind."
   }
 ]

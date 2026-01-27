@@ -1,0 +1,5 @@
+# Assignment 1
+
+Complete [Exercise 6.1](http://www.josephlyonmullins.com/structural-econometrics-julia/why_models.html#exercises) from the lecture notes.
+
+**Reminder**: please submit your solutions in .html or .pdf format on Canvas. The due date is suggestive, but it is in your interest to stay on schedule, so that you don't fall behind.
