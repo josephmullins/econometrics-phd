@@ -1,0 +1,6 @@
+# Recitation 2
+
+Agenda:
+
+1. Continue / finish agenda from [Recitation 1](recitation-2.qmd).
+2. If time, work through [one or two examples](https://www.josephlyonmullins.com/structural-econometrics-julia/why_models.html#marschaks-maxim) of Marschak's maxim at work.
