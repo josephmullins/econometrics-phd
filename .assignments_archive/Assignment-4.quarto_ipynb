@@ -1,0 +1,170 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Assignment 4: Income and Savings from the PSID\"\n",
+        "bibliography: ../references.bib\n",
+        "---\n",
+        "\n",
+        "\n",
+        "In this assignment we'll start working with [data](/data/abb_aea_data.csv) from the PSID. If you would like more details on how these data are constructed, you should refer to @ABB_2018.\n",
+        "\n",
+        "To begin, let's load the data and pull out the variables we are interested in using. These are person identifiers (`person`), year, total income (`y`), savings (`tot_assets1`) and age. You should bear in mind that it is by no means trivial to measure total income and total assets in these data. The variables we are looking at are the product of a lot of data cleaning and careful choices by the authors.\n"
+      ],
+      "id": "780fe4c3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "using CSV, DataFrames, DataFramesMeta, Statistics\n",
+        "data = @chain begin \n",
+        "    CSV.read(\"../data/abb_aea_data.csv\",DataFrame,missingstring = \"NA\")\n",
+        "    @select :person :y :tot_assets1 :asset :age :year\n",
+        "end"
+      ],
+      "id": "12b764f0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "You are going to estimate the parameters of the income process in the [simple savings model](/models/savings.ipynb) by matching the implied variances and covariances from the model to those that are calculated from the data.\n",
+        "\n",
+        "Recall that the income process is:\n",
+        "\n",
+        "$$ \\log(y_{it}) = \\mu_{t} + \\varepsilon_{it} $$\n",
+        "\n",
+        "where $\\varepsilon_{it}$ is an AR1 process with autocorrelation $\\rho$ and variance $\\sigma^2_{\\eta} / (1-\\rho^2)$. Thus, there are only two parameters dictating the income process: ($\\rho,\\sigma_\\eta$).\n",
+        "\n",
+        "## Setup\n",
+        "\n",
+        "To map to the model, assume that agents begin ($t=1$) when aged 25 and live for 40 years (so the \"terminal\" period is at age 64). Thus, we should filter the data to look at only these ages.\n"
+      ],
+      "id": "059b8f62"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "@subset!(data,:age.>=25,:age.<=64)"
+      ],
+      "id": "f3eb6779",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Part 1\n",
+        "\n",
+        "Estimate the parameters $\\mu$ using the sample mean of log income at each age. Create residuals $\\hat{\\varepsilon}_{it}$ for each individual in each period using these estimates.\n",
+        "\n",
+        "## Part 2\n",
+        "\n",
+        "The PSID data are taken biennially (every two years). Thus, write a function that takes a guess of $(\\rho,\\sigma_\\eta)$ and calculates:\n",
+        "\n",
+        "1. The unconditional variance of the residual.\n",
+        "2. The covariance of the residual with its two year lag.\n",
+        "3. The covariance of the residual with its four year lag.\n",
+        "\n",
+        "## Part 3\n",
+        "\n",
+        "Calculate the sample equivalent of these moments from the data, and write a function that calculates the sum of squared differences between the data and those predicted by a particular choice of $(\\rho,\\sigma_\\eta)$.\n",
+        "\n",
+        "If it helps, here is code to create the lags for income (you could adapt this code to create lags for the residuals you calculated in part 1).\n"
+      ],
+      "id": "39413e7a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "d1 = @chain data begin\n",
+        "    @select :year :person :y\n",
+        "    @transform :year = :year .+ 2\n",
+        "    @rename :ylag1 = :y\n",
+        "end\n",
+        "\n",
+        "d2 = @chain data begin\n",
+        "    @select :year :person :y\n",
+        "    @transform :year = :year .+ 4\n",
+        "    @rename :ylag2 = :y\n",
+        "end\n",
+        "\n",
+        "data = @chain data begin\n",
+        "    innerjoin(d1 , on=[:person,:year])\n",
+        "    innerjoin(d2 , on=[:person,:year])\n",
+        "end"
+      ],
+      "id": "06301258",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "An example of calculating covariances:\n"
+      ],
+      "id": "8a3233c9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "@chain data begin\n",
+        "    @combine begin \n",
+        "        :c1 = cov(log.(:y),log.(:ylag1)) \n",
+        "        :c2 = cov(log.(:y),log.(:ylag2))\n",
+        "    end\n",
+        "end"
+      ],
+      "id": "a84fbd76",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Part 4\n",
+        "\n",
+        "Now estimate the income process parameters by minimizing this weighted sum of squares (i.e. implement a minimum distance estimator with identity weighting matrix).\n",
+        "\n",
+        "## Part 5 \n",
+        "\n",
+        "Note that in this model:\n",
+        "\n",
+        "$$ \\rho = \\frac{\\mathbb{C}(\\varepsilon_{it},\\varepsilon_{it-1})}{\\mathbb{V}(\\varepsilon_{it})} $$.\n",
+        "\n",
+        "Suppose that the true model is:\n",
+        "\n",
+        "$$ \\log(y_{it}) = \\mu_{t} + \\varepsilon_{it} + \\zeta_{it} $$\n",
+        "\n",
+        "where $\\zeta_{it}$ is an additional shock to income that is completely iid (i.e. no persistence). Suppose we estimate the persistence parameter $\\rho$ using the relationship above (which is now misspecified).\n",
+        "\n",
+        "$$ \\hat{\\rho} = \\frac{\\widehat{\\mathbb{C}(\\hat{\\varepsilon}_{it},\\hat{\\varepsilon}_{it-1})}}{\\widehat{\\mathbb{V}(\\hat{\\varepsilon}_{it})}} $$\n",
+        "\n",
+        "Does the population limit of our estimator over- or under-estimate $\\rho$, the persistence in $\\varepsilon$?\n"
+      ],
+      "id": "ff7330a0"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "julia-1.11",
+      "language": "julia",
+      "display_name": "Julia 1.11.3",
+      "path": "/Users/mullinsj/Library/Jupyter/kernels/julia-1.11"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
