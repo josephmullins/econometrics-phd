@@ -1,0 +1,8 @@
+# Recitation 3
+
+Agenda:
+
+1. Review the [solution method](https://www.josephlyonmullins.com/structural-econometrics-julia/models/search.html#numerical-model-solution) for the search model.
+2. Review the estimation exercise in [Example 7.1](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/identification_roy.html#identification-with-exclusion-restrictions)
+3. Review the CPS data and code in [Example 8.1](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/identification_search.html#data) 
+4. If time: start thinking about how you might code up the log likelihood of the search model without any heterogeneity.

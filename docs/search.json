@@ -173,5 +173,12 @@
     "title": "Syllabus",
     "section": "Office Hours",
     "text": "Office Hours\nI will provide a link on Canvas to sign up for my weekly office hours."
+  },
+  {
+    "objectID": "recitations/recitation-3.html",
+    "href": "recitations/recitation-3.html",
+    "title": "Recitation 3",
+    "section": "",
+    "text": "Recitation 3\nAgenda:\n\nReview the solution method for the search model.\nReview the estimation exercise in Example 7.1\nReview the CPS data and code in Example 8.1\nIf time: start thinking about how you might code up the log likelihood of the search model without any heterogeneity."
   }
 ]
