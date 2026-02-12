@@ -1,1 +1,3 @@
-Assignment 4
+# Assignment 4
+
+Do [Exercise 12.1](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/extremum_intro_examples.html#the-search-model).

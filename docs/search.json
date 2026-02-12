@@ -72,9 +72,9 @@
   {
     "objectID": "assignments/Assignment-4.html",
     "href": "assignments/Assignment-4.html",
-    "title": "Applied Econometrics",
+    "title": "Assignment 4",
     "section": "",
-    "text": "Assignment 4"
+    "text": "Assignment 4\nDo Exercise 12.1."
   },
   {
     "objectID": "assignments/Assignment-5.html",
@@ -180,5 +180,12 @@
     "title": "Recitation 3",
     "section": "",
     "text": "Recitation 3\nAgenda:\n\nReview the solution method for the search model.\nReview the estimation exercise in Example 7.1\nReview the CPS data and code in Example 8.1\nIf time: start thinking about how you might code up the log likelihood of the search model without any heterogeneity."
+  },
+  {
+    "objectID": "recitations/recitation-4.html",
+    "href": "recitations/recitation-4.html",
+    "title": "Recitation 4",
+    "section": "",
+    "text": "Recitation 4\nWork through Example 12.1."
   }
 ]
