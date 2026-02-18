@@ -1,1 +1,3 @@
 # Assignment 5
+
+Do [exercise 13.1](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/extremum_theory.html#exercises) from the lecture notes. You will find example 13.1 useful.

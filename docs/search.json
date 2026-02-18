@@ -81,7 +81,7 @@
     "href": "assignments/Assignment-5.html",
     "title": "Assignment 5",
     "section": "",
-    "text": "Assignment 5"
+    "text": "Assignment 5\nDo exercise 13.1 from the lecture notes. You will find example 13.1 useful."
   },
   {
     "objectID": "assignments/Assignment-6.html",
@@ -187,5 +187,12 @@
     "title": "Recitation 4",
     "section": "",
     "text": "Recitation 4\nWork through Example 12.1."
+  },
+  {
+    "objectID": "recitations/recitation-5.html",
+    "href": "recitations/recitation-5.html",
+    "title": "Recitation 5",
+    "section": "",
+    "text": "Recitation 5\nAgenda:\n\nExample 12.2\nReview solution of the life-cycle savings model\nIf time: Example 13.1\n\nNote: example 13.1 uses theory that we will establish in our lecture next week."
   }
 ]

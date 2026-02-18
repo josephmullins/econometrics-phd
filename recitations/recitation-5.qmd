@@ -1,0 +1,9 @@
+# Recitation 5
+
+Agenda:
+
+- [Example 12.2](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/extremum_intro_examples.html#the-minimum-distance-estimator)
+- Review solution of the [life-cycle savings model](https://www.josephlyonmullins.com/structural-econometrics-julia/models/savings.html)
+- If time: [Example 13.1](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/extremum_theory.html#the-information-matrix-equality)
+
+Note: example 13.1 uses theory that we will establish in our lecture next week.
