@@ -49,6 +49,27 @@
     "text": "Model solution\nIn class we showed that the optimal decision rule of the worker is characterized by a reservation wage. We derived the reservation wage equation:\n\\[ w^* = b + \\beta\\lambda\\int_{w^*}\\frac{1-F_{W}(w)}{1 - \\beta(1-\\delta)}dw \\]\nand we characterized the steady state rate of unemployment as:\n\\[ P[E = 0] = \\frac{h}{h+\\delta} \\]\nwhere \\(h = \\lambda(1-F_{W}(w^*))\\) is the rate at which workers exit unemployment.\nSimilarly, we showed that the steady state fraction of unemployment durations \\(t\\) is\n\\[ P[t_{U}=t] = h(1-h)^{t} \\]\nLet’s write some code to solve the reservation wage equation, starting with code to evalute the equation below:\n\nusing Distributions, QuadGK\n\n# this function evaluates the reservation wage equation\ndS(x ; F,β,δ) = (1-cdf(F,x)) / (1-β*(1-δ)) #&lt;- this function defines S'(x)\nres_wage(wres ; b,λ,δ,β,F::Distribution) = wres - b - β * λ * quadgk(x-&gt;dS(x;F,β,δ),wres,Inf)[1]\npars = (;b = -5.,λ = 0.45,δ = 0.03,β = 0.99,F = LogNormal(1,1))\nres_wage(1. ; pars...)\n\n-33.70656559385876\n\n\nThe most straightforward way to solve for the reservation wage would be to use a root-finding method here. Since we have used Optim already, let’s just go ahead and use that package:\n\nusing Optim\nfunction solve_res_wage(pars)\n    (;F) = pars\n    w_lb = quantile(F,0.001) #&lt;- get a lower and upper bound for the solution\n    w_ub = quantile(F,0.999)\n    r = optimize(x-&gt;res_wage(x;pars...)^2,w_lb,w_ub)\n    return r.minimizer\nend\nrwage = solve_res_wage(pars)\n\n7.2471320591661295"
   },
   {
+    "objectID": "recitations/recitation-5.html",
+    "href": "recitations/recitation-5.html",
+    "title": "Recitation 5",
+    "section": "",
+    "text": "Recitation 5\nAgenda:\n\nExample 12.2\nReview solution of the life-cycle savings model\nIf time: Example 13.1\n\nNote: example 13.1 uses theory that we will establish in our lecture next week."
+  },
+  {
+    "objectID": "recitations/recitation-6.html",
+    "href": "recitations/recitation-6.html",
+    "title": "Recitation 6",
+    "section": "",
+    "text": "Recitation 6\nAgenda:\n\nReview the proof of MLE’s efficiency relative to GMM (13.6.1)\nReview Section 13.7 on Two-Step Estimators\nWork through Example 14.1"
+  },
+  {
+    "objectID": "recitations/recitation-3.html",
+    "href": "recitations/recitation-3.html",
+    "title": "Recitation 3",
+    "section": "",
+    "text": "Recitation 3\nAgenda:\n\nReview the solution method for the search model.\nReview the estimation exercise in Example 7.1\nReview the CPS data and code in Example 8.1\nIf time: start thinking about how you might code up the log likelihood of the search model without any heterogeneity."
+  },
+  {
     "objectID": "assignments/Assignment-1.html",
     "href": "assignments/Assignment-1.html",
     "title": "Assignment 1",
@@ -88,7 +109,7 @@
     "href": "assignments/Assignment-6.html",
     "title": "Assignment 6",
     "section": "",
-    "text": "Assignment 6"
+    "text": "Assignment 6\nDo Exercise 14.1 from the lecture notes."
   },
   {
     "objectID": "assignments/Assignment-3.html",
@@ -110,6 +131,20 @@
     "title": "Recitation 2",
     "section": "",
     "text": "Recitation 2\nAgenda:\n\nContinue / finish agenda from Recitation 1.\nIf time, work through one or two examples of Marschak’s maxim at work."
+  },
+  {
+    "objectID": "recitations/recitation-7.html",
+    "href": "recitations/recitation-7.html",
+    "title": "Recitation 7",
+    "section": "",
+    "text": "Recitation 7"
+  },
+  {
+    "objectID": "recitations/recitation-4.html",
+    "href": "recitations/recitation-4.html",
+    "title": "Recitation 4",
+    "section": "",
+    "text": "Recitation 4\nWork through Example 12.1."
   },
   {
     "objectID": "models/entry-exit.html",
@@ -173,26 +208,5 @@
     "title": "Syllabus",
     "section": "Office Hours",
     "text": "Office Hours\nI will provide a link on Canvas to sign up for my weekly office hours."
-  },
-  {
-    "objectID": "recitations/recitation-3.html",
-    "href": "recitations/recitation-3.html",
-    "title": "Recitation 3",
-    "section": "",
-    "text": "Recitation 3\nAgenda:\n\nReview the solution method for the search model.\nReview the estimation exercise in Example 7.1\nReview the CPS data and code in Example 8.1\nIf time: start thinking about how you might code up the log likelihood of the search model without any heterogeneity."
-  },
-  {
-    "objectID": "recitations/recitation-4.html",
-    "href": "recitations/recitation-4.html",
-    "title": "Recitation 4",
-    "section": "",
-    "text": "Recitation 4\nWork through Example 12.1."
-  },
-  {
-    "objectID": "recitations/recitation-5.html",
-    "href": "recitations/recitation-5.html",
-    "title": "Recitation 5",
-    "section": "",
-    "text": "Recitation 5\nAgenda:\n\nExample 12.2\nReview solution of the life-cycle savings model\nIf time: Example 13.1\n\nNote: example 13.1 uses theory that we will establish in our lecture next week."
   }
 ]

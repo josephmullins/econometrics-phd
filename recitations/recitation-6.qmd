@@ -1,0 +1,7 @@
+# Recitation 6
+
+Agenda:
+
+- Review the proof of MLE's efficiency relative to GMM (13.6.1)
+- Review [Section 13.7](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/extremum_theory.html#two-step-estimators) on Two-Step Estimators
+- Work through [Example 14.1](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/simulation-methods.html#asymptotic-distribution)
