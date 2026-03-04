@@ -1,1 +1,3 @@
 # Recitation 7
+
+Work through [Examples 14.2 - 14.5](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/simulation-methods.html).

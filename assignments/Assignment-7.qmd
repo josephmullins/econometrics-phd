@@ -1,1 +1,3 @@
 # Assignment 7
+
+[Do Exercise 14.2](https://www.josephlyonmullins.com/structural-econometrics-julia/lectures/simulation-methods.html#exercises).
