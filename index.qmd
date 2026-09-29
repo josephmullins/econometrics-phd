@@ -50,19 +50,19 @@ We review some of the formalities of discrete choice models and consider estimat
 
 ## Assessment
 
-There will be 7 problem sets. Your best 5 of these 7 problem sets will be worth 20%. Hence, you can skip two if you want. 
+There are 4 problem sets. Each problem sets will be worth 25%.
 
-Here is the proposed timeline of due dates. Submissions **must** be made through Canvas as a notebook (e.g. jupyter or quarto) formatted to html with printed output. 
+Here is the proposed timeline of due dates. Submissions **must** be emailed to your TA as a notebook (e.g. jupyter or quarto) formatted to html with printed output.
 
 | Assignment | Due Date |
 | ---------- | -------- |
-| [Assignment 1](assignments/Assignment-1.qmd) | Jan 30 |
-| [Assignment 2](assignments/Assignment-2.qmd) | Feb 6 | 
-| [Assignment 3](assignments/Assignment-3.qmd) | Feb 13 | 
-| [Assignment 4](assignments/Assignment-4.qmd) | Feb 20 | 
-| [Assignment 5](assignments/Assignment-5.qmd) | Feb 27 | 
-| [Assignment 6](assignments/Assignment-6.qmd) | Mar 6 | 
-| [Assignment 7](assignments/Assignment-7.qmd) | Mar 20 | 
+| [Assignment 1](assignments/Assignment-1.qmd) | Oct 9 |
+| [Assignment 2](assignments/Assignment-2.qmd) | Oct 16 | 
+| [Assignment 3](assignments/Assignment-3.qmd) | Oct 23 | 
+| [Assignment 4](assignments/Assignment-4.qmd) | Oct 30 | 
+| [Assignment 5](assignments/Assignment-5.qmd) |  - | 
+| [Assignment 6](assignments/Assignment-6.qmd) |  - | 
+| [Assignment 7](assignments/Assignment-7.qmd) |  - | 
 
 ## Office Hours
 
